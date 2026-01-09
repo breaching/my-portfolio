@@ -78,8 +78,9 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
             "payment=(), usb=()"
         )
 
-        # Remove server header
-        response.headers.pop("Server", None)
+        # Remove server header if present
+        if "Server" in response.headers:
+            del response.headers["Server"]
 
         return response
 

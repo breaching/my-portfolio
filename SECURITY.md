@@ -1,6 +1,6 @@
 # Securite
 
-Ce portfolio est volontairement sur-securise. C'est un exercice pour montrer que je sais faire, pas parce qu'un portfolio a besoin de tout ca.
+Ce portfolio est volontairement sur-securise. Pour m'exercer, pas parce qu'un portfolio a besoin de tout ca.
 
 ## Architecture
 
