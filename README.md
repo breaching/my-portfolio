@@ -1,4 +1,4 @@
-# Portfolio - Alexis Dubus
+# Portfolio 
 
 Portfolio perso. Next.js 16 + FastAPI + SQLite. Self-hosted derriere Cloudflare Tunnel.
 
