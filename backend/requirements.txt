@@ -1,0 +1,23 @@
+# Core Framework
+fastapi>=0.109.0
+uvicorn>=0.27.0
+
+# Database
+sqlalchemy>=2.0.0
+aiosqlite>=0.19.0
+
+# Validation & Settings
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+email-validator>=2.1.0
+
+# Content Processing
+python-multipart>=0.0.6
+markdown>=3.5.0
+python-frontmatter>=1.0.0
+bleach>=6.1.0
+
+# Security - Pin transitive dependencies to safe versions
+# These may be pulled by other packages; explicit pins ensure no vulnerable versions
+starlette>=0.36.0
+httpx>=0.27.0
