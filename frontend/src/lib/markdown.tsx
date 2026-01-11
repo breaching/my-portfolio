@@ -47,36 +47,17 @@ const components: Components = {
   code: ({ className, children }) => {
     const isBlock = className?.includes("language-");
     if (isBlock) {
-      return (
-        <code className="text-[13px] sm:text-sm font-mono text-text-secondary">{children}</code>
-      );
+      return <code className="font-mono">{children}</code>;
     }
-    return (
-      <code className="px-1 sm:px-1.5 py-0.5 rounded bg-background-elevated text-text-primary font-mono text-[13px] sm:text-sm break-words">
-        {children}
-      </code>
-    );
+    return <code>{children}</code>;
   },
-  pre: ({ children }) => (
-    <pre className="my-4 sm:my-6 p-3 sm:p-4 bg-background-elevated overflow-x-auto border border-accent-border">
-      {children}
-    </pre>
-  ),
-  table: ({ children }) => (
-    <div className="overflow-x-auto my-4 sm:my-6">
-      <table className="min-w-full">{children}</table>
-    </div>
-  ),
-  th: ({ children }) => (
-    <th className="px-2 sm:px-3 py-2 text-left text-sm font-medium text-text-primary bg-background-elevated border border-accent-border">
-      {children}
-    </th>
-  ),
-  td: ({ children }) => (
-    <td className="px-2 sm:px-3 py-2 text-sm text-text-secondary border border-accent-border">
-      {children}
-    </td>
-  ),
+  pre: ({ children }) => <pre>{children}</pre>,
+  table: ({ children }) => <table>{children}</table>,
+  thead: ({ children }) => <thead>{children}</thead>,
+  tbody: ({ children }) => <tbody>{children}</tbody>,
+  tr: ({ children }) => <tr>{children}</tr>,
+  th: ({ children }) => <th>{children}</th>,
+  td: ({ children }) => <td>{children}</td>,
   hr: () => <hr className="my-8 border-accent-border" />,
 };
 
