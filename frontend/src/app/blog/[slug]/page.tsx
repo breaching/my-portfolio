@@ -89,7 +89,7 @@ export default async function PostPage({ params }: PageProps) {
           )}
         </header>
 
-        <div className="prose-content max-w-none sm:max-w-2xl">
+        <div className="prose-content">
           <MarkdownContent content={post.content} />
         </div>
 

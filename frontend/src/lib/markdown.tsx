@@ -39,11 +39,7 @@ const components: Components = {
       {children}
     </a>
   ),
-  blockquote: ({ children }) => (
-    <blockquote className="border-l-2 border-accent-border pl-4 my-4 text-text-tertiary italic">
-      {children}
-    </blockquote>
-  ),
+  blockquote: ({ children }) => <blockquote>{children}</blockquote>,
   code: ({ className, children }) => {
     const isBlock = className?.includes("language-");
     if (isBlock) {
