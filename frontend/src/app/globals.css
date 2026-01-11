@@ -46,6 +46,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -55,6 +56,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01", "ss02", "cv01";
+  overflow-x: hidden;
 }
 
 /* Monospace font */
@@ -178,12 +180,24 @@ code, pre, .font-mono {
 .prose-content {
   font-size: 15px;
   line-height: 1.7;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 @media (min-width: 640px) {
   .prose-content {
     font-size: 16px;
   }
+}
+
+/* Prevent horizontal overflow on mobile */
+.prose-content * {
+  max-width: 100%;
+}
+
+.prose-content code {
+  word-break: break-all;
 }
 
 .prose-content pre {
