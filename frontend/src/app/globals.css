@@ -174,6 +174,73 @@ code, pre, .font-mono {
   max-width: 680px;
 }
 
+/* Prose content - responsive markdown */
+.prose-content {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+@media (min-width: 640px) {
+  .prose-content {
+    font-size: 16px;
+  }
+}
+
+.prose-content pre {
+  margin-left: -24px;
+  margin-right: -24px;
+  border-radius: 0;
+  font-size: 13px;
+}
+
+@media (min-width: 640px) {
+  .prose-content pre {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+}
+
+.prose-content table {
+  width: 100%;
+  font-size: 14px;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose-content th,
+.prose-content td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--accent-border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .prose-content table {
+    display: table;
+  }
+
+  .prose-content th,
+  .prose-content td {
+    white-space: normal;
+  }
+}
+
+.prose-content th {
+  background: var(--background-elevated);
+  font-weight: 500;
+}
+
+.prose-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
 /* Section spacing */
 .section {
   padding: 96px 0;

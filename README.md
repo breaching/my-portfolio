@@ -47,12 +47,14 @@ cp .env.example .env
 uvicorn main:app --reload
 ```
 
-## Prod
+## Deploiement
 
-Mettre `ENVIRONMENT=production` dans le .env backend. L'app verifie que :
-- `ADMIN_API_KEY` >= 32 chars
-- `DEBUG` = false
-- `ALLOWED_HOSTS` != "*"
-- `ENABLE_HSTS` = true
+Guide complet : **[DEPLOY.md](./DEPLOY.md)**
 
-Sinon elle refuse de demarrer.
+En resume :
+1. VM Debian sur Proxmox
+2. Cloudflare Tunnel (zero port ouvert)
+3. Nginx reverse proxy local
+4. Services systemd
+
+L'app refuse de boot en prod si la config est faible (cle API < 32 chars, debug=true, etc).

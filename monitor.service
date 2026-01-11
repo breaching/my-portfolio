@@ -1,0 +1,13 @@
+[Unit]
+Description=Security Monitor
+After=portfolio-api.service
+
+[Service]
+Type=simple
+ExecStart=/home/portfolio/monitor.sh
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
