@@ -10,7 +10,7 @@ Portfolio perso. Next.js 16 + FastAPI + SQLite. Self-hosted derriere Cloudflare 
 
 ## Securite
 
-J'ai pousse la securite plus loin que necessaire pour un portfolio - c'est le but. Details dans [SECURITY.md](./SECURITY.md).
+J'ai pousse la securite plus loin que necessaire pour un portfolio - c'est le but.
 
 En resume :
 - Rate limiting + brute force protection
