@@ -2,7 +2,7 @@
 title: "GPU Passthrough sur Proxmox"
 description: "Configuration complète du passthrough GPU (GTX 1070 Ti) pour une VM dédiée IA."
 type: "article"
-date: "2024-01-15"
+date: "2025-01-18"
 tags: ["Proxmox", "GPU", "Linux", "Virtualisation"]
 ---
 

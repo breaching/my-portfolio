@@ -95,3 +95,5 @@ CLAUDE.md
 *.temp
 .cache/
 next-env.d.ts
+backend/app/services/redis_service.py
+vitrine.rar

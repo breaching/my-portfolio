@@ -2,13 +2,13 @@
 title: "Reverse Lookup Engine"
 description: "Moteur de recherche inversée sur millions de records avec cross-référencement multi-sources."
 type: "projet"
-date: "2024-03-01"
+date: "2024-08-12"
 tags: ["Python", "SQLite", "FTS5", "Data Engineering"]
 ---
 
 ## Le problème
 
-J'avais besoin d'un outil capable de faire du cross-référencement sur des millions d'enregistrements provenant de sources hétérogènes (nom, téléphone, email, adresse). Les solutions existantes étaient soit trop lentes, soit inadaptées à mon cas d'usage.
+J'avais besoin d'un outil capable de faire du cross-référencement sur des millions d'enregistrements provenant de sources hétérogènes. Les solutions existantes étaient soit trop lentes, soit inadaptées à mon cas d'usage.
 
 ## Choix techniques
 

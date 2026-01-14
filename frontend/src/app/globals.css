@@ -241,7 +241,6 @@ code, pre, .font-mono {
   padding: 8px 12px;
   border: 1px solid var(--accent-border);
   text-align: left;
-  white-space: nowrap;
   min-width: 80px;
 }
 

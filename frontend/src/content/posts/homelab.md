@@ -2,7 +2,7 @@
 title: "Homelab & IA locale"
 description: "Infrastructure Proxmox avec GPU passthrough pour héberger des LLMs locaux via Ollama."
 type: "projet"
-date: "2024-02-15"
+date: "2025-08-15"
 tags: ["Proxmox", "Linux", "GPU Passthrough", "Ollama", "LLM"]
 ---
 
@@ -26,9 +26,13 @@ La partie la plus technique du projet. Points clés :
 
 ## Stack IA
 
-- **Ollama** : Pour faire tourner des modèles comme Llama, Mistral, etc.
-- **32GB RAM** : Essentiel pour les modèles de taille moyenne
-- **Objectif** : Assistant personnel local et automatisations
+- **Ollama** : Pour faire tourner des modèles comme Llama, Mistral, etc. Je run principalement **Cogito:8b** et **Qwen3:8b** pour les réflexions et tâches plus poussées. Pour la vitesse ou des traitements minimaux, comme la génération d'images text-to-image ou la description d'images, j'utilise **Gemma 3:4b**. Occasionnellement, **Mistral7b** est aussi déployé.
+- **Open WebUI** : Une interface utilisateur web conviviale pour interagir facilement avec les modèles Ollama. Elle offre une expérience similaire à ChatGPT, mais entièrement self-hosted et privée.
+- **API Ollama** : L'utilisation de l'API RESTful d'Ollama permet l'intégration des LLMs locaux dans des applications tierces et des scripts personnalisés, ouvrant la voie à des automatisations avancées et à l'expérimentation de nouvelles applications basées sur l'IA.
+- **Modèles Quantifiés** : Je me suis également intéressé aux modèles quantifiés (par exemple, en Q4) pour optimiser l'utilisation de la RAM et la vitesse d'inférence sur mon hardware limité.
+- **32GB RAM** : Essentiel pour les modèles de taille moyenne.
+- **Automatisation (n8n)** : Intégration avec n8n pour orchestrer des workflows automatisés tirant parti de ces LLMs locaux.
+- **Objectif** : Assistant personnel local et automatisations.
 
 ## Ce que j'ai appris
 

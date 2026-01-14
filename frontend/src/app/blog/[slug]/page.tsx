@@ -74,7 +74,7 @@ export default async function PostPage({ params }: PageProps) {
             ))}
           </div>
 
-          {post.github && (
+          {post.type === "projet" && post.github && (
             <div className="flex gap-3 mt-6">
               <a
                 href={post.github}
@@ -89,7 +89,11 @@ export default async function PostPage({ params }: PageProps) {
           )}
         </header>
 
-        <div className="prose-content">
+
+        
+
+
+                <div className="prose-content">
           <MarkdownContent content={post.content} />
         </div>
 

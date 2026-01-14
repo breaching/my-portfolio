@@ -1,14 +1,15 @@
 ---
-title: "Securiser un portfolio : defense en profondeur"
-description: "Comment j'ai implemente une architecture de securite complete pour ce portfolio. OWASP Top 10, threat modeling STRIDE, et preuves d'attaques bloquees."
+title: "Sécuriser un portfolio : défense en profondeur"
+description: "Comment j'ai implémenté une architecture de sécurité complète pour ce portfolio. OWASP Top 10, threat modeling STRIDE, et preuves d'attaques bloquées."
 type: "projet"
-date: "2025-01-10"
+date: "2026-01-06"
 tags: ["Securite", "OWASP", "FastAPI", "Next.js", "DevSecOps"]
+github: "https://github.com/breaching/my-portfolio"
 ---
 
 ## Le contexte
 
-Ce portfolio n'est pas juste une vitrine. C'est une demonstration de competences en securite applicative. L'objectif : implementer une architecture de securite complete, documentee, et testable.
+Ce portfolio n'est pas juste une vitrine. C'est une démonstration de compétences en sécurité applicative. L'objectif : implémenter une architecture de sécurité complète, documentée et testable.
 
 ## Architecture de defense
 
@@ -27,7 +28,7 @@ Internet
 [Application] ----> Rate limiting, validation, logging
 ```
 
-Chaque couche a un role specifique. Si une couche est compromise, les autres restent actives.
+Chaque couche a un rôle spécifique. Si une couche est compromise, les autres restent actives.
 
 ## Conformite OWASP Top 10
 
@@ -42,7 +43,7 @@ Chaque couche a un role specifique. Si une couche est compromise, les autres res
 
 ## Threat Model (STRIDE)
 
-J'ai applique la methodologie STRIDE pour identifier les menaces :
+J'ai appliqué la méthodologie STRIDE pour identifier les menaces :
 
 - **Spoofing** : Comparaison timing-safe des credentials
 - **Tampering** : ORM uniquement, pas de SQL brut
@@ -79,14 +80,14 @@ Quand un scanner teste `/wp-admin`, je le sais immediatement.
 
 ### Validation au demarrage
 
-L'application refuse de demarrer en production si :
+L'application refuse de démarrer en production si :
 
 - `ADMIN_API_KEY` < 32 caracteres
 - `DEBUG` = true
 - `ALLOWED_HOSTS` contient "*"
 - `ENABLE_HSTS` = false
 
-Pas de config faible possible.
+Pas de configuration faible possible.
 
 ## Exemples d'attaques bloquees
 
@@ -100,7 +101,7 @@ Pas de config faible possible.
 
 ## Logging securite
 
-Chaque evenement de securite est logue en JSON structure :
+Chaque événement de sécurité est logué en JSON structuré :
 
 ```json
 {
@@ -113,11 +114,11 @@ Chaque evenement de securite est logue en JSON structure :
 }
 ```
 
-Events traces : `AUTH_SUCCESS`, `AUTH_FAILURE`, `RATE_LIMIT_TRIGGERED`, `SUSPICIOUS_REQUEST`, `HONEYPOT_TRIGGERED`.
+Événements tracés : AUTH_SUCCESS, AUTH_FAILURE, RATE_LIMIT_TRIGGERED, SUSPICIOUS_REQUEST, HONEYPOT_TRIGGERED.
 
 ## Tests automatises
 
-Suite de 11 categories de tests de securite :
+Suite de 11 catégories de tests de sécurité :
 
 ```bash
 python test_security.py --url https://api.example.com
@@ -137,13 +138,13 @@ python test_security.py --url https://api.example.com
 SUMMARY: 35/35 tests passed
 ```
 
-## Choix techniques justifies
+## Choix techniques justifiés
 
 **Pourquoi API Key vs JWT ?**
-Un seul admin (moi). JWT ajouterait de la complexite sans benefice. La cle est comparee de facon timing-safe.
+Un seul admin (moi). JWT ajouterait de la complexité sans bénéfice. La clé est comparée de façon timing-safe.
 
 **Pourquoi SQLite ?**
-Self-hosted, traffic faible. Pas besoin d'un serveur PostgreSQL. Backup = `cp portfolio.db backup.db`.
+Self-hosted, traffic faible. Pas besoin d'un serveur PostgreSQL. Sauvegarde = `cp portfolio.db backup.db`.
 
 **Pourquoi rate limiting in-memory ?**
 Single instance, pas de workers multiples. Redis serait overkill.
@@ -158,8 +159,8 @@ Ces limites sont acceptables pour un portfolio personnel.
 
 ## Ce que j'ai appris
 
-1. **Defense in depth** : plusieurs couches independantes
-2. **STRIDE** : methodologie structuree pour identifier les menaces
-3. **OWASP Top 10** : checklist concrete de vulnerabilites a couvrir
-4. **Security logging** : les logs structures changent tout pour le monitoring
-5. **Fail secure** : l'app refuse de demarrer si la config est faible
+1. **Défense en profondeur** : plusieurs couches indépendantes
+2. **STRIDE** : méthodologie structurée pour identifier les menaces
+3. **OWASP Top 10** : checklist concrète de vulnérabilités à couvrir
+4. **Security logging** : les logs structurés changent tout pour le monitoring
+5. **Fail secure** : l'app refuse de démarrer si la config est faible

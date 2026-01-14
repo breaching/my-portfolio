@@ -8,7 +8,7 @@ tags: ["Python", "ETL", "JSON", "Data Engineering"]
 
 ## Le problème
 
-Les APIs modernes renvoient souvent du JSON profondément imbriqué. Transformer ça en données plates exploitables n'est pas trivial.
+Les APIs modernes renvoient souvent du JSON profondément imbriqué. Transformer ça en données plates exploitables n'est pas facile.
 
 ## Exemple de structure
 
