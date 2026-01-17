@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/Button";
 import { submitContactForm } from "@/lib/api";
+import { validateContactInput } from "@/lib/security";
 import type { ContactFormData, FormStatus } from "@/types";
 
 const contactLinks = [
@@ -41,6 +42,7 @@ export function ContactSection() {
     subject: "",
     message: "",
   });
+  const [honeypot, setHoneypot] = useState("");
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -55,8 +57,25 @@ export function ContactSection() {
     e.preventDefault();
     setFormStatus("loading");
     setFormError(null);
+
+    // Honeypot check - if filled, it's a bot
+    if (honeypot) {
+      // Silently "succeed" to not reveal the trap
+      setFormStatus("success");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      return;
+    }
+
+    // Validate and sanitize input
+    const validation = validateContactInput(formData);
+    if (!validation.valid) {
+      setFormStatus("error");
+      setFormError(validation.errors.join(". "));
+      return;
+    }
+
     try {
-      await submitContactForm(formData);
+      await submitContactForm(validation.sanitized!);
       setFormStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
@@ -129,6 +148,20 @@ export function ContactSection() {
 
           {/* Contact Form */}
           <form onSubmit={handleFormSubmit} className="space-y-6">
+            {/* Honeypot field - hidden from humans, visible to bots */}
+            <div className="absolute -left-[9999px] opacity-0" aria-hidden="true">
+              <label htmlFor="website_url">Website</label>
+              <input
+                type="text"
+                id="website_url"
+                name="website_url"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             <div>
               <label
                 htmlFor="name"

@@ -3,7 +3,7 @@ title: "Sécuriser un portfolio : défense en profondeur"
 description: "Comment j'ai implémenté une architecture de sécurité complète pour ce portfolio. OWASP Top 10, threat modeling STRIDE, et preuves d'attaques bloquées."
 type: "projet"
 date: "2026-01-06"
-tags: ["Securite", "OWASP", "FastAPI", "Next.js", "DevSecOps"]
+tags: ["Securite", "OWASP", "Next.js", "DevSecOps"]
 github: "https://github.com/breaching/my-portfolio"
 ---
 
@@ -22,10 +22,10 @@ Internet
 [Cloudflare] -----> DDoS protection, TLS 1.3, WAF
     |
     v
-[Nginx Proxy] ----> Isolation, headers securite
+[Next.js Middleware] --> Rate limiting, honeypots, validation
     |
     v
-[Application] ----> Rate limiting, validation, logging
+[Application] ----> Input sanitization, CSP, security headers
 ```
 
 Chaque couche a un rôle spécifique. Si une couche est compromise, les autres restent actives.
@@ -34,60 +34,128 @@ Chaque couche a un rôle spécifique. Si une couche est compromise, les autres r
 
 | Risque | Protection |
 |--------|------------|
-| **A01 - Broken Access Control** | API Key timing-safe + CORS whitelist |
-| **A02 - Cryptographic Failures** | HSTS force + secrets.compare_digest |
-| **A03 - Injection** | ORM SQLAlchemy + bleach sanitization |
-| **A05 - Security Misconfiguration** | Validation bloquante au demarrage |
-| **A07 - Auth Failures** | Brute force protection (5 tentatives = 15min block) |
-| **A09 - Logging Failures** | Logs JSON structures avec events securite |
+| **A01 - Broken Access Control** | CSP strict + frame-ancestors 'none' |
+| **A02 - Cryptographic Failures** | HSTS force + TLS 1.3 via Cloudflare |
+| **A03 - Injection** | Input sanitization + pattern detection |
+| **A05 - Security Misconfiguration** | Headers sécurité complets |
+| **A07 - Auth Failures** | Rate limiting (5 contacts/15min) |
+| **A09 - Logging Failures** | Logs JSON structurés pour tous les events sécurité |
 
 ## Threat Model (STRIDE)
 
 J'ai appliqué la méthodologie STRIDE pour identifier les menaces :
 
-- **Spoofing** : Comparaison timing-safe des credentials
-- **Tampering** : ORM uniquement, pas de SQL brut
-- **Repudiation** : Logging de toutes les actions admin
-- **Information Disclosure** : Pas de stack traces en prod
-- **Denial of Service** : Rate limiting multi-niveau
-- **Elevation of Privilege** : Validation stricte des inputs
+- **Spoofing** : Honeypot dans le formulaire pour piéger les bots
+- **Tampering** : Sanitization de tous les inputs
+- **Repudiation** : Logging structuré de toutes les requêtes suspectes
+- **Information Disclosure** : Pas de stack traces, headers X-Powered-By désactivés
+- **Denial of Service** : Rate limiting multi-niveau (global + formulaire)
+- **Elevation of Privilege** : Pas d'admin, architecture statique
 
 ## Implementations techniques
 
-### Protection brute force
+### Middleware de sécurité (Next.js)
 
-```python
-# Apres 5 echecs d'auth, l'IP est bloquee 15 minutes
-if len(failed_attempts[ip]) >= 5:
-    blocked_ips[ip] = current_time + 900
-    security_logger.log("BRUTE_FORCE_BLOCKED", ip=ip)
+```typescript
+// Rate limiting global : 100 req/min
+if (!checkRateLimit(ip)) {
+  logSecurityEvent("RATE_LIMIT_EXCEEDED", ip, pathname);
+  return new NextResponse("Too Many Requests", { status: 429 });
+}
+
+// Rate limiting contact : 5 tentatives/15min
+if (!checkContactRateLimit(ip)) {
+  logSecurityEvent("CONTACT_RATE_LIMIT", ip, pathname);
+  return new NextResponse("Too Many Requests", { status: 429 });
+}
 ```
 
 ### Honeypots
 
-Des endpoints pieges detectent les scans malveillants :
+Des endpoints pièges détectent les scans malveillants :
 
-```python
-@app.get("/wp-admin")
-@app.get("/.env")
-@app.get("/phpinfo.php")
-async def honeypot(request: Request):
-    security_logger.honeypot_triggered(ip, path)
-    return JSONResponse(status_code=404)
+```typescript
+const HONEYPOT_PATHS = [
+  "/wp-admin", "/.env", "/phpinfo.php",
+  "/phpmyadmin", "/.git/config", "/backup.sql"
+];
+
+if (isHoneypotPath(pathname)) {
+  logSecurityEvent("HONEYPOT_TRIGGERED", ip, pathname);
+  blockedIPs.set(ip, Date.now() + BLOCK_DURATION);
+  return new NextResponse("Not Found", { status: 404 });
+}
 ```
 
-Quand un scanner teste `/wp-admin`, je le sais immediatement.
+Quand un scanner teste `/wp-admin`, l'IP est bloquée 15 minutes.
 
-### Validation au demarrage
+### Détection de patterns malveillants
 
-L'application refuse de démarrer en production si :
+```typescript
+const SUSPICIOUS_PATTERNS = [
+  // SQL Injection
+  /('|")\s*(or|and)\s*('|")?1('|")?\s*=\s*('|")?1/i,
+  /union\s+(all\s+)?select/i,
 
-- `ADMIN_API_KEY` < 32 caracteres
-- `DEBUG` = true
-- `ALLOWED_HOSTS` contient "*"
-- `ENABLE_HSTS` = false
+  // XSS
+  /<script[\s>]/i,
+  /javascript:/i,
 
-Pas de configuration faible possible.
+  // Path Traversal
+  /\.\.\//,
+  /%2e%2e%2f/i,
+];
+
+if (hasSuspiciousPattern(fullUrl)) {
+  logSecurityEvent("SUSPICIOUS_REQUEST", ip, pathname);
+  return new NextResponse("Bad Request", { status: 400 });
+}
+```
+
+### Honeypot formulaire
+
+Un champ invisible piège les bots qui remplissent tous les champs :
+
+```typescript
+// Honeypot check - if filled, it's a bot
+if (honeypot) {
+  // Silently "succeed" to not reveal the trap
+  setFormStatus("success");
+  return;
+}
+```
+
+### Validation et sanitization des inputs
+
+```typescript
+// Sanitize HTML entities
+function sanitizeHtml(input: string): string {
+  return input.replace(/[&<>"'`=/]/g, (char) => HTML_ENTITIES[char]);
+}
+
+// Validate before sending
+const validation = validateContactInput(formData);
+if (!validation.valid) {
+  setFormError(validation.errors.join(". "));
+  return;
+}
+```
+
+## Security Headers
+
+```typescript
+// Headers configurés dans next.config.ts
+{
+  "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-Content-Type-Options": "nosniff",
+  "X-XSS-Protection": "1; mode=block",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "Cross-Origin-Resource-Policy": "same-origin",
+  "Content-Security-Policy": "default-src 'self'; frame-ancestors 'none'..."
+}
+```
 
 ## Exemples d'attaques bloquees
 
@@ -96,8 +164,9 @@ Pas de configuration faible possible.
 | SQL Injection | `' OR '1'='1` | 400 Bad Request |
 | XSS | `<script>alert(1)</script>` | Input sanitized |
 | Path Traversal | `../../../etc/passwd` | 400 Bad Request |
-| Brute Force | 5+ failed auth | 429 + 15min block |
-| Scanner | `GET /wp-admin` | Logged + 404 |
+| Rate Limit | 100+ req/min | 429 + Retry-After |
+| Scanner | `GET /wp-admin` | Logged + 404 + IP blocked |
+| Bot spam | Honeypot filled | Silent success (no email) |
 
 ## Logging securite
 
@@ -105,55 +174,37 @@ Chaque événement de sécurité est logué en JSON structuré :
 
 ```json
 {
-  "timestamp": "2025-01-10T12:34:56Z",
+  "timestamp": "2026-01-17T12:34:56Z",
   "level": "WARNING",
-  "security_event": "AUTH_FAILURE",
+  "security_event": "HONEYPOT_TRIGGERED",
   "ip": "192.168.1.xxx",
-  "path": "/api/projects",
-  "reason": "invalid_api_key"
+  "path": "/wp-admin"
 }
 ```
 
-Événements tracés : AUTH_SUCCESS, AUTH_FAILURE, RATE_LIMIT_TRIGGERED, SUSPICIOUS_REQUEST, HONEYPOT_TRIGGERED.
-
-## Tests automatises
-
-Suite de 11 catégories de tests de sécurité :
-
-```bash
-python test_security.py --url https://api.example.com
-
-[1] Testing Security Headers... OK
-[2] Testing Authentication... OK
-[3] Testing Rate Limiting... OK
-[4] Testing Input Validation... OK
-[5] Testing CORS... OK
-[6] Testing Error Handling... OK
-[7] Testing API Documentation... OK
-[8] Testing Honeypots... OK
-[9] Testing Suspicious Patterns... OK
-[10] Testing Contact Rate Limit... OK
-[11] Testing Brute Force Protection... OK
-
-SUMMARY: 35/35 tests passed
-```
+Événements tracés :
+- `RATE_LIMIT_EXCEEDED`
+- `HONEYPOT_TRIGGERED`
+- `SUSPICIOUS_REQUEST`
+- `IP_BLOCKED`
+- `CONTACT_RATE_LIMIT`
 
 ## Choix techniques justifiés
 
-**Pourquoi API Key vs JWT ?**
-Un seul admin (moi). JWT ajouterait de la complexité sans bénéfice. La clé est comparée de façon timing-safe.
+**Pourquoi Next.js middleware ?**
+Edge runtime, exécution avant le rendu. Bloque les attaques au plus tôt.
 
-**Pourquoi SQLite ?**
-Self-hosted, traffic faible. Pas besoin d'un serveur PostgreSQL. Sauvegarde = `cp portfolio.db backup.db`.
+**Pourquoi Formspree ?**
+Service externe = pas de backend à sécuriser. Moins de surface d'attaque.
 
 **Pourquoi rate limiting in-memory ?**
 Single instance, pas de workers multiples. Redis serait overkill.
 
 ## Limites connues
 
-- Pas de HA (single instance)
-- Rate limit reset au redemarrage
+- Rate limit reset au redémarrage
 - Pas de WAF applicatif complet (Cloudflare en amont)
+- In-memory storage = pas de persistence
 
 Ces limites sont acceptables pour un portfolio personnel.
 
@@ -163,4 +214,4 @@ Ces limites sont acceptables pour un portfolio personnel.
 2. **STRIDE** : méthodologie structurée pour identifier les menaces
 3. **OWASP Top 10** : checklist concrète de vulnérabilités à couvrir
 4. **Security logging** : les logs structurés changent tout pour le monitoring
-5. **Fail secure** : l'app refuse de démarrer si la config est faible
+5. **Minimal attack surface** : pas de backend = moins de risques

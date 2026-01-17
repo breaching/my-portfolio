@@ -1,11 +1,5 @@
 # Dependencies
 node_modules/
-__pycache__/
-*.py[cod]
-*$py.class
-.venv/
-venv/
-env/
 .pnp
 .pnp.*
 .yarn/*
@@ -19,13 +13,7 @@ env/
 out/
 dist/
 build/
-*.egg-info/
 *.tsbuildinfo
-
-# Database
-*.db
-*.sqlite3
-portfolio.db
 
 # Environment & Secrets
 .env
@@ -73,10 +61,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Testing & Coverage
-.coverage
 coverage/
-htmlcov/
-.pytest_cache/
 .nyc_output/
 junit.xml
 
@@ -95,5 +80,4 @@ CLAUDE.md
 *.temp
 .cache/
 next-env.d.ts
-backend/app/services/redis_service.py
 vitrine.rar
