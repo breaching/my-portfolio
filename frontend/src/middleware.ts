@@ -15,6 +15,28 @@ const CONTACT_RATE_LIMIT = 5; // 5 contact attempts per 15 minutes
 const CONTACT_WINDOW = 15 * 60 * 1000; // 15 minutes
 const BLOCK_DURATION = 15 * 60 * 1000; // 15 minutes block
 
+// Blocked user agents (scrapers, scanners, bots)
+const BLOCKED_USER_AGENTS = [
+  "wget",
+  "curl",
+  "python-requests",
+  "scrapy",
+  "httpclient",
+  "java/",
+  "libwww",
+  "lwp-trivial",
+  "sitesucker",
+  "webcopier",
+  "httrack",
+  "webzip",
+  "teleport",
+  "nikto",
+  "sqlmap",
+  "nmap",
+  "masscan",
+  "zgrab",
+];
+
 // Honeypot paths - common scanner targets
 const HONEYPOT_PATHS = [
   "/wp-admin",
@@ -84,7 +106,15 @@ type SecurityEvent =
   | "HONEYPOT_TRIGGERED"
   | "SUSPICIOUS_REQUEST"
   | "IP_BLOCKED"
-  | "CONTACT_RATE_LIMIT";
+  | "CONTACT_RATE_LIMIT"
+  | "BLOCKED_USER_AGENT";
+
+// Check for suspicious/blocked user agents
+function isSuspiciousUserAgent(userAgent: string | null): boolean {
+  if (!userAgent) return true;
+  const ua = userAgent.toLowerCase();
+  return BLOCKED_USER_AGENTS.some((blocked) => ua.includes(blocked));
+}
 
 // Structured security logger
 function logSecurityEvent(
@@ -190,6 +220,7 @@ export function middleware(request: NextRequest) {
   const ip = getClientIP(request);
   const pathname = request.nextUrl.pathname;
   const fullUrl = request.nextUrl.toString();
+  const userAgent = request.headers.get("user-agent");
 
   // 1. Check if IP is blocked
   if (isIPBlocked(ip)) {
@@ -197,7 +228,13 @@ export function middleware(request: NextRequest) {
     return new NextResponse("Forbidden", { status: 403 });
   }
 
-  // 2. Check honeypots first (before rate limiting to always catch scanners)
+  // 2. Block suspicious user agents (scrapers, scanners)
+  if (isSuspiciousUserAgent(userAgent)) {
+    logSecurityEvent("BLOCKED_USER_AGENT", ip, pathname, { userAgent });
+    return new NextResponse("Forbidden", { status: 403 });
+  }
+
+  // 3. Check honeypots (before rate limiting to always catch scanners)
   if (isHoneypotPath(pathname)) {
     logSecurityEvent("HONEYPOT_TRIGGERED", ip, pathname);
     // Block the IP for repeated honeypot hits
@@ -208,7 +245,7 @@ export function middleware(request: NextRequest) {
     return new NextResponse("Not Found", { status: 404 });
   }
 
-  // 3. Check for suspicious patterns
+  // 4. Check for suspicious patterns
   const suspiciousCheck = hasSuspiciousPattern(fullUrl);
   if (suspiciousCheck.suspicious) {
     logSecurityEvent("SUSPICIOUS_REQUEST", ip, pathname, {
@@ -218,7 +255,7 @@ export function middleware(request: NextRequest) {
     return new NextResponse("Bad Request", { status: 400 });
   }
 
-  // 4. Rate limiting
+  // 5. Rate limiting
   if (!checkRateLimit(ip)) {
     logSecurityEvent("RATE_LIMIT_EXCEEDED", ip, pathname, {
       limit: RATE_LIMIT_MAX,
@@ -232,7 +269,7 @@ export function middleware(request: NextRequest) {
     });
   }
 
-  // 5. Contact form specific rate limiting
+  // 6. Contact form specific rate limiting
   if (pathname === "/api/contact" && request.method === "POST") {
     if (!checkContactRateLimit(ip)) {
       logSecurityEvent("CONTACT_RATE_LIMIT", ip, pathname, {
