@@ -1,17 +1,6 @@
 import type { ContactFormData } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  message?: string;
-}
-
-export interface ContactResponse {
-  id: number;
-  message: string;
-}
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mzddzpep";
 
 export class ApiError extends Error {
   constructor(
@@ -26,23 +15,28 @@ export class ApiError extends Error {
 
 export async function submitContactForm(
   data: ContactFormData
-): Promise<ContactResponse> {
-  const response = await fetch(`${API_BASE}/api/contact`, {
+): Promise<{ ok: boolean }> {
+  const response = await fetch(FORMSPREE_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      message: data.message,
+    }),
   });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new ApiError(
-      errorData.detail || "Échec de l'envoi du message",
-      response.status,
-      errorData.code
+      errorData.error || "Échec de l'envoi du message",
+      response.status
     );
   }
 
-  return response.json();
+  return { ok: true };
 }
