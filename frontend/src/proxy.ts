@@ -216,7 +216,7 @@ function isHoneypotPath(pathname: string): boolean {
   return HONEYPOT_PATHS.some(hp => lowerPath.startsWith(hp) || lowerPath === hp);
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const ip = getClientIP(request);
   const pathname = request.nextUrl.pathname;
   const fullUrl = request.nextUrl.toString();
