@@ -1,4 +1,4 @@
-# Portfolio - Alexis Dubus
+# Portfolio 
 
 Portfolio perso. Next.js + Tailwind. Self-hosted derriere Cloudflare Tunnel.
 
