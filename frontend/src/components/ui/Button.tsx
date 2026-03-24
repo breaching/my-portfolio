@@ -19,7 +19,7 @@ interface ButtonProps {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent-primary text-background hover:bg-accent-hover",
+    "bg-accent-action text-background hover:bg-accent-action-hover",
   secondary:
     "bg-background-elevated text-text-primary hover:bg-accent-border",
   ghost:
@@ -56,7 +56,7 @@ export function Button({
         inline-flex items-center justify-center gap-2
         font-medium rounded-md
         transition-colors duration-200
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 focus-visible:ring-offset-background
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-action focus-visible:ring-offset-2 focus-visible:ring-offset-background
         disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
         ${variantStyles[variant]}
         ${sizeStyles[size]}

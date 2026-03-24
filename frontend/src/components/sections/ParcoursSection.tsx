@@ -98,7 +98,8 @@ export function ParcoursSection() {
                   transition={{ delay: catIndex * 0.1 }}
                 >
                   <h4 className="text-sm font-medium mb-4 tracking-[-0.01em] font-mono">
-                    <span className="text-text-tertiary opacity-60">//</span>{" "}
+                    <span className="text-text-tertiary opacity-60">{"//"}
+                    </span>{" "}
                     {category}
                   </h4>
                   <div className="flex flex-wrap gap-2">

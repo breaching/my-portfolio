@@ -156,7 +156,7 @@ export function Navbar() {
           <a
             href="#contact"
             onClick={handleCtaClick}
-            className="ml-4 inline-flex items-center gap-2 px-4 py-2 bg-accent-primary text-background text-sm font-medium rounded-md hover:bg-accent-hover transition-all btn-primary"
+            className="ml-4 inline-flex items-center gap-2 px-4 py-2 bg-accent-action text-background text-sm font-medium rounded-lg hover:bg-accent-action-hover transition-all btn-primary"
           >
             Devis gratuit
           </a>
@@ -266,7 +266,7 @@ export function Navbar() {
                     handleCtaClick(e);
                     setMobileMenuOpen(false);
                   }}
-                  className="block text-center py-3 px-3 bg-accent-primary text-background text-sm font-medium rounded-md hover:bg-accent-hover transition-all"
+                  className="block text-center py-3 px-3 bg-accent-action text-background text-sm font-medium rounded-lg hover:bg-accent-action-hover transition-all"
                 >
                   Devis gratuit
                 </a>

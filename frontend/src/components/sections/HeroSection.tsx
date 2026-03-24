@@ -33,12 +33,21 @@ export function HeroSection() {
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="accueil" className="section pt-24 md:pt-32" ref={heroRef}>
+    <section id="accueil" className="section pt-24 md:pt-32 relative" ref={heroRef}>
+      {/* Background glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse, var(--accent-action-glow) 0%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+
       <motion.div
         initial="initial"
         animate={isHeroInView ? "animate" : "initial"}
         variants={staggerContainer}
-        className="prose-width"
+        className="prose-width relative"
       >
         {/* Availability badge */}
         <motion.div variants={fadeInUp} className="mb-8">
@@ -53,27 +62,28 @@ export function HeroSection() {
 
         <motion.h1
           variants={fadeInUp}
-          className="text-5xl md:text-6xl font-light tracking-[-0.02em] mb-6 leading-[1.1]"
+          className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[-0.02em] mb-6 leading-[1.1]"
         >
-          Je crée des sites web qui convertissent.
+          Je crée des sites web qui{" "}
+          <span className="text-gradient-action">convertissent</span>.
         </motion.h1>
 
         <motion.p
           variants={fadeInUp}
-          className="text-text-secondary text-lg md:text-xl leading-[1.6] mb-10 max-w-[600px]"
+          className="text-text-secondary text-base md:text-lg lg:text-xl leading-[1.6] mb-10 max-w-[600px]"
         >
           Développeur web freelance à Caen. Sites vitrines modernes, rapides, et
           optimisés pour Google. De l&apos;idée au site en ligne en 2 semaines.
         </motion.p>
 
-        <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
+        <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
           <a
             href="#contact"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection("contact");
             }}
-            className="btn-primary inline-flex items-center gap-2 px-6 py-3 bg-accent-primary text-background font-medium rounded-md hover:bg-accent-hover transition-all"
+            className="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-action text-background font-medium rounded-md hover:bg-accent-action-hover transition-all"
           >
             <EnvelopeSimple size={18} weight="bold" />
             <span>Demander un devis gratuit</span>
@@ -84,11 +94,27 @@ export function HeroSection() {
               e.preventDefault();
               scrollToSection("realisations");
             }}
-            className="inline-flex items-center gap-2 px-6 py-3 border border-accent-primary text-accent-primary font-medium rounded-md hover:bg-accent-primary hover:text-background transition-all"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-accent-border text-text-primary font-medium rounded-md hover:bg-background-elevated hover:border-text-tertiary transition-all"
           >
             <ArrowDown size={18} weight="bold" />
             <span>Voir mes réalisations</span>
           </a>
+        </motion.div>
+
+        {/* Credibility stats */}
+        <motion.div
+          variants={fadeInUp}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-10 text-sm text-text-tertiary font-mono"
+        >
+          <div>
+            <span className="text-text-primary font-medium">186</span> tests passés sur Clarmind
+          </div>
+          <div>
+            <span className="text-text-primary font-medium">Next.js 16</span> dernière version
+          </div>
+          <div>
+            <span className="text-text-primary font-medium">&lt; 2s</span> temps de chargement
+          </div>
         </motion.div>
       </motion.div>
 
@@ -98,7 +124,7 @@ export function HeroSection() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="mt-20"
+        className="mt-20 relative"
       >
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {expertise.map((item, index) => (
@@ -110,7 +136,7 @@ export function HeroSection() {
               transition={{ delay: 0.1 + index * 0.1, duration: 0.5 }}
               className="group"
             >
-              <div className="p-6 border border-accent-border rounded-lg bg-background-elevated/50 transition-colors duration-200 group-hover:border-text-tertiary/50 group-hover:bg-background-elevated">
+              <div className="p-6 border border-accent-border rounded-lg bg-background-elevated/50 transition-colors duration-200 group-hover:border-accent-action/50 group-hover:bg-background-elevated">
                 <h3 className="text-lg font-medium mb-3 tracking-[-0.01em] group-hover:text-text-primary transition-colors font-mono">
                   <span className="text-text-tertiary opacity-60 mr-2">
                     [{String(index + 1).padStart(2, "0")}]

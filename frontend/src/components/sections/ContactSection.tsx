@@ -8,8 +8,8 @@ import {
   LinkedinLogo,
   PaperPlaneTilt,
   Check,
+  CaretDown,
 } from "@phosphor-icons/react";
-import { Button } from "@/components/ui/Button";
 import { submitContactForm } from "@/lib/api";
 import { validateContactInput } from "@/lib/security";
 import type { ContactFormData, FormStatus } from "@/types";
@@ -109,10 +109,10 @@ export function ContactSection() {
     <section id="contact" className="section border-t border-accent-border">
       <motion.div {...fadeIn}>
         <h2 className="text-3xl font-light tracking-[-0.02em] mb-4">
-          Contact
+          Un projet en tête ?
         </h2>
         <p className="text-text-secondary prose-width leading-relaxed mb-12">
-          Un projet en tête ? Décrivez-le en quelques mots, je vous réponds sous
+          Décrivez-le en quelques mots, je vous réponds sous
           24h avec une première estimation.
         </p>
 
@@ -136,7 +136,7 @@ export function ContactSection() {
                   >
                     <Icon
                       size={20}
-                      className="text-text-tertiary group-hover:text-accent-primary transition-colors"
+                      className="text-text-tertiary group-hover:text-accent-action transition-colors"
                     />
                     <div>
                       <p className="text-sm text-text-tertiary font-mono">
@@ -198,7 +198,7 @@ export function ContactSection() {
                 value={formData.name}
                 onChange={handleFormChange}
                 required
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-text-tertiary transition-colors"
+                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent-action transition-colors"
                 placeholder="Votre nom"
               />
             </div>
@@ -217,12 +217,12 @@ export function ContactSection() {
                 value={formData.email}
                 onChange={handleFormChange}
                 required
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-text-tertiary transition-colors"
+                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent-action transition-colors"
                 placeholder="votre@email.com"
               />
             </div>
 
-            <div>
+            <div className="relative">
               <label
                 htmlFor="project_type"
                 className="block text-sm text-text-secondary mb-2"
@@ -234,7 +234,7 @@ export function ContactSection() {
                 name="project_type"
                 value={projectType}
                 onChange={(e) => setProjectType(e.target.value)}
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary focus:outline-none focus:border-text-tertiary transition-colors appearance-none"
+                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary text-sm appearance-none cursor-pointer focus:outline-none focus:border-accent-action transition-colors pr-10"
               >
                 <option value="">Type de projet (optionnel)</option>
                 <option value="site-essentiel">Site Essentiel</option>
@@ -242,6 +242,10 @@ export function ContactSection() {
                 <option value="sur-mesure">Projet sur mesure</option>
                 <option value="autre">Autre</option>
               </select>
+              <CaretDown
+                size={16}
+                className="absolute right-4 top-[42px] text-text-tertiary pointer-events-none"
+              />
             </div>
 
             <div>
@@ -260,7 +264,7 @@ export function ContactSection() {
                 required
                 minLength={5}
                 maxLength={200}
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-text-tertiary transition-colors"
+                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent-action transition-colors"
                 placeholder="Objet de votre message"
               />
             </div>
@@ -279,7 +283,7 @@ export function ContactSection() {
                 onChange={handleFormChange}
                 required
                 rows={5}
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-text-tertiary transition-colors resize-none"
+                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent-action transition-colors resize-none"
                 placeholder="Décrivez votre projet ou votre demande..."
               />
             </div>
@@ -300,7 +304,7 @@ export function ContactSection() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 rounded-md bg-red-500/10 border border-red-500/30 text-red-400 text-sm"
+                className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm"
                 role="alert"
               >
                 {formError}
@@ -312,20 +316,22 @@ export function ContactSection() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 rounded-md bg-green-500/10 border border-green-500/30 text-green-400 text-sm"
+                className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm"
                 role="status"
               >
                 Message envoyé avec succès ! Je vous répondrai sous 24h.
               </motion.div>
             )}
 
-            <Button
+            {/* Submit button - full width, accent-action */}
+            <button
               type="submit"
-              size="lg"
-              loading={formStatus === "loading"}
-              loadingText="Envoi..."
+              disabled={formStatus === "loading"}
+              className="w-full py-4 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-colors text-base disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
             >
-              {formStatus === "success" ? (
+              {formStatus === "loading" ? (
+                "Envoi..."
+              ) : formStatus === "success" ? (
                 <>
                   <Check size={18} weight="bold" />
                   Envoyé
@@ -333,10 +339,15 @@ export function ContactSection() {
               ) : (
                 <>
                   <PaperPlaneTilt size={18} />
-                  Envoyer
+                  Envoyer ma demande
                 </>
               )}
-            </Button>
+            </button>
+
+            {/* Reassurance */}
+            <p className="text-xs text-text-tertiary text-center">
+              Réponse sous 24h · Devis gratuit · Sans engagement
+            </p>
           </form>
         </div>
       </motion.div>

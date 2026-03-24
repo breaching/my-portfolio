@@ -16,6 +16,12 @@
   --accent-hover: #E5E5E5;
   --accent-border: #27272A;
 
+  /* Accent action — éléments d'action et de conversion */
+  --accent-action: #818CF8;
+  --accent-action-hover: #6366F1;
+  --accent-action-glow: rgba(129, 140, 248, 0.15);
+  --accent-action-subtle: rgba(129, 140, 248, 0.08);
+
   /* Statut */
   --status-success: #10B981;
   --status-warning: #F59E0B;
@@ -34,6 +40,11 @@
   --color-accent-primary: var(--accent-primary);
   --color-accent-hover: var(--accent-hover);
   --color-accent-border: var(--accent-border);
+
+  --color-accent-action: var(--accent-action);
+  --color-accent-action-hover: var(--accent-action-hover);
+  --color-accent-action-glow: var(--accent-action-glow);
+  --color-accent-action-subtle: var(--accent-action-subtle);
 
   --color-status-success: var(--status-success);
   --color-status-warning: var(--status-warning);
@@ -308,20 +319,34 @@ code, pre, .font-mono {
 }
 
 /* Smooth focus states */
-input:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--accent-primary);
+*:focus-visible {
+  outline: 2px solid var(--accent-action);
   outline-offset: 2px;
-  border-color: var(--accent-primary);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-action);
+  outline-offset: 2px;
+  border-color: var(--accent-action);
+}
+
+/* Gradient text utility */
+.text-gradient-action {
+  background: linear-gradient(90deg, var(--accent-action), var(--accent-action-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Selection */
 ::selection {
-  background-color: var(--accent-primary);
+  background-color: var(--accent-action);
   color: var(--background);
 }
 
 ::-moz-selection {
-  background-color: var(--accent-primary);
+  background-color: var(--accent-action);
   color: var(--background);
 }

@@ -48,6 +48,28 @@ function scrollToContact(serviceName?: string) {
   }
 }
 
+function formatPrice(price: string) {
+  // Extract number from "À partir de X €" or return as-is for "Sur devis"
+  const match = price.match(/(\d[\d\s]*)\s*€/);
+  if (match) {
+    const number = match[1].trim();
+    return (
+      <>
+        <span className="text-3xl font-light tracking-tight text-text-primary">
+          {number}
+        </span>{" "}
+        <span className="text-lg text-text-tertiary">€</span>
+        <p className="text-xs text-text-tertiary mt-1">À partir de · HT</p>
+      </>
+    );
+  }
+  return (
+    <span className="text-3xl font-light tracking-tight text-text-primary">
+      {price}
+    </span>
+  );
+}
+
 export function ServicesSection() {
   return (
     <section id="services" className="section border-t border-accent-border">
@@ -78,19 +100,21 @@ export function ServicesSection() {
             key={service.name}
             variants={fadeInUp}
             viewport={{ once: true }}
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.2 }}
             className="group"
           >
             <div
-              className={`relative flex flex-col h-full p-6 md:p-8 rounded-lg border transition-colors duration-200 ${
+              className={`relative flex flex-col h-full p-6 md:p-8 rounded-lg border transition-all duration-300 ${
                 service.popular
-                  ? "border-accent-primary bg-background-elevated"
-                  : "border-accent-border bg-background-elevated/50 group-hover:border-text-tertiary/50"
+                  ? "border-accent-action bg-background-elevated shadow-[0_0_30px_var(--accent-action-glow)] scale-[1.02]"
+                  : "border-accent-border bg-background-elevated/50 group-hover:border-accent-action/50"
               }`}
             >
               {/* Popular badge */}
               {service.popular && (
                 <div className="absolute -top-3 left-6">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent-primary text-background text-xs font-medium">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent-action text-background text-xs font-medium">
                     <Star size={12} weight="fill" />
                     Populaire
                   </span>
@@ -98,13 +122,11 @@ export function ServicesSection() {
               )}
 
               <div className="mb-6">
-                <h3 className="text-xl font-medium tracking-[-0.01em] mb-2">
+                <h3 className="text-xl font-medium tracking-[-0.01em] mb-3">
                   {service.name}
                 </h3>
-                <p className="text-2xl font-light text-text-primary mb-2">
-                  {service.price}
-                </p>
-                <p className="text-sm text-text-secondary">
+                <div>{formatPrice(service.price)}</div>
+                <p className="text-sm text-text-secondary mt-3">
                   {service.description}
                 </p>
               </div>
@@ -133,8 +155,8 @@ export function ServicesSection() {
                 }}
                 className={`inline-flex items-center justify-center gap-2 px-6 py-3 font-medium rounded-md transition-all text-sm ${
                   service.popular
-                    ? "bg-accent-primary text-background hover:bg-accent-hover btn-primary"
-                    : "border border-accent-primary text-accent-primary hover:bg-accent-primary hover:text-background"
+                    ? "bg-accent-action text-background hover:bg-accent-action-hover btn-primary"
+                    : "border border-accent-border text-text-primary hover:border-accent-action hover:text-accent-action"
                 }`}
               >
                 Demander un devis
