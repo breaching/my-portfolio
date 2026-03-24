@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { EnvelopeSimple, Terminal } from "@phosphor-icons/react";
-import { getYearsOfExperience } from "@/lib/utils";
+import { EnvelopeSimple, ArrowDown } from "@phosphor-icons/react";
 import { expertise } from "@/data/posts";
 
 const staggerContainer = {
@@ -21,102 +20,74 @@ const fadeInUp = {
   transition: { duration: 0.5 },
 };
 
-function useTypingEffect(text: string, speed: number = 50) {
-  const [displayText, setDisplayText] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
-
-  useEffect(() => {
-    if (displayText.length < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(text.slice(0, displayText.length + 1));
-      }, speed);
-      return () => clearTimeout(timeout);
-    } else {
-      setIsComplete(true);
-    }
-  }, [displayText, text, speed]);
-
-  return { displayText, isComplete };
+function scrollToSection(id: string) {
+  const section = document.getElementById(id);
+  if (section) {
+    const offsetTop = section.offsetTop - 80;
+    window.scrollTo({ top: offsetTop, behavior: "smooth" });
+  }
 }
 
 export function HeroSection() {
-  const age = getYearsOfExperience();
-  const [hasAnimated, setHasAnimated] = useState(false);
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
-
-  const subtitle = "Systèmes, Web & Sécurité";
-  const { displayText: typedSubtitle, isComplete } = useTypingEffect(subtitle, 80);
-
-  useEffect(() => {
-    if (isHeroInView && !hasAnimated) {
-      setHasAnimated(true);
-    }
-  }, [isHeroInView, hasAnimated]);
 
   return (
     <section id="accueil" className="section pt-24 md:pt-32" ref={heroRef}>
       <motion.div
         initial="initial"
-        animate={hasAnimated ? "animate" : "initial"}
+        animate={isHeroInView ? "animate" : "initial"}
         variants={staggerContainer}
         className="prose-width"
       >
-        {/* Terminal-style prompt */}
-        <motion.div
-          variants={fadeInUp}
-          className="flex items-center gap-2 mb-8 text-text-tertiary font-mono text-sm"
-        >
-          <Terminal size={16} weight="bold" />
-          <span className="opacity-60">~/portfolio</span>
-          <span className="text-status-success">$</span>
-          <span className="opacity-60">cat about.txt</span>
+        {/* Availability badge */}
+        <motion.div variants={fadeInUp} className="mb-8">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent-border bg-background-elevated text-sm text-text-secondary">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-success opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-status-success" />
+            </span>
+            Disponible pour de nouveaux projets
+          </span>
         </motion.div>
 
         <motion.h1
           variants={fadeInUp}
           className="text-5xl md:text-6xl font-light tracking-[-0.02em] mb-6 leading-[1.1]"
         >
-          Alexis Dubus
+          Je crée des sites web qui convertissent.
         </motion.h1>
-
-        <motion.div
-          variants={fadeInUp}
-          className="text-xl md:text-2xl text-text-secondary font-light mb-8 leading-[1.4] tracking-[-0.01em] font-mono"
-        >
-          <span className="text-accent-primary">{">"}</span> {typedSubtitle}
-          {!isComplete && (
-            <motion.span
-              animate={{ opacity: [1, 0] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-              className="inline-block w-2 h-5 bg-accent-primary ml-1 align-middle"
-            />
-          )}
-        </motion.div>
 
         <motion.p
           variants={fadeInUp}
-          className="text-text-secondary leading-[1.7] mb-10 max-w-[600px]"
+          className="text-text-secondary text-lg md:text-xl leading-[1.6] mb-10 max-w-[600px]"
         >
-          {age} ans, autodidacte. Je construis des systèmes complets —
-          infrastructure, sites web, pipelines de données — avec une approche
-          problem-solving et une sensibilité forte à la performance et la
-          sécurité. Disponible pour des projets de développement web.
+          Développeur web freelance à Caen. Sites vitrines modernes, rapides, et
+          optimisés pour Google. De l&apos;idée au site en ligne en 2 semaines.
         </motion.p>
 
-        <motion.div variants={fadeInUp}>
+        <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
           <a
             href="#contact"
             onClick={(e) => {
               e.preventDefault();
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" });
+              scrollToSection("contact");
             }}
             className="btn-primary inline-flex items-center gap-2 px-6 py-3 bg-accent-primary text-background font-medium rounded-md hover:bg-accent-hover transition-all"
           >
             <EnvelopeSimple size={18} weight="bold" />
-            <span>Me contacter</span>
+            <span>Demander un devis gratuit</span>
+          </a>
+          <a
+            href="#realisations"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("realisations");
+            }}
+            className="inline-flex items-center gap-2 px-6 py-3 border border-accent-primary text-accent-primary font-medium rounded-md hover:bg-accent-primary hover:text-background transition-all"
+          >
+            <ArrowDown size={18} weight="bold" />
+            <span>Voir mes réalisations</span>
           </a>
         </motion.div>
       </motion.div>

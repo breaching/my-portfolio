@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import {
   EnvelopeSimple,
   GithubLogo,
+  LinkedinLogo,
   PaperPlaneTilt,
   Check,
 } from "@phosphor-icons/react";
@@ -26,6 +27,12 @@ const contactLinks = [
     href: "https://github.com/breaching",
     icon: GithubLogo,
   },
+  {
+    label: "LinkedIn",
+    value: "Alexis Dubus",
+    href: "https://www.linkedin.com/in/alexis-dubus-music/",
+    icon: LinkedinLogo,
+  },
 ];
 
 const fadeIn = {
@@ -42,6 +49,7 @@ export function ContactSection() {
     subject: "",
     message: "",
   });
+  const [projectType, setProjectType] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [formError, setFormError] = useState<string | null>(null);
@@ -63,6 +71,7 @@ export function ContactSection() {
       // Silently "succeed" to not reveal the trap
       setFormStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
+      setProjectType("");
       return;
     }
 
@@ -75,9 +84,17 @@ export function ContactSection() {
     }
 
     try {
-      await submitContactForm(validation.sanitized!);
+      // Include project type in the subject if selected
+      const enrichedData = {
+        ...validation.sanitized!,
+        subject: projectType
+          ? `[${projectType}] ${validation.sanitized!.subject}`
+          : validation.sanitized!.subject,
+      };
+      await submitContactForm(enrichedData);
       setFormStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
+      setProjectType("");
     } catch (error) {
       setFormStatus("error");
       setFormError(
@@ -91,10 +108,12 @@ export function ContactSection() {
   return (
     <section id="contact" className="section border-t border-accent-border">
       <motion.div {...fadeIn}>
-        <h2 className="text-3xl font-light tracking-[-0.02em] mb-4">Contact</h2>
+        <h2 className="text-3xl font-light tracking-[-0.02em] mb-4">
+          Contact
+        </h2>
         <p className="text-text-secondary prose-width leading-relaxed mb-12">
-          Disponible pour des opportunités de stage, d&apos;alternance, ou pour
-          la réalisation de sites web et projets techniques.
+          Un projet en tête ? Décrivez-le en quelques mots, je vous réponds sous
+          24h avec une première estimation.
         </p>
 
         <div className="grid lg:grid-cols-2 gap-16">
@@ -140,7 +159,7 @@ export function ContactSection() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-status-success" />
                 </span>
                 <span className="text-sm text-text-secondary">
-                  Disponible pour de nouvelles opportunités
+                  Disponible — réponse sous 24h
                 </span>
               </div>
             </div>
@@ -149,7 +168,10 @@ export function ContactSection() {
           {/* Contact Form */}
           <form onSubmit={handleFormSubmit} className="space-y-6">
             {/* Honeypot field - hidden from humans, visible to bots */}
-            <div className="absolute -left-[9999px] opacity-0" aria-hidden="true">
+            <div
+              className="absolute -left-[9999px] opacity-0"
+              aria-hidden="true"
+            >
               <label htmlFor="website_url">Website</label>
               <input
                 type="text"
@@ -198,6 +220,28 @@ export function ContactSection() {
                 className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-text-tertiary transition-colors"
                 placeholder="votre@email.com"
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="project_type"
+                className="block text-sm text-text-secondary mb-2"
+              >
+                Type de projet
+              </label>
+              <select
+                id="project_type"
+                name="project_type"
+                value={projectType}
+                onChange={(e) => setProjectType(e.target.value)}
+                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-md text-text-primary focus:outline-none focus:border-text-tertiary transition-colors appearance-none"
+              >
+                <option value="">Type de projet (optionnel)</option>
+                <option value="site-essentiel">Site Essentiel</option>
+                <option value="site-pro">Site Pro</option>
+                <option value="sur-mesure">Projet sur mesure</option>
+                <option value="autre">Autre</option>
+              </select>
             </div>
 
             <div>
@@ -271,7 +315,7 @@ export function ContactSection() {
                 className="p-4 rounded-md bg-green-500/10 border border-green-500/30 text-green-400 text-sm"
                 role="status"
               >
-                Message envoyé avec succès ! Je vous répondrai rapidement.
+                Message envoyé avec succès ! Je vous répondrai sous 24h.
               </motion.div>
             )}
 

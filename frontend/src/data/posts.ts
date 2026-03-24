@@ -2,24 +2,24 @@ import type { Expertise, TimelineItem } from "@/types";
 
 export const expertise: Expertise[] = [
   {
-    title: "Systèmes & Infrastructure",
+    title: "Sites vitrines",
     description:
-      "Proxmox, virtualisation, GPU passthrough, administration Linux. Construction d'environnements stables et performants.",
+      "Design moderne, responsive, rapide. Votre vitrine en ligne qui inspire confiance.",
   },
   {
-    title: "Développement Web",
+    title: "Applications web",
     description:
-      "Sites vitrines et applications React/Next.js. Design responsive, interfaces modernes, performance optimisée.",
+      "Outils sur mesure, dashboards, espaces clients. React & Next.js.",
   },
   {
-    title: "Data Engineering",
+    title: "SEO & Performance",
     description:
-      "Pipelines ETL, SQLite avancé (FTS5), InfluxDB. Transformation et consolidation de données multi-sources.",
+      "Optimisé pour Google dès le départ. Temps de chargement < 2s.",
   },
   {
-    title: "Sécurité & Self-hosting",
+    title: "Sécurité & RGPD",
     description:
-      "Pratique hands-on via TryHackMe. Infrastructure auto-hébergée, isolation, segmentation réseau.",
+      "Hébergement sécurisé, conformité RGPD, certificat SSL.",
   },
 ];
 

@@ -1,8 +1,10 @@
 import { getAllPosts } from "@/lib/posts";
 import {
   HeroSection,
+  ServicesSection,
+  RealisationsSection,
+  ProcessSection,
   BlogSection,
-  ParcoursSection,
   ContactSection,
 } from "@/components/sections";
 
@@ -12,8 +14,10 @@ export default function HomePage() {
   return (
     <div className="container-main">
       <HeroSection />
+      <ServicesSection />
+      <RealisationsSection />
+      <ProcessSection />
       <BlogSection posts={posts} />
-      <ParcoursSection />
       <ContactSection />
     </div>
   );

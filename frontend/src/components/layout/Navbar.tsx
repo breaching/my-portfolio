@@ -9,8 +9,9 @@ import { List, X } from "@phosphor-icons/react";
 // Types de navigation : "page" pour lien direct, "anchor" pour scroll sur homepage
 const navLinks = [
   { href: "/", id: "accueil", label: "Accueil", type: "page" as const },
+  { href: "/#services", id: "services", label: "Services", type: "anchor" as const },
+  { href: "/#realisations", id: "realisations", label: "Réalisations", type: "anchor" as const },
   { href: "/blog", id: "blog", label: "Blog", type: "page" as const },
-  { href: "/#parcours", id: "parcours", label: "Parcours", type: "anchor" as const },
   { href: "/#contact", id: "contact", label: "Contact", type: "anchor" as const },
 ];
 
@@ -20,45 +21,44 @@ export function Navbar() {
   const isHomePage = pathname === "/";
   const isBlogPage = pathname === "/blog" || pathname.startsWith("/blog/");
 
-  const [activeSection, setActiveSection] = useState("accueil");
+  const [scrollSection, setScrollSection] = useState("accueil");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Determine active section: scroll spy on homepage, route-based elsewhere
+  const activeSection = isHomePage
+    ? scrollSection
+    : isBlogPage
+      ? "blog"
+      : "";
 
   // Scroll spy uniquement sur la homepage
   useEffect(() => {
-    if (!isHomePage) {
-      // Sur /blog ou /blog/[slug], activer "blog"
-      if (isBlogPage) {
-        setActiveSection("blog");
-      } else {
-        setActiveSection("");
-      }
-      return;
-    }
+    if (!isHomePage) return;
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
 
-      // Chercher quelle section est visible
-      const sections = ["contact", "parcours", "blog", "accueil"];
+      // Chercher quelle section est visible (ordre inversé pour priorité)
+      const sections = ["contact", "blog", "process", "realisations", "services", "accueil"];
       for (const sectionId of sections) {
         const section = document.getElementById(sectionId);
         if (section) {
           const sectionTop = section.offsetTop;
           if (scrollPosition >= sectionTop) {
-            setActiveSection(sectionId);
+            setScrollSection(sectionId);
             return;
           }
         }
       }
 
-      setActiveSection("accueil");
+      setScrollSection("accueil");
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage, isBlogPage]);
+  }, [isHomePage]);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -87,6 +87,19 @@ export function Navbar() {
         // Sur autre page: naviguer vers homepage avec ancre
         router.push(link.href);
       }
+    }
+  };
+
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (isHomePage) {
+      const section = document.getElementById("contact");
+      if (section) {
+        const offsetTop = section.offsetTop - 80;
+        window.scrollTo({ top: offsetTop, behavior: "smooth" });
+      }
+    } else {
+      router.push("/#contact");
     }
   };
 
@@ -138,6 +151,15 @@ export function Navbar() {
               </Link>
             );
           })}
+
+          {/* CTA Button */}
+          <a
+            href="#contact"
+            onClick={handleCtaClick}
+            className="ml-4 inline-flex items-center gap-2 px-4 py-2 bg-accent-primary text-background text-sm font-medium rounded-md hover:bg-accent-hover transition-all btn-primary"
+          >
+            Devis gratuit
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -217,6 +239,38 @@ export function Navbar() {
                   </motion.div>
                 );
               })}
+
+              {/* Mobile CTA */}
+              <motion.div
+                variants={{
+                  open: {
+                    y: 0,
+                    opacity: 1,
+                    transition: {
+                      y: { stiffness: 1000, velocity: -100 },
+                    },
+                  },
+                  closed: {
+                    y: 20,
+                    opacity: 0,
+                    transition: {
+                      y: { stiffness: 1000 },
+                    },
+                  },
+                }}
+                className="pt-2"
+              >
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    handleCtaClick(e);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block text-center py-3 px-3 bg-accent-primary text-background text-sm font-medium rounded-md hover:bg-accent-hover transition-all"
+                >
+                  Devis gratuit
+                </a>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
