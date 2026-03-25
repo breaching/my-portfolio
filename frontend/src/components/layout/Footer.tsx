@@ -7,9 +7,14 @@ const socialLinks = [
   { href: "https://tryhackme.com/p/bremusic", icon: ShieldCheck, label: "TryHackMe" },
 ];
 
-const siteLinks = [
+const navLinks = [
   { href: "/#services", label: "Tarifs" },
   { href: "/#realisations", label: "Réalisations" },
+  { href: "/#process", label: "Processus" },
+  { href: "/#faq", label: "FAQ" },
+];
+
+const resourceLinks = [
   { href: "/blog", label: "Blog" },
   { href: "/parcours", label: "Parcours" },
   { href: "/mentions-legales", label: "Mentions légales" },
@@ -17,30 +22,74 @@ const siteLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-accent-border">
-      <div className="container-main py-10">
-        <div className="flex flex-col gap-8">
-          {/* Top row */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
-            {/* Left - Name and email */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
-              <Link
-                href="/"
-                className="text-sm font-medium text-text-primary hover:text-accent-action transition-colors duration-200 tracking-[-0.01em]"
-              >
-                Alexis Dubus
-              </Link>
-              <span className="hidden sm:block text-text-tertiary text-xs">·</span>
-              <a
-                href="mailto:contact@dubus.pro"
-                className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200 font-mono"
-              >
-                contact@dubus.pro
-              </a>
-            </div>
+    <footer className="border-t border-accent-border mt-8">
+      <div className="container-main pt-16 pb-10">
+        {/* Main grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12">
+          {/* Brand column */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link
+              href="/"
+              className="text-base font-medium text-text-primary hover:text-accent-action transition-colors duration-200 tracking-[-0.01em]"
+            >
+              Alexis Dubus
+            </Link>
+            <p className="text-sm text-text-tertiary mt-2 leading-relaxed max-w-[260px]">
+              Développeur web freelance à Caen.
+              Sites vitrines et applications web sur mesure.
+            </p>
+            <a
+              href="mailto:contact@dubus.pro"
+              className="inline-block text-sm text-text-secondary hover:text-accent-action transition-colors duration-200 font-mono mt-4"
+            >
+              contact@dubus.pro
+            </a>
+          </div>
 
-            {/* Right - Social */}
-            <div className="flex items-center gap-5">
+          {/* Navigation */}
+          <div>
+            <p className="text-xs font-medium text-text-tertiary uppercase tracking-wide mb-4">
+              Navigation
+            </p>
+            <ul className="space-y-2.5">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <p className="text-xs font-medium text-text-tertiary uppercase tracking-wide mb-4">
+              Ressources
+            </p>
+            <ul className="space-y-2.5">
+              {resourceLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social + Recruiter */}
+          <div>
+            <p className="text-xs font-medium text-text-tertiary uppercase tracking-wide mb-4">
+              Retrouvez-moi
+            </p>
+            <div className="flex items-center gap-4 mb-6">
               {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
@@ -49,48 +98,31 @@ export function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-text-tertiary hover:text-text-primary transition-all duration-200 hover:-translate-y-0.5"
+                    className="flex items-center justify-center w-9 h-9 rounded-lg border border-accent-border bg-background-elevated/50 text-text-tertiary hover:text-accent-action hover:border-accent-action/40 transition-all duration-200"
                     aria-label={link.label}
                   >
-                    <Icon size={18} />
+                    <Icon size={16} />
                   </a>
                 );
               })}
             </div>
-          </div>
-
-          {/* Site links */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-2">
-            {siteLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-xs text-text-tertiary hover:text-text-secondary transition-colors duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Recruiter link */}
-          <div className="flex justify-center sm:justify-start">
             <Link
               href="/parcours"
-              className="inline-flex items-center gap-2 text-sm text-text-tertiary hover:text-accent-action transition-colors duration-200 px-3 py-2 -mx-3 rounded-lg border border-dashed border-accent-border hover:border-accent-action/40"
+              className="text-sm text-text-tertiary hover:text-accent-action transition-colors duration-200"
             >
-              Vous recrutez ? Voir mon parcours technique →
+              Vous recrutez ? Voir mon parcours →
             </Link>
           </div>
+        </div>
 
-          {/* Bottom — legal + SEO */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-accent-border">
-            <p className="text-xs text-text-tertiary">
-              Développeur web freelance à Caen — Sites vitrines et applications web
-            </p>
-            <p className="text-xs text-text-tertiary font-mono">
-              SIREN 101 749 216 · EI · TVA non applicable
-            </p>
-          </div>
+        {/* Bottom bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-accent-border">
+          <p className="text-xs text-text-tertiary">
+            © {new Date().getFullYear()} Alexis Dubus — Développeur web freelance à Caen
+          </p>
+          <p className="text-xs text-text-tertiary font-mono">
+            SIREN 101 749 216 · EI · TVA non applicable
+          </p>
         </div>
       </div>
     </footer>
