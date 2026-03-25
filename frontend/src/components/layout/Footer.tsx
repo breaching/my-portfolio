@@ -3,28 +3,30 @@ import Link from "next/link";
 
 const socialLinks = [
   { href: "https://github.com/breaching", icon: GithubLogo, label: "GitHub" },
-  { href: "https://www.linkedin.com/in/alexis-dubus-music/", icon: LinkedinLogo, label: "LinkedIn" },
+  { href: "https://www.linkedin.com/in/alexis-dubus-603590284/", icon: LinkedinLogo, label: "LinkedIn" },
   { href: "https://tryhackme.com/p/bremusic", icon: ShieldCheck, label: "TryHackMe" },
 ];
 
-const internalLinks = [
+const siteLinks = [
   { href: "/#services", label: "Services" },
+  { href: "/#realisations", label: "Réalisations" },
   { href: "/blog", label: "Blog" },
   { href: "/parcours", label: "Parcours" },
+  { href: "/mentions-legales", label: "Mentions légales" },
 ];
 
 export function Footer() {
   return (
     <footer className="border-t border-accent-border">
       <div className="container-main py-10">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           {/* Top row */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
             {/* Left - Name and email */}
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
               <Link
                 href="/"
-                className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200 tracking-[-0.01em]"
+                className="text-sm font-medium text-text-primary hover:text-accent-action transition-colors duration-200 tracking-[-0.01em]"
               >
                 Alexis Dubus
               </Link>
@@ -57,9 +59,9 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Internal links */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4">
-            {internalLinks.map((link) => (
+          {/* Site links */}
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-2">
+            {siteLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
@@ -70,10 +72,15 @@ export function Footer() {
             ))}
           </div>
 
-          {/* SEO tagline */}
-          <p className="text-xs text-text-tertiary text-center sm:text-left">
-            Développeur web freelance à Caen
-          </p>
+          {/* Bottom — legal + SEO */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-accent-border">
+            <p className="text-xs text-text-tertiary">
+              Développeur web freelance à Caen — Sites vitrines et applications web
+            </p>
+            <p className="text-xs text-text-tertiary font-mono">
+              SIREN 101 749 216 · EI · TVA non applicable
+            </p>
+          </div>
         </div>
       </div>
     </footer>

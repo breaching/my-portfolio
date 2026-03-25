@@ -102,11 +102,8 @@ export function validateContactInput(input: {
     errors.push("Email invalide");
   }
 
-  // Validate subject
-  if (!input.subject || input.subject.trim().length < 5) {
-    errors.push("Le sujet doit contenir au moins 5 caractères");
-  }
-  if (input.subject.length > 200) {
+  // Validate subject (auto-generated, lenient)
+  if (input.subject && input.subject.length > 200) {
     errors.push("Le sujet ne doit pas dépasser 200 caractères");
   }
 

@@ -30,7 +30,7 @@ const contactLinks = [
   {
     label: "LinkedIn",
     value: "Alexis Dubus",
-    href: "https://www.linkedin.com/in/alexis-dubus-music/",
+    href: "https://www.linkedin.com/in/alexis-dubus-603590284/",
     icon: LinkedinLogo,
   },
 ];
@@ -50,6 +50,7 @@ export function ContactSection() {
     message: "",
   });
   const [projectType, setProjectType] = useState("");
+  const [budget, setBudget] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [formError, setFormError] = useState<string | null>(null);
@@ -72,11 +73,23 @@ export function ContactSection() {
       setFormStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       setProjectType("");
+      setBudget("");
       return;
     }
 
+    // Build subject from project type + budget
+    const autoSubject = [
+      projectType ? `[${projectType}]` : null,
+      budget ? `Budget: ${budget}` : null,
+      "Demande de devis",
+    ]
+      .filter(Boolean)
+      .join(" — ");
+
+    const dataWithSubject = { ...formData, subject: autoSubject };
+
     // Validate and sanitize input
-    const validation = validateContactInput(formData);
+    const validation = validateContactInput(dataWithSubject);
     if (!validation.valid) {
       setFormStatus("error");
       setFormError(validation.errors.join(". "));
@@ -84,17 +97,11 @@ export function ContactSection() {
     }
 
     try {
-      // Include project type in the subject if selected
-      const enrichedData = {
-        ...validation.sanitized!,
-        subject: projectType
-          ? `[${projectType}] ${validation.sanitized!.subject}`
-          : validation.sanitized!.subject,
-      };
-      await submitContactForm(enrichedData);
+      await submitContactForm(validation.sanitized!);
       setFormStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       setProjectType("");
+      setBudget("");
     } catch (error) {
       setFormStatus("error");
       setFormError(
@@ -222,51 +229,58 @@ export function ContactSection() {
               />
             </div>
 
-            <div className="relative">
-              <label
-                htmlFor="project_type"
-                className="block text-sm text-text-secondary mb-2"
-              >
-                Type de projet
-              </label>
-              <select
-                id="project_type"
-                name="project_type"
-                value={projectType}
-                onChange={(e) => setProjectType(e.target.value)}
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary text-sm appearance-none cursor-pointer focus:outline-none focus:border-accent-action transition-colors pr-10"
-              >
-                <option value="">Type de projet (optionnel)</option>
-                <option value="site-essentiel">Site Essentiel</option>
-                <option value="site-pro">Site Pro</option>
-                <option value="sur-mesure">Projet sur mesure</option>
-                <option value="autre">Autre</option>
-              </select>
-              <CaretDown
-                size={16}
-                className="absolute right-4 top-[42px] text-text-tertiary pointer-events-none"
-              />
-            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative">
+                <label
+                  htmlFor="project_type"
+                  className="block text-sm text-text-secondary mb-2"
+                >
+                  Type de projet
+                </label>
+                <select
+                  id="project_type"
+                  name="project_type"
+                  value={projectType}
+                  onChange={(e) => setProjectType(e.target.value)}
+                  className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary text-sm appearance-none cursor-pointer focus:outline-none focus:border-accent-action transition-colors pr-10"
+                >
+                  <option value="">Choisir (optionnel)</option>
+                  <option value="site-essentiel">Site Essentiel</option>
+                  <option value="site-pro">Site Pro</option>
+                  <option value="sur-mesure">Sur mesure</option>
+                  <option value="autre">Autre</option>
+                </select>
+                <CaretDown
+                  size={16}
+                  className="absolute right-4 top-[42px] text-text-tertiary pointer-events-none"
+                />
+              </div>
 
-            <div>
-              <label
-                htmlFor="subject"
-                className="block text-sm text-text-secondary mb-2"
-              >
-                Sujet
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleFormChange}
-                required
-                minLength={5}
-                maxLength={200}
-                className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent-action transition-colors"
-                placeholder="Objet de votre message"
-              />
+              <div className="relative">
+                <label
+                  htmlFor="budget"
+                  className="block text-sm text-text-secondary mb-2"
+                >
+                  Budget estimé
+                </label>
+                <select
+                  id="budget"
+                  name="budget"
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value)}
+                  className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary text-sm appearance-none cursor-pointer focus:outline-none focus:border-accent-action transition-colors pr-10"
+                >
+                  <option value="">Choisir (optionnel)</option>
+                  <option value="< 800 €">Moins de 800 €</option>
+                  <option value="800 - 1500 €">800 — 1 500 €</option>
+                  <option value="1500 - 3000 €">1 500 — 3 000 €</option>
+                  <option value="> 3000 €">Plus de 3 000 €</option>
+                </select>
+                <CaretDown
+                  size={16}
+                  className="absolute right-4 top-[42px] text-text-tertiary pointer-events-none"
+                />
+              </div>
             </div>
 
             <div>

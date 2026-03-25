@@ -58,10 +58,50 @@ export function RealisationsSection() {
         className="mb-8"
       >
         <div className="rounded-lg border border-accent-border bg-background-elevated/50 hover:border-accent-action/50 transition-colors duration-300 overflow-hidden">
-          {/* Decorative header gradient */}
-          <div className="h-32 bg-gradient-to-br from-accent-action-subtle via-background-elevated to-background overflow-hidden">
-            <div className="flex items-center justify-center h-full text-text-tertiary text-sm font-mono">
-              clarmind.com
+          {/* Clarmind mockup — CSS-only dashboard preview */}
+          <div className="h-48 sm:h-56 bg-gradient-to-br from-accent-action-subtle via-background-elevated to-background overflow-hidden p-4 sm:p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2.5 h-2.5 rounded-full bg-status-error/60" />
+              <div className="w-2.5 h-2.5 rounded-full bg-status-warning/60" />
+              <div className="w-2.5 h-2.5 rounded-full bg-status-success/60" />
+              <span className="ml-2 text-xs text-text-tertiary font-mono">clarmind.com</span>
+            </div>
+            <div className="flex gap-3 h-[calc(100%-32px)]">
+              {/* Sidebar */}
+              <div className="hidden sm:flex flex-col gap-2 w-24 shrink-0">
+                <div className="h-3 w-16 rounded bg-accent-action/20" />
+                <div className="h-3 w-20 rounded bg-accent-border" />
+                <div className="h-3 w-14 rounded bg-accent-border" />
+                <div className="h-3 w-18 rounded bg-accent-border" />
+              </div>
+              {/* Main content area */}
+              <div className="flex-1 flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <div className="flex-1 h-14 rounded bg-accent-action/10 border border-accent-action/20 p-2">
+                    <div className="h-2 w-10 rounded bg-accent-action/30 mb-1.5" />
+                    <div className="h-4 w-8 rounded bg-accent-action/40" />
+                  </div>
+                  <div className="flex-1 h-14 rounded bg-status-success/10 border border-status-success/20 p-2">
+                    <div className="h-2 w-8 rounded bg-status-success/30 mb-1.5" />
+                    <div className="h-4 w-6 rounded bg-status-success/40" />
+                  </div>
+                  <div className="hidden sm:block flex-1 h-14 rounded bg-status-warning/10 border border-status-warning/20 p-2">
+                    <div className="h-2 w-12 rounded bg-status-warning/30 mb-1.5" />
+                    <div className="h-4 w-7 rounded bg-status-warning/40" />
+                  </div>
+                </div>
+                <div className="flex-1 rounded bg-background-overlay/50 border border-accent-border p-2">
+                  <div className="flex items-end gap-1 h-full">
+                    {[40, 65, 45, 80, 55, 70, 90, 60, 75, 85, 50, 95].map((h, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-t bg-accent-action/30"
+                        style={{ height: `${h}%` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -124,7 +164,7 @@ export function RealisationsSection() {
         </div>
       </motion.div>
 
-      {/* Placeholder slots */}
+      {/* Secondary projects */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -132,46 +172,88 @@ export function RealisationsSection() {
         transition={{ delay: 0.2, duration: 0.5 }}
         className="grid md:grid-cols-2 gap-6"
       >
-        {[
-          {
-            title: "Votre site vitrine ?",
-            text: "Ce slot attend votre projet. Un site moderne qui vous ressemble.",
-          },
-          {
-            title: "Votre application ?",
-            text: "Parlons de votre prochain projet. Dashboard, espace client, outil métier.",
-          },
-        ].map((placeholder) => (
-          <motion.div
-            key={placeholder.title}
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2 }}
+        {/* dubus.pro — this portfolio */}
+        <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+          <a
+            href="https://github.com/breaching"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block p-8 rounded-lg border border-accent-border bg-background-elevated/50 hover:border-accent-action/50 transition-all duration-300 h-full"
           >
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToContact();
-              }}
-              className="group block p-8 rounded-lg border border-dashed border-accent-border bg-transparent hover:border-accent-action hover:bg-accent-action-subtle transition-all duration-300 text-center h-full"
-            >
-              <Plus
-                size={32}
-                className="text-text-tertiary group-hover:text-accent-action transition-colors mx-auto mb-4"
-              />
-              <h4 className="text-lg font-medium mb-3 tracking-[-0.01em]">
-                {placeholder.title}
-              </h4>
-              <p className="text-text-secondary text-sm leading-[1.6] mb-4">
-                {placeholder.text}
-              </p>
-              <span className="inline-flex items-center gap-2 text-sm text-text-tertiary group-hover:text-accent-action transition-colors">
-                <EnvelopeSimple size={16} />
-                Me contacter
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="px-2.5 py-1 rounded-full bg-status-success/10 text-status-success text-xs font-medium border border-status-success/20">
+                En production
               </span>
-            </a>
-          </motion.div>
-        ))}
+              <span className="px-2.5 py-1 rounded-full bg-background-overlay text-text-tertiary text-xs font-medium border border-accent-border">
+                Open source
+              </span>
+            </div>
+            <h4 className="text-lg font-medium mb-2 tracking-[-0.01em]">
+              dubus.pro — Ce site
+            </h4>
+            <p className="text-text-secondary text-sm leading-[1.6] mb-4">
+              Portfolio et site de conversion freelance. Next.js 16, React 19,
+              SSG, score Lighthouse optimisé, security headers, dark/light auto.
+            </p>
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {["Next.js 16", "React 19", "Tailwind 4", "Framer Motion"].map(
+                (tech) => (
+                  <span
+                    key={tech}
+                    className="px-2 py-0.5 rounded bg-accent-action-subtle text-accent-action text-xs font-mono border border-accent-action/20"
+                  >
+                    {tech}
+                  </span>
+                )
+              )}
+            </div>
+            <span className="inline-flex items-center gap-2 text-sm text-text-tertiary group-hover:text-accent-action transition-colors">
+              <ArrowUpRight size={16} />
+              Voir le code
+            </span>
+          </a>
+        </motion.div>
+
+        {/* Placeholder — votre projet */}
+        <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToContact();
+            }}
+            className="group block p-8 rounded-lg border border-dashed border-accent-border bg-transparent hover:border-accent-action hover:bg-accent-action-subtle transition-all duration-300 text-center h-full flex flex-col items-center justify-center"
+          >
+            <Plus
+              size={32}
+              className="text-text-tertiary group-hover:text-accent-action transition-colors mb-4"
+            />
+            <h4 className="text-lg font-medium mb-3 tracking-[-0.01em]">
+              Votre projet ?
+            </h4>
+            <p className="text-text-secondary text-sm leading-[1.6] mb-4">
+              Site vitrine, application web, outil métier — ce slot attend votre
+              projet.
+            </p>
+            <span className="inline-flex items-center gap-2 text-sm text-text-tertiary group-hover:text-accent-action transition-colors">
+              <EnvelopeSimple size={16} />
+              Me contacter
+            </span>
+          </a>
+        </motion.div>
+      </motion.div>
+
+      {/* Témoignages — placeholder transparent */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="mt-12 text-center"
+      >
+        <p className="text-sm text-text-tertiary">
+          Les premiers retours clients arrivent bientôt.
+        </p>
       </motion.div>
     </section>
   );

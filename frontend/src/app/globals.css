@@ -28,6 +28,32 @@
   --status-error: #EF4444;
 }
 
+/* Light theme — basé sur la préférence système */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #FAFAFA;
+    --background-elevated: #FFFFFF;
+    --background-overlay: #F4F4F5;
+
+    --text-primary: #18181B;
+    --text-secondary: #52525B;
+    --text-tertiary: #A1A1AA;
+
+    --accent-primary: #18181B;
+    --accent-hover: #27272A;
+    --accent-border: #E4E4E7;
+
+    --accent-action: #6366F1;
+    --accent-action-hover: #4F46E5;
+    --accent-action-glow: rgba(99, 102, 241, 0.12);
+    --accent-action-subtle: rgba(99, 102, 241, 0.06);
+
+    --status-success: #059669;
+    --status-warning: #D97706;
+    --status-error: #DC2626;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-background-elevated: var(--background-elevated);

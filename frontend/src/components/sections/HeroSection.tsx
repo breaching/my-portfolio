@@ -64,16 +64,16 @@ export function HeroSection() {
           variants={fadeInUp}
           className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[-0.02em] mb-6 leading-[1.1]"
         >
-          Je crée des sites web qui{" "}
-          <span className="text-gradient-action">convertissent</span>.
+          Votre site pro en ligne{" "}
+          <span className="text-gradient-action">en 2 semaines</span>.
         </motion.h1>
 
         <motion.p
           variants={fadeInUp}
           className="text-text-secondary text-base md:text-lg lg:text-xl leading-[1.6] mb-10 max-w-[600px]"
         >
-          Développeur web freelance à Caen. Sites vitrines modernes, rapides, et
-          optimisés pour Google. De l&apos;idée au site en ligne en 2 semaines.
+          Développeur web freelance à Caen. Je crée des sites vitrines modernes,
+          rapides et visibles sur Google — pour que vos clients vous trouvent.
         </motion.p>
 
         <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
@@ -107,13 +107,13 @@ export function HeroSection() {
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-10 text-sm text-text-tertiary font-mono"
         >
           <div>
-            <span className="text-text-primary font-medium">186</span> tests passés sur Clarmind
-          </div>
-          <div>
-            <span className="text-text-primary font-medium">Next.js 16</span> dernière version
+            <span className="text-text-primary font-medium">7-10 jours</span> pour un site vitrine
           </div>
           <div>
             <span className="text-text-primary font-medium">&lt; 2s</span> temps de chargement
+          </div>
+          <div>
+            <span className="text-text-primary font-medium">À partir de 800 €</span> tout inclus
           </div>
         </motion.div>
       </motion.div>
