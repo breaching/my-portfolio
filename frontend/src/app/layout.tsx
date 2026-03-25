@@ -28,18 +28,23 @@ export const metadata: Metadata = {
   keywords: [
     "développeur web freelance Caen",
     "création site vitrine Caen",
-    "développeur Next.js freelance",
+    "création site internet Caen",
+    "développeur web Normandie",
     "site internet professionnel Normandie",
+    "refonte site web Caen",
+    "développeur Next.js freelance",
     "développeur React freelance",
-    "création site web Caen",
+    "site vitrine pas cher Caen",
     "agence web Caen",
-    "site vitrine pas cher",
   ],
   metadataBase: new URL("https://dubus.pro"),
+  alternates: {
+    canonical: "https://dubus.pro",
+  },
   openGraph: {
     title: "Alexis Dubus — Développeur Web Freelance à Caen",
     description:
-      "Création de sites vitrines et applications web. Design moderne, SEO, RGPD. Devis gratuit.",
+      "Création de sites vitrines et applications web à Caen. Design moderne, SEO, RGPD. Devis gratuit.",
     url: "https://dubus.pro",
     siteName: "Alexis Dubus — Dev Web Freelance",
     locale: "fr_FR",
@@ -49,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Alexis Dubus — Développeur Web Freelance à Caen",
     description:
-      "Sites vitrines modernes et applications web. Freelance à Caen.",
+      "Création de sites vitrines et applications web. Freelance à Caen.",
   },
   robots: {
     index: true,
@@ -57,15 +62,26 @@ export const metadata: Metadata = {
   },
 };
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://dubus.pro/#website",
+  url: "https://dubus.pro",
+  name: "Alexis Dubus — Développeur Web Freelance",
+  description: "Création de sites vitrines et applications web à Caen",
+  publisher: { "@id": "https://dubus.pro/#business" },
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": "https://dubus.pro/#business",
   name: "Alexis Dubus — Développeur Web Freelance",
   description:
     "Développeur web freelance à Caen. Création de sites vitrines modernes, applications React/Next.js, optimisés SEO et RGPD.",
   url: "https://dubus.pro",
+  image: "https://dubus.pro/opengraph-image",
   email: "contact@dubus.pro",
-  telephone: "",
   areaServed: [
     { "@type": "City", name: "Caen" },
     { "@type": "AdministrativeArea", name: "Normandie" },
@@ -145,6 +161,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

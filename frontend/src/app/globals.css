@@ -3,7 +3,7 @@
 :root {
   /* Base - Noir profond avec nuances subtiles */
   --background: #0A0A0B;
-  --background-elevated: #111113;
+  --background-elevated: #151517;
   --background-overlay: #18181B;
 
   /* Texte - Haute lisibilité */
@@ -37,7 +37,7 @@
 
     --text-primary: #18181B;
     --text-secondary: #52525B;
-    --text-tertiary: #A1A1AA;
+    --text-tertiary: #71717A;
 
     --accent-primary: #18181B;
     --accent-hover: #27272A;
@@ -225,12 +225,13 @@ code, pre, .font-mono {
   background-size: 24px 24px;
 }
 
-/* Gradient mesh for hero */
+/* Gradient mesh for hero — audacieux */
 .gradient-mesh {
   background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, var(--accent-action-glow) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(129, 140, 248, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(99, 102, 241, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 70% 60%, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 50%);
 }
 
 /* Noise grain texture overlay */
@@ -244,6 +245,16 @@ code, pre, .font-mono {
   pointer-events: none;
   z-index: 1;
   border-radius: inherit;
+}
+
+/* Marquee infinite scroll */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration) linear infinite;
 }
 
 /* Animated gradient border */
@@ -560,12 +571,19 @@ select:focus-visible {
   border-color: var(--accent-action);
 }
 
-/* Gradient text utility */
+/* Gradient text utility — indigo to cyan, animated shimmer */
 .text-gradient-action {
-  background: linear-gradient(135deg, var(--accent-action) 0%, #a78bfa 50%, var(--accent-action-hover) 100%);
+  background: linear-gradient(90deg, var(--accent-action) 0%, #a78bfa 25%, #22d3ee 50%, #a78bfa 75%, var(--accent-action) 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: gradient-shimmer 6s linear infinite;
+}
+
+@keyframes gradient-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 /* Selection */

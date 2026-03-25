@@ -1,8 +1,11 @@
 export { HeroSection } from "./HeroSection";
-export { ServicesSection } from "./ServicesSection";
+export { TechLogosSection } from "./TechLogosSection";
 export { DifferencesSection } from "./DifferencesSection";
 export { RealisationsSection } from "./RealisationsSection";
+export { ServicesSection } from "./ServicesSection";
 export { ProcessSection } from "./ProcessSection";
+export { GarantiesSection } from "./GarantiesSection";
 export { FaqSection } from "./FaqSection";
-export { BlogSection } from "./BlogSection";
 export { ContactSection } from "./ContactSection";
+export { BlogSection } from "./BlogSection";
+export { PreFooterCta } from "./PreFooterCta";

@@ -1,4 +1,4 @@
-type BadgeVariant = "default" | "primary" | "secondary" | "success" | "warning" | "error";
+type BadgeVariant = "default" | "primary" | "success" | "warning" | "error";
 
 interface BadgeProps {
   children: React.ReactNode;
@@ -7,12 +7,11 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: "bg-card text-foreground-muted border-border",
-  primary: "bg-accent-primary/10 text-accent-primary border-accent-primary/20",
-  secondary: "bg-accent-secondary/10 text-accent-secondary border-accent-secondary/20",
-  success: "bg-success/10 text-success border-success/20",
-  warning: "bg-warning/10 text-warning border-warning/20",
-  error: "bg-error/10 text-error border-error/20",
+  default: "bg-background-overlay text-text-tertiary border-accent-border",
+  primary: "bg-accent-action-subtle text-accent-action border-accent-action/20",
+  success: "bg-status-success/10 text-status-success border-status-success/20",
+  warning: "bg-status-warning/10 text-status-warning border-status-warning/20",
+  error: "bg-status-error/10 text-status-error border-status-error/20",
 };
 
 export function Badge({ children, variant = "default", className = "" }: BadgeProps) {

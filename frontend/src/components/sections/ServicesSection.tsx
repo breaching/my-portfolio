@@ -45,12 +45,27 @@ function scrollToContact(serviceName?: string) {
 }
 
 function formatPrice(price: string) {
+  // Handle range like "800 — 1 200 €"
+  const rangeMatch = price.match(/(\d[\d\s]*)\s*—\s*(\d[\d\s]*)\s*€/);
+  if (rangeMatch) {
+    const from = rangeMatch[1].trim();
+    const to = rangeMatch[2].trim();
+    return (
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-3xl font-light tracking-tight text-text-primary font-mono">
+          {from} — {to}
+        </span>
+        <span className="text-lg text-text-tertiary font-light">€</span>
+      </div>
+    );
+  }
+  // Handle single price like "À partir de 800 €"
   const match = price.match(/(\d[\d\s]*)\s*€/);
   if (match) {
     const number = match[1].trim();
     return (
       <div className="flex items-baseline gap-1.5">
-        <span className="text-4xl font-light tracking-tight text-text-primary stat-number">
+        <span className="text-4xl font-light tracking-tight text-text-primary font-mono">
           {number}
         </span>
         <span className="text-lg text-text-tertiary font-light">€</span>
@@ -75,7 +90,7 @@ function getDelivery(name: string) {
 
 export function ServicesSection() {
   return (
-    <section id="services" className="section border-t border-accent-border">
+    <section id="services" aria-labelledby="services-heading" className="section border-t border-accent-border">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -85,12 +100,17 @@ export function ServicesSection() {
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Offres & tarifs
         </p>
-        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
-          Des prix transparents, sans surprise.
+        <h2 id="services-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+          Création de site vitrine à Caen —{" "}
+          <span className="font-medium">prix transparents.</span>
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-14">
+        <p className="text-text-secondary prose-width leading-relaxed mb-4">
           Vous savez exactement ce que vous obtenez et combien ça coûte.
           Paiement en 2 fois, devis gratuit.
+        </p>
+        <p className="text-xs text-text-tertiary prose-width leading-relaxed mb-14">
+          Une agence web facture en moyenne 3 000 à 8 000 € pour un site vitrine.
+          Je propose la même qualité technique, sans les frais d&apos;agence.
         </p>
       </motion.div>
 
@@ -111,7 +131,7 @@ export function ServicesSection() {
             <div
               className={`relative flex flex-col h-full rounded-xl border transition-all duration-300 overflow-hidden ${
                 service.popular
-                  ? "border-accent-action/60 bg-background-elevated shadow-[0_0_40px_var(--accent-action-glow)] md:scale-[1.03]"
+                  ? "border-accent-action/60 bg-gradient-to-b from-accent-action-subtle to-background-elevated ring-1 ring-accent-action/30 shadow-[0_0_50px_var(--accent-action-glow)] md:scale-[1.05]"
                   : "border-accent-border bg-background-elevated/50 hover:border-accent-action/30"
               }`}
             >
@@ -120,7 +140,7 @@ export function ServicesSection() {
                 <div className="bg-accent-action px-4 py-2 flex items-center justify-center gap-1.5">
                   <Star size={14} weight="fill" className="text-background" />
                   <span className="text-background text-xs font-semibold tracking-wide uppercase">
-                    Le plus demandé
+                    Recommandé
                   </span>
                 </div>
               )}
@@ -134,9 +154,14 @@ export function ServicesSection() {
                   <div className="mb-2">
                     {formatPrice(service.price)}
                     {service.price !== "Sur devis" && (
-                      <p className="text-xs text-text-tertiary mt-1">
-                        À partir de · TVA non applicable
-                      </p>
+                      <div className="mt-1 space-y-0.5">
+                        <p className="text-xs text-text-tertiary">
+                          TVA non applicable — vous payez exactement ce montant
+                        </p>
+                        <p className="text-xs text-accent-action/70 font-medium">
+                          Payable en 2 fois
+                        </p>
+                      </div>
                     )}
                   </div>
                   <p className="text-sm text-text-secondary mt-3 leading-relaxed">

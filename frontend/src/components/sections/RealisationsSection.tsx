@@ -43,13 +43,14 @@ export function RealisationsSection() {
   return (
     <section
       id="realisations"
+      aria-labelledby="realisations-heading"
       className="section border-t border-accent-border"
     >
       <motion.div {...fadeIn}>
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Réalisations
         </p>
-        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+        <h2 id="realisations-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
           Ce que je construis.
         </h2>
         <p className="text-text-secondary prose-width leading-relaxed mb-14">
@@ -156,10 +157,14 @@ export function RealisationsSection() {
               Clarmind — Suivi émotionnel TCC
             </h3>
 
-            <p className="text-text-secondary leading-[1.7] mb-6 max-w-[600px]">
-              Application complète de suivi émotionnel pour psychologues TCC et
-              leurs patients. Dashboard temps réel, export PDF, gestion des
-              abonnements.
+            <p className="text-text-secondary leading-[1.7] mb-3 max-w-[600px]">
+              Application web complète de suivi émotionnel pour des professionnels
+              de santé. Dashboard temps réel, export PDF, gestion des abonnements.
+            </p>
+            <p className="text-text-tertiary text-sm leading-[1.6] mb-6 max-w-[600px]">
+              Ce projet prouve ma capacité à livrer un produit complet : paiement en
+              ligne, conformité RGPD, 186 tests qualité. Votre site vitrine bénéficiera
+              du même niveau de rigueur.
             </p>
 
             {/* Tech stack */}
@@ -225,7 +230,7 @@ export function RealisationsSection() {
         className="grid md:grid-cols-2 gap-5"
       >
         {/* dubus.pro */}
-        <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}>
+        <div>
           <a
             href="https://github.com/breaching"
             target="_blank"
@@ -264,10 +269,10 @@ export function RealisationsSection() {
               Voir le code
             </span>
           </a>
-        </motion.div>
+        </div>
 
         {/* Placeholder — votre projet */}
-        <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}>
+        <div>
           <a
             href="#contact"
             onClick={(e) => {
@@ -294,9 +299,32 @@ export function RealisationsSection() {
               Me contacter
             </span>
           </a>
-        </motion.div>
+        </div>
       </motion.div>
 
+      {/* CTA after realisations */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="mt-10 text-center"
+      >
+        <a
+          href="#contact"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToContact();
+          }}
+          className="group/link inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent-action transition-colors"
+        >
+          Envie d&apos;un site comme ceux-ci ? Demander un devis
+          <ArrowUpRight
+            size={16}
+            className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"
+          />
+        </a>
+      </motion.div>
     </section>
   );
 }

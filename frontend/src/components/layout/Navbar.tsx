@@ -9,7 +9,7 @@ import { List, X } from "@phosphor-icons/react";
 // Types de navigation : "page" pour lien direct, "anchor" pour scroll sur homepage
 const navLinks = [
   { href: "/", id: "accueil", label: "Accueil", type: "page" as const },
-  { href: "/#services", id: "services", label: "Services", type: "anchor" as const },
+  { href: "/#services", id: "services", label: "Tarifs", type: "anchor" as const },
   { href: "/#realisations", id: "realisations", label: "Réalisations", type: "anchor" as const },
   { href: "/blog", id: "blog", label: "Blog", type: "page" as const },
   { href: "/#contact", id: "contact", label: "Contact", type: "anchor" as const },
@@ -109,9 +109,9 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-sm font-medium text-text-primary hover:text-accent-primary transition-colors duration-200 tracking-[-0.01em] font-mono group"
+          className="text-[15px] font-medium text-text-primary hover:text-accent-primary transition-colors duration-200 tracking-[-0.01em] font-mono group"
         >
-          <span className="text-accent-primary opacity-60 mr-1">$</span>
+          <span className="text-accent-action mr-1">$</span>
           <span>Alexis Dubus</span>
         </Link>
 

@@ -25,6 +25,16 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `https://dubus.pro/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      publishedTime: post.date,
+      authors: ["Alexis Dubus"],
+    },
   };
 }
 
@@ -36,8 +46,27 @@ export default async function PostPage({ params }: PageProps) {
     notFound();
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: "Alexis Dubus",
+      url: "https://dubus.pro",
+    },
+    publisher: { "@id": "https://dubus.pro/#business" },
+    mainEntityOfPage: `https://dubus.pro/blog/${slug}`,
+  };
+
   return (
     <div className="container-main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <article className="section">
         <BackButton className="mb-8" />
 
@@ -50,10 +79,10 @@ export default async function PostPage({ params }: PageProps) {
             }`}>
               {post.type === "projet" ? "Projet" : "Article"}
             </span>
-            <span className="flex items-center gap-1.5 text-sm text-text-tertiary">
+            <time dateTime={post.date} className="flex items-center gap-1.5 text-sm text-text-tertiary">
               <Calendar size={14} />
               {formatDate(post.date)}
-            </span>
+            </time>
           </div>
 
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4 leading-tight">

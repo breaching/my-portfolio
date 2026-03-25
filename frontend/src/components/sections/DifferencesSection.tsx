@@ -70,7 +70,7 @@ function scrollToContact() {
 
 export function DifferencesSection() {
   return (
-    <section className="section section-accent border-t border-accent-border">
+    <section aria-labelledby="differences-heading" className="section section-accent border-t border-accent-border">
       <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,12 +81,13 @@ export function DifferencesSection() {
           <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
             Pourquoi du sur-mesure
           </p>
-          <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
-            La différence que vos clients verront.
+          <h2 id="differences-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+            Un site internet professionnel,{" "}
+            <span className="font-medium">pas un template.</span>
           </h2>
           <p className="text-text-secondary prose-width leading-relaxed mb-14">
-            Un site codé sur mesure vs WordPress ou Wix — voici ce que ça change
-            concrètement pour votre activité.
+            La différence entre un site sur mesure et WordPress ou Wix — voici ce
+            que ça change concrètement pour votre activité à Caen et en Normandie.
           </p>
         </motion.div>
 
@@ -119,9 +120,9 @@ export function DifferencesSection() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-action-subtle border border-accent-action/20 mb-5">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent-action-subtle border border-accent-action/20 mb-5">
                     <Icon
-                      size={20}
+                      size={24}
                       className="text-accent-action"
                       weight="duotone"
                     />

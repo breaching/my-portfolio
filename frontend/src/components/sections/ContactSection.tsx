@@ -118,18 +118,19 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="section section-accent border-t border-accent-border">
+    <section id="contact" aria-labelledby="contact-heading" className="section section-accent border-t border-accent-border">
       <div className="relative z-10">
         <motion.div {...fadeIn}>
           <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
             Contact
           </p>
-          <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
-            Un projet en tête ?
+          <h2 id="contact-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+            Un projet web à Caen ?{" "}
+            <span className="font-medium">Parlons-en.</span>
           </h2>
           <p className="text-text-secondary prose-width leading-relaxed mb-14">
-            Décrivez-le en quelques mots, je vous réponds sous 24h avec une
-            première estimation.
+            Décrivez votre projet en quelques mots — création de site vitrine, refonte
+            ou application web. Je vous réponds sous 24h avec une première estimation.
           </p>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -261,7 +262,7 @@ export function ContactSection() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="relative">
                   <label
                     htmlFor="project_type"
@@ -330,7 +331,7 @@ export function ContactSection() {
                   required
                   rows={5}
                   className="w-full px-4 py-3 bg-background-elevated border border-accent-border rounded-lg text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent-action transition-colors resize-none"
-                  placeholder="Décrivez votre projet ou votre demande..."
+                  placeholder="Ex : Je suis boulanger à Caen et j'aimerais un site pour présenter mes produits et horaires..."
                 />
               </div>
 
@@ -349,7 +350,7 @@ export function ContactSection() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm"
+                  className="p-4 rounded-lg bg-status-error/10 border border-status-error/30 text-status-error text-sm"
                   role="alert"
                 >
                   {formError}
@@ -360,7 +361,7 @@ export function ContactSection() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 text-sm"
+                  className="p-4 rounded-lg bg-status-success/10 border border-status-success/30 text-status-success text-sm"
                   role="status"
                 >
                   Message envoyé avec succès ! Je vous répondrai sous 24h.
@@ -382,7 +383,7 @@ export function ContactSection() {
                 ) : (
                   <>
                     <PaperPlaneTilt size={18} />
-                    Envoyer ma demande
+                    Envoyer — réponse sous 24h
                   </>
                 )}
               </button>

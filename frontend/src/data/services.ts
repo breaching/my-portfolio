@@ -9,8 +9,8 @@ export interface Service {
 export const services: Service[] = [
   {
     name: "Site Essentiel",
-    price: "À partir de 800 €",
-    description: "L'essentiel pour être visible en ligne.",
+    price: "800 — 1 200 €",
+    description: "Votre vitrine en ligne en 10 jours — vos clients vous trouvent sur Google.",
     features: [
       "Site one-page responsive",
       "Design moderne sur mesure",
@@ -23,8 +23,8 @@ export const services: Service[] = [
   },
   {
     name: "Site Pro",
-    price: "À partir de 1 500 €",
-    description: "Pour les professionnels qui veulent performer.",
+    price: "1 500 — 2 500 €",
+    description: "Un site complet qui rassure vos clients et vous démarque des concurrents.",
     features: [
       "3 à 5 pages optimisées",
       "Animations et transitions",
@@ -38,7 +38,7 @@ export const services: Service[] = [
   {
     name: "Sur-Mesure",
     price: "Sur devis",
-    description: "Votre projet, vos règles.",
+    description: "Application web, outil métier, projet ambitieux — construisons-le ensemble.",
     features: [
       "Pages illimitées",
       "Blog ou espace dynamique",

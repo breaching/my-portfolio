@@ -6,7 +6,9 @@ import {
   FileText,
   Code,
   Rocket,
+  ArrowRight,
 } from "@phosphor-icons/react";
+import { scrollToSection } from "@/lib/scroll";
 
 const steps = [
   {
@@ -45,7 +47,7 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section id="process" className="section border-t border-accent-border">
+    <section id="process" aria-labelledby="process-heading" className="section border-t border-accent-border">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -55,8 +57,9 @@ export function ProcessSection() {
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Processus
         </p>
-        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
-          Comment ça se passe ?
+        <h2 id="process-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+          Comment ça se passe ?{" "}
+          <span className="font-medium">4 étapes simples.</span>
         </h2>
         <p className="text-text-secondary prose-width leading-relaxed mb-14">
           Un process simple en 4 étapes. Vous êtes informé à chaque moment.
@@ -130,21 +133,25 @@ export function ProcessSection() {
         </div>
       </div>
 
-      {/* Payment info */}
+      {/* CTA after process */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className="mt-10 p-5 rounded-xl border border-accent-action/20 bg-accent-action-subtle"
+        className="mt-10 text-center"
       >
-        <p className="text-sm text-text-secondary leading-[1.6]">
-          <span className="text-accent-action font-medium">
-            Paiement en 2 fois
-          </span>{" "}
-          — 50 % à la commande, 50 % à la livraison. Pas d&apos;engagement, pas
-          de mauvaise surprise.
-        </p>
+        <a
+          href="#contact"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection("contact");
+          }}
+          className="btn-glow inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-all text-sm"
+        >
+          <span>Prêt à démarrer ? Étape 1 : votre devis gratuit</span>
+          <ArrowRight size={16} weight="bold" />
+        </a>
       </motion.div>
     </section>
   );

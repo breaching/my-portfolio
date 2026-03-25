@@ -1,210 +1,166 @@
 # PROJECT STATE — dubus.pro
 
-> Dernière mise à jour : 2026-03-25
+> Derniere mise a jour : 2026-03-25
 
 ## Statut global
 
-**Objectif** : Machine de conversion freelance + portfolio technique crédible pour employeurs/stages.
+**Objectif** : Machine de conversion freelance + portfolio technique credible pour employeurs/stages.
 
-**Toutes les phases sont terminées.** Audit qualité effectué et correctifs appliqués. Prochaines étapes : deploy, test Lighthouse réel, création compte Calendly, vrais projets clients.
+**Phase en cours** : Phase 8 — Audit complet (Conversion + SEO + Design/UX) avec 3 agents specialises.
 
 ---
 
-## Phases & tâches
+## Phase 8 — Audit complet & refonte (EN COURS)
 
-### Phase 1 — Fondations conversion (TERMINÉE)
+Audit realise par 3 agents specialises (Conversion, SEO, Design/UX). 83 items identifies, classes par priorite.
 
-| # | Tâche | Statut |
+### Priorite 1 — Impact CRITIQUE
+
+| # | Action | Domaine | Statut |
+|---|--------|---------|--------|
+| 8.1 | Ajouter des visuels (screenshots, illustrations, mockups, bandeau logos tech) | Design | TODO |
+| 8.2 | Refaire le H1 avec mot-cle + benefice + Caen | SEO+Conv | TODO |
+| 8.3 | Reordonner les sections (valeur avant prix) : Hero > Logos Tech > Differences > Realisations > Services > Process > Garanties > FAQ > Contact > Blog | Conversion | TODO |
+| 8.4 | Integrer mots-cles cibles dans le contenu visible (1/10 actuellement) | SEO | TODO |
+| 8.5 | Hero 2 colonnes avec element visuel + gradient audacieux + mixed-weight typo | Design | TODO |
+| 8.6 | Ajouter CTAs intermediaires (Realisations, Process, FAQ) | Conversion | TODO |
+| 8.7 | Metadata/OG/canonical sur toutes les pages (/blog, articles, /parcours) | SEO | TODO |
+| 8.8 | Page /blog sans metadata (ni title, ni description, ni OG) | SEO | TODO |
+
+### Priorite 2 — Impact ELEVE
+
+| # | Action | Domaine | Statut |
+|---|--------|---------|--------|
+| 8.9 | Bandeau logos technologies (React, Next.js, Vercel, Stripe, Supabase) | Design+Conv | TODO |
+| 8.10 | FAQ enrichie : 3 questions SEO local + objection confiance + comparaison prix | SEO+Conv | TODO |
+| 8.11 | Pre-footer CTA plein ecran en indigo avant le footer | Design+Conv | TODO |
+| 8.12 | Varier le design des sections (briser monotonie 7x meme header+cards) | Design | TODO |
+| 8.13 | Enrichir mockup Clarmind avec vrais contenus (labels, metriques, couleurs) | Design+Conv | TODO |
+| 8.14 | Ancrage prix : comparaison agence (3000-8000EUR) + fourchettes au lieu de "a partir de" | Conversion | TODO |
+| 8.15 | "Caen/Normandie" dans plus de sections (2 mentions actuellement) | SEO local | TODO |
+| 8.16 | Schemas JSON-LD supplementaires (WebSite, BlogPosting, BreadcrumbList) | SEO | TODO |
+| 8.17 | Maillage interne blog > services (CTA en bas des articles) | SEO | TODO |
+
+### Priorite 3 — Impact MOYEN
+
+| # | Action | Domaine | Statut |
+|---|--------|---------|--------|
+| 8.18 | Toggle dark/light dans la navbar + transitions | Design | TODO |
+| 8.19 | Formulaire optimise : placeholder guide, selects optionnels, grid-cols-1 mobile | Conversion | TODO |
+| 8.20 | Renommer badge "Le plus demande" > "Recommande" | Conversion | TODO |
+| 8.21 | Wording CTA : "Parlons de votre projet" + micro-copie "30 min, sans engagement" | Conversion | TODO |
+| 8.22 | Descriptions de services avec resultat concret (pas generiques) | Conversion | TODO |
+| 8.23 | Mention cout de l'inaction : "Chaque jour sans site, des clients trouvent vos concurrents" | Conversion | TODO |
+| 8.24 | Section garanties regroupee (devis gratuit, paiement 2x, satisfait ou corrige, code livre) | Conv+Design | TODO |
+| 8.25 | Paiement en 2 fois visible sur chaque carte prix | Conversion | TODO |
+| 8.26 | Augmenter contraste surfaces dark (cards se fondent) + shadows light theme | Design | TODO |
+| 8.27 | H2 plus grands (text-4xl md:text-5xl), icones plus grandes (24-32px) | Design | TODO |
+| 8.28 | JetBrains Mono sur chiffres/prix/metriques + logo agrandi + $ en accent | Design | TODO |
+| 8.29 | Navbar : "Services" > "Tarifs" | Conversion | TODO |
+| 8.30 | Barre de progression au scroll (fine, indigo, Framer Motion useScroll) | Design | TODO |
+| 8.31 | Carte "populaire" plus impactante (scale 1.05, ring, gradient bg) | Design | TODO |
+
+### Priorite 4 — Impact FAIBLE / Maintenance
+
+| # | Action | Domaine | Statut |
+|---|--------|---------|--------|
+| 8.32 | Supprimer telephone: "" du JSON-LD | SEO | TODO |
+| 8.33 | Ajouter image dans ProfessionalService schema | SEO | TODO |
+| 8.34 | Redirect /contact 307 > 301 (permanentRedirect) | SEO | TODO |
+| 8.35 | `<time datetime>` sur dates articles | SEO | TODO |
+| 8.36 | Page 404 enrichie avec CTA conversion | Conv+SEO | TODO |
+| 8.37 | Mediateur de la consommation dans mentions legales | Legal | TODO |
+| 8.38 | Fix Badge component (tokens CSS inexistants) | Design | TODO |
+| 8.39 | Fix couleurs erreur/succes formulaire (tokens au lieu de hardcode) | Design | TODO |
+| 8.40 | Fix double animation hover cartes Realisations (CSS + Framer Motion) | Design | TODO |
+| 8.41 | Contraste text-tertiary en light theme (3.5:1 > 4.5:1) | A11y | TODO |
+| 8.42 | aria-labelledby sur les sections homepage | A11y | TODO |
+| 8.43 | Clarmind description orientee prospect (pas juste "TCC") | Conversion | TODO |
+| 8.44 | Lien recruteur footer plus visible (text-sm, encadre) | Design | TODO |
+| 8.45 | Bouton formulaire : "Recevoir mon devis gratuit" ou "Envoyer — reponse sous 24h" | Conversion | TODO |
+
+### Strategique (a planifier, pas urgent)
+
+| # | Action | Domaine | Statut |
+|---|--------|---------|--------|
+| S1 | Landing pages dediees (/creation-site-vitrine-caen, etc.) | SEO | PLANNED |
+| S2 | Google Business Profile (hors code) | SEO local | PLANNED |
+| S3 | Transitions de page (AnimatePresence ou View Transitions) | Design | PLANNED |
+| S4 | Carousel scroll-snap mobile pour cartes services | Design | PLANNED |
+| S5 | Pages tags/categories blog | SEO | PLANNED |
+| S6 | CV PDF telechargeble sur /parcours | Conversion | PLANNED |
+| S7 | Calendly integration | Conversion | WAITING |
+
+---
+
+## Phases precedentes (TERMINEES)
+
+### Phase 1 — Fondations conversion (TERMINEE)
+
+| # | Tache | Statut |
 |---|-------|--------|
 | 1 | Vercel Analytics | DONE |
 | 2 | Light theme auto (prefers-color-scheme) | DONE |
-| 3 | Mentions légales (SIREN, EI, RGPD) | DONE |
+| 3 | Mentions legales (SIREN, EI, RGPD) | DONE |
 | 4 | Footer enrichi (SIREN, liens, copyright) | DONE |
-| 5 | Section FAQ / Réassurance (6 questions, accordion) | DONE |
-| 13 | Lien LinkedIn harmonisé partout | DONE |
+| 5 | Section FAQ / Reassurance (6 questions, accordion) | DONE |
+| 13 | Lien LinkedIn harmonise partout | DONE |
 
-### Phase 2 — Optimisation conversion (TERMINÉE)
+### Phase 2 — Optimisation conversion (TERMINEE)
 
-| # | Tâche | Statut |
+| # | Tache | Statut |
 |---|-------|--------|
-| 6 | Placeholder témoignages (transparent) | DONE |
+| 6 | Placeholder temoignages (transparent) | DONE |
 | 7 | Mockup Clarmind (CSS-only dashboard) | DONE |
-| 9 | Formulaire simplifié (budget select, sans sujet) | DONE |
-| 14 | CTA flottant mobile (sticky, apparaît/disparaît) | DONE |
+| 9 | Formulaire simplifie (budget select, sans sujet) | DONE |
+| 14 | CTA flottant mobile (sticky, apparait/disparait) | DONE |
 | 15 | Hero percutant | DONE |
 | 20 | Section "Pourquoi un site sur mesure" (4 avantages) | DONE |
 
-### Phase 3 — SEO & technique (TERMINÉE)
+### Phase 3 — SEO & technique (TERMINEE)
 
-| # | Tâche | Statut |
+| # | Tache | Statut |
 |---|-------|--------|
 | 10 | JSON-LD enrichi (geo, offres, sameAs, areaServed) | DONE |
 | 11 | OG image dynamique (Next.js edge) | DONE |
-| 12 | Middleware — déjà nettoyé (plus de fichier) | DONE |
+| 12 | Middleware — deja nettoye | DONE |
 | 18 | Lighthouse — optimisations code en place | DONE |
-| 19 | Sitemap — mentions-legales ajoutée | DONE |
+| 19 | Sitemap — mentions-legales ajoutee | DONE |
 
-### Phase 4 — Portfolio technique (TERMINÉE)
+### Phase 4 — Portfolio technique (TERMINEE)
 
-| # | Tâche | Statut |
+| # | Tache | Statut |
 |---|-------|--------|
-| 8 | dubus.pro ajouté comme réalisation | DONE |
-| 16 | Page /parcours — déjà propre (pas de stage/alternance) | DONE |
-| 17 | Calendly — en attente création compte | WAITING |
-| 21 | Refonte /parcours — page portfolio technique complète | DONE |
-| 22 | Lien "Vous recrutez ?" discret dans le footer | DONE |
+| 8 | dubus.pro ajoute comme realisation | DONE |
+| 16 | Page /parcours — deja propre | DONE |
+| 17 | Calendly — en attente creation compte | WAITING |
+| 21 | Refonte /parcours | DONE |
+| 22 | Lien "Vous recrutez ?" dans le footer | DONE |
 
-### Phase 7 — Audit qualité & correctifs (TERMINÉE)
+### Phase 7 — Audit qualite & correctifs (TERMINEE)
 
-| # | Tâche | Statut |
+| # | Tache | Statut |
 |---|-------|--------|
-| 23 | Corriger mention "HT" → "TVA non applicable" (obligation légale) | DONE |
-| 24 | Retirer placeholder témoignages ("arrivent bientôt") | DONE |
-| 25 | Remplacer "Google Analytics" → "Analytics (RGPD)" dans services | DONE |
-| 26 | Harmoniser délais hero (retrait "en 2 semaines" → "rapidement") | DONE |
-| 27 | Ajouter metadata SEO sur /parcours (layout.tsx) | DONE |
-| 28 | Ajouter FAQ JSON-LD schema (rich snippets) | DONE |
-| 29 | Fix unused import getAllPosts dans blog/[slug] | DONE |
-| 30 | Utiliser next/image dans le markdown renderer | DONE |
-| 31 | Extraire scrollToSection en utilitaire partagé (lib/scroll.ts) | DONE |
-| 32 | Sitemap : dates réelles au lieu de new Date() | DONE |
-| 33 | Supprimer getHoneypotFieldName() inutilisée | DONE |
+| 23-33 | 13 correctifs (legal, SEO, technique, DRY) | DONE |
 
 ---
 
-## Changelog
+## Decisions prises
 
-### 2026-03-25 — Audit qualité & correctifs
-
-**Phase 7 — Audit qualité (13 correctifs) :**
-
-P0 — Correctifs légaux et crédibilité :
-- **"HT" → "TVA non applicable"** : correction obligation légale (art. 293 B CGI, pas de TVA = prix TTC par définition)
-- **Suppression placeholder témoignages** : "Les premiers retours arrivent bientôt" retiré — signalait l'absence de clients plutôt que de rassurer
-
-P1 — Incohérences contenu :
-- **"Google Analytics" → "Analytics (RGPD)"** dans `data/services.ts` — le site utilise Vercel Analytics
-- **Hero harmonisé** : "en 2 semaines" remplacé par "rapidement" pour éviter l'incohérence avec "7-10 jours" et "2-3 semaines" des offres
-- **Metadata /parcours** : ajout `layout.tsx` avec title + description SEO
-
-P2 — SEO & technique :
-- **FAQ JSON-LD** : schema FAQPage ajouté pour rich snippets Google
-- **Fix ESLint** : import `getAllPosts` inutilisé supprimé dans `blog/[slug]/page.tsx`
-- **next/image** dans le markdown renderer : remplacement `<img>` par `<Image>` optimisé
-- **scrollToSection mutualisé** : `lib/scroll.ts` créé, 5 copies supprimées (Hero, Services, Différences, Réalisations, FloatingCta)
-
-P3 — Maintenance :
-- **Sitemap dates réelles** : utilise les dates des articles au lieu de `new Date()` à chaque build
-- **getHoneypotFieldName() supprimée** : fonction morte dans `lib/security.ts`
-
-**Résultat audit post-correctifs :**
-- TypeScript : 0 erreur
-- ESLint : 0 warning
-- Build : clean (16 pages statiques)
-
-### 2026-03-25 — Session complète
-
-**Phase 1 :**
-- `@vercel/analytics` installé, `<Analytics />` dans layout.tsx
-- Light theme via `@media (prefers-color-scheme: light)` — variables CSS complètes, retiré `className="dark"` hardcodé
-- Page `/mentions-legales` créée (SIREN, APE, hébergeur Vercel, RGPD, PI)
-- Footer enrichi : SIREN, mentions légales, lien réalisations, tagline SEO, border bottom
-- LinkedIn corrigé partout → `/alexis-dubus-603590284/`
-- Section FAQ : 6 questions en accordion animé (technique, délais, satisfaction, WordPress, paiement, SEO)
-
-**Phase 2 :**
-- Mockup Clarmind CSS-only : barre de fenêtre, sidebar, KPI cards, bar chart
-- Formulaire : retiré champ sujet, ajouté select budget, sujet auto-généré pour Formspree, grid 2 colonnes pour type/budget
-- CTA flottant mobile : sticky bottom, apparaît après hero, disparaît à la section contact
-- Hero : stats orientées client (délai, vitesse, prix)
-- Section "Pourquoi un site sur mesure" : 4 cards (vitesse, coût, code, sécurité) entre Services et Réalisations
-
-**Phase 3 :**
-- JSON-LD enrichi : geo Caen, areaServed [Caen, Normandie], sameAs, hasOfferCatalog avec 3 offres
-- OG image dynamique via `opengraph-image.tsx` (edge runtime)
-- Sitemap : `/mentions-legales` ajoutée
-- Middleware : confirmé supprimé, rien à nettoyer
-
-**Phase 4 :**
-- dubus.pro ajouté comme 2e réalisation (stack Next.js 16, React 19, Tailwind 4, Framer Motion)
-- Page /parcours vérifiée : aucune mention stage/alternance/étudiant
-- Calendly : en attente de création du compte
-- **Refonte /parcours** : 5 projets détaillés (Clarmind, dubus.pro, homelab, pipeline Oura, reverse lookup) avec choix techniques justifiés, compétences avec contexte, timeline enrichie, approche, CTA collaborations
-- **Lien recruteur** : "Vous recrutez ? Voir mon parcours technique →" ajouté dans le footer
-
-**Phase 5 — Contenu SEO :**
-- **Article blog** : "Combien coûte un site vitrine en 2026 ?" — ~3000 mots, données de marché réelles (Malt, MajorFlow, AMN, BOFIP), tableaux comparatifs, TCO 3 ans, prix Caen/Normandie, fiscalité, FAQ
-
-**Phase 6 — Refonte design conversion :**
-- **globals.css** : ajout `.btn-glow` (CTA halo lumineux), `.gradient-mesh`, `.bg-dot-pattern`, `.grain-overlay`, `.section-accent`, `.stat-number`, `.card-interactive`, amélioration `.btn-primary` et `.text-gradient-action`
-- **HeroSection** : fond gradient mesh + dot grid + grain, headline 7xl, stats en cards avec icônes, CTA glow, suppression grille expertise
-- **ServicesSection** : labels mono uppercase, bannière "Le plus demandé" full-width, temps de livraison affiché, prix 4xl, CTA avec flèche animée
-- **DifferencesSection** : chiffres concrets (< 2s, 0 €/mois, 100%, A+), icônes dans containers, section-accent en fond, CTA discret
-- **RealisationsSection** : browser frame premium (barre URL + SSL), barres chart animées whileInView, métriques en mini-cards avec icônes, badge SaaS B2B
-- **ProcessSection** : timeline verticale avec ligne gradient, icônes contextuelles (ChatCircle, FileText, Code, Rocket), détail rapide par étape, animation slide-in-left
-- **ContactSection** : badges réassurance (24h, gratuit, sans engagement), contact links en cards, btn-glow submit, section-accent
-- **BlogSection + FaqSection** : labels mono uppercase cohérents, titres md:4xl
-- **Cohérence** : toutes sections ont label mono + titre 3xl/4xl + mb-14 + rounded-xl
-
----
-
-## Architecture actuelle
-
-```
-Homepage funnel :
-Hero → Services (pricing 3 offres) → Différenciation (4 avantages) → Réalisations (Clarmind + dubus.pro) → Process (4 étapes) → FAQ (6 questions + JSON-LD) → Blog → Contact (formulaire Formspree)
-```
-
-- **Theme** : Dark/Light automatique (prefers-color-scheme, pas de toggle)
-- **Analytics** : Vercel Analytics (RGPD-friendly, pas de cookies)
-- **Formulaire** : Formspree + honeypot statique + validation + select budget
-- **SEO** : JSON-LD ProfessionalService + FAQPage, OG image dynamique, sitemap avec dates réelles, meta tags
-- **Sécurité** : CSP/HSTS headers (next.config.ts)
-- **Blog** : 7 articles markdown (6 tech/sécu + 1 prospect/SEO), images via next/image
-- **Pages** : /, /blog, /blog/[slug], /parcours, /contact, /mentions-legales
-- **Mobile** : CTA flottant sticky bottom
-- **Utils** : `lib/scroll.ts` (scroll partagé), `lib/security.ts` (validation/sanitization)
-
----
-
-## Décisions prises
-
-- Dark/light basé sur `prefers-color-scheme` (pas de toggle manuel)
-- Pas de faux témoignages (obligation légale + crédibilité)
-- Pas de placeholder témoignages non plus (signale l'absence de clients)
+- Dark/light base sur `prefers-color-scheme` (toggle a ajouter phase 8)
+- Pas de faux temoignages (obligation legale + credibilite)
+- Pas de placeholder temoignages non plus (signale l'absence de clients)
 - Phosphor Icons uniquement
 - Push direct sur main (projet solo)
-- Commits en français
+- Commits en francais
 - LinkedIn officiel : /alexis-dubus-603590284/
-- Subject formulaire auto-généré (type + budget)
-- Calendly : lien simple quand créé, pas d'embed
-- Prix affichés "TVA non applicable" (pas "HT")
-- Hero : "rapidement" au lieu de délai précis (incohérent avec les offres variables)
+- Prix affiches "TVA non applicable" (pas "HT")
 
 ---
 
-## Problèmes connus (non corrigés)
+## Problemes connus
 
-- **Portfolio faible** : 1 seul vrai projet (Clarmind) + ce site. Pas de site vitrine réalisé pour un client → décalage avec le service vendu. Besoin de projets réels ou pro bono.
-- **Pas de visuel Clarmind** : le mockup est un skeleton CSS, pas de screenshot du vrai produit. Le site clarmind.com est derrière un paywall.
-- **Pas de preuve sociale** : zéro témoignage, zéro avis. Priorité absolue dès le premier client livré.
-- **Navbar mono** : le style terminal (font-mono, `$`, `>`) peut dérouter les prospects non-tech. Choix délibéré pour le double usage recruteur.
-- **FloatingCta mobile** : peut couvrir du contenu en bas de page (pas de padding-bottom compensatoire).
-- **OG image en edge runtime** : fonctionne mais incohérent avec l'approche Node.js du reste du site.
-
----
-
-## Prochaines étapes
-
-- [ ] Push sur origin et deploy sur Vercel
-- [ ] Tester Lighthouse réel en production
-- [ ] Tester le light theme sur différents devices
-- [ ] Vérifier l'OG image en partageant le lien sur LinkedIn
-- [ ] Créer compte Calendly et ajouter le lien
-- [ ] Google Search Console — soumettre le sitemap
-- [ ] Google Business Profile — fiche locale Caen
-- [ ] **Réaliser 1-2 sites vitrines (pro bono ou prix réduit) pour alimenter le portfolio**
-- [ ] Obtenir 1er vrai témoignage client
-- [ ] Ajouter screenshots réels de Clarmind quand disponibles
-- [ ] 2e article prospect : "5 erreurs des sites de commerçants"
-- [ ] 3e article prospect : "Pourquoi un site rapide vous fait gagner des clients"
+- **Portfolio faible** : 1 seul vrai projet (Clarmind) + ce site
+- **Pas de visuel Clarmind** : mockup skeleton CSS, pas de screenshot reel
+- **Pas de preuve sociale** : zero temoignage, zero avis
+- **OG image en edge runtime** : fonctionne mais incoherent avec Node.js du reste

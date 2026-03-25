@@ -108,6 +108,36 @@ export default function MentionsLegalesPage() {
 
           <div>
             <h2 className="text-lg font-medium text-text-primary mb-3">
+              Médiation de la consommation
+            </h2>
+            <p className="mb-3">
+              Conformément aux articles L.616-1 et R.616-1 du Code de la
+              consommation, tout consommateur a le droit de recourir
+              gratuitement à un médiateur de la consommation en vue de la
+              résolution amiable d&apos;un litige l&apos;opposant à un
+              professionnel.
+            </p>
+            <ul className="space-y-1">
+              <li>
+                <span className="text-text-tertiary">Médiateur :</span>{" "}
+                Médiation de la consommation en ligne (MCEL)
+              </li>
+              <li>
+                <span className="text-text-tertiary">Site :</span>{" "}
+                <a
+                  href="https://www.economie.gouv.fr/mediation-conso"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent-action hover:underline"
+                >
+                  economie.gouv.fr/mediation-conso
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-medium text-text-primary mb-3">
               Responsabilité
             </h2>
             <p>

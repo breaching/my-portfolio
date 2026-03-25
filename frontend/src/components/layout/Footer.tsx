@@ -8,7 +8,7 @@ const socialLinks = [
 ];
 
 const siteLinks = [
-  { href: "/#services", label: "Services" },
+  { href: "/#services", label: "Tarifs" },
   { href: "/#realisations", label: "Réalisations" },
   { href: "/blog", label: "Blog" },
   { href: "/parcours", label: "Parcours" },
@@ -76,7 +76,7 @@ export function Footer() {
           <div className="flex justify-center sm:justify-start">
             <Link
               href="/parcours"
-              className="text-xs text-text-tertiary hover:text-accent-action transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-sm text-text-tertiary hover:text-accent-action transition-colors duration-200 px-3 py-2 -mx-3 rounded-lg border border-dashed border-accent-border hover:border-accent-action/40"
             >
               Vous recrutez ? Voir mon parcours technique →
             </Link>

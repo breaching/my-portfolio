@@ -20,12 +20,12 @@ export function BlogSection({ posts }: BlogSectionProps) {
   const recentPosts = posts.slice(0, 2);
 
   return (
-    <section id="blog" className="section border-t border-accent-border">
+    <section id="blog" aria-labelledby="blog-heading" className="section border-t border-accent-border">
       <motion.div {...fadeIn}>
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Blog
         </p>
-        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+        <h2 id="blog-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
           Articles & retours d&apos;expérience
         </h2>
         <p className="text-text-secondary prose-width leading-relaxed mb-10">
