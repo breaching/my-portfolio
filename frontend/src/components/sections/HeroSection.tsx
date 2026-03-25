@@ -125,8 +125,8 @@ export function HeroSection() {
             >
               <span className="font-medium">Un site web</span>
               <br />
-              <span className="text-gradient-action font-medium inline-block min-w-[280px] sm:min-w-[340px]">
-                <FlipWords words={flipWords} duration={2800} />
+              <span className="font-medium inline-block min-w-[280px] sm:min-w-[340px]">
+                <FlipWords words={flipWords} duration={2800} className="text-accent-action" />
               </span>
               <br />
               pour votre entreprise
