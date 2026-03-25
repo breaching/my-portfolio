@@ -89,6 +89,9 @@
 - **Refonte /parcours** : 5 projets détaillés (Clarmind, dubus.pro, homelab, pipeline Oura, reverse lookup) avec choix techniques justifiés, compétences avec contexte, timeline enrichie, approche, CTA collaborations
 - **Lien recruteur** : "Vous recrutez ? Voir mon parcours technique →" ajouté dans le footer
 
+**Phase 5 — Contenu SEO :**
+- **Article blog** : "Combien coûte un site vitrine en 2026 ?" — ~3000 mots, données de marché réelles (Malt, MajorFlow, AMN, BOFIP), tableaux comparatifs, TCO 3 ans, prix Caen/Normandie, fiscalité, FAQ
+
 ---
 
 ## Architecture actuelle
@@ -103,7 +106,7 @@ Hero → Services (pricing 3 offres) → Différenciation (4 avantages) → Réa
 - **Formulaire** : Formspree + honeypot + validation + select budget
 - **SEO** : JSON-LD ProfessionalService enrichi, OG image dynamique, sitemap, meta tags
 - **Sécurité** : CSP/HSTS headers (next.config.ts)
-- **Blog** : 6 articles markdown (tech/sécu)
+- **Blog** : 7 articles markdown (6 tech/sécu + 1 prospect/SEO)
 - **Pages** : /, /blog, /blog/[slug], /parcours, /contact, /mentions-legales
 - **Mobile** : CTA flottant sticky bottom
 
@@ -124,8 +127,14 @@ Hero → Services (pricing 3 offres) → Différenciation (4 avantages) → Réa
 
 ## Prochaines étapes
 
-- [ ] Deploy sur Vercel et tester Lighthouse réel
+- [ ] Push sur origin et deploy sur Vercel
+- [ ] Tester Lighthouse réel en production
+- [ ] Tester le light theme sur différents devices
+- [ ] Vérifier l'OG image en partageant le lien sur LinkedIn
 - [ ] Créer compte Calendly et ajouter le lien
-- [ ] Écrire 1er article blog orienté prospect ("Combien coûte un site vitrine en 2026")
+- [ ] Google Search Console — soumettre le sitemap
+- [ ] Google Business Profile — fiche locale Caen
 - [ ] Obtenir 1er vrai témoignage client pour remplacer le placeholder
 - [ ] Ajouter screenshots réels de Clarmind quand disponibles
+- [ ] 2e article prospect : "5 erreurs des sites de commerçants"
+- [ ] 3e article prospect : "Pourquoi un site rapide vous fait gagner des clients"
