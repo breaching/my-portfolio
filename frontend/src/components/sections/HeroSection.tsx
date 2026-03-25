@@ -8,9 +8,10 @@ import {
   Checks,
   Clock,
   CurrencyEur,
-  DeviceMobile,
-  MagnifyingGlass,
-  Gauge,
+  Star,
+  MapPin,
+  Phone,
+  Image,
 } from "@phosphor-icons/react";
 import { scrollToSection } from "@/lib/scroll";
 import { FlipWords } from "@/components/ui/FlipWords";
@@ -54,22 +55,10 @@ const stats = [
   },
 ];
 
-const mockupFeatures = [
-  {
-    icon: DeviceMobile,
-    title: "Responsive",
-    desc: "Parfait sur mobile, tablette et desktop",
-  },
-  {
-    icon: MagnifyingGlass,
-    title: "SEO optimisé",
-    desc: "Visible sur Google dès la mise en ligne",
-  },
-  {
-    icon: Gauge,
-    title: "Ultra rapide",
-    desc: "Score 95+ sur Google PageSpeed",
-  },
+const lighthouseScores = [
+  { label: "Perf.", value: 98, color: "text-status-success" },
+  { label: "A11y", value: 100, color: "text-status-success" },
+  { label: "SEO", value: 100, color: "text-status-success" },
 ];
 
 export function HeroSection() {
@@ -87,14 +76,10 @@ export function HeroSection() {
         className="absolute inset-0 gradient-mesh pointer-events-none"
         aria-hidden="true"
       />
-
-      {/* Dot grid pattern */}
       <div
         className="absolute inset-0 bg-dot-pattern opacity-30 pointer-events-none"
         aria-hidden="true"
       />
-
-      {/* Grain overlay */}
       <div
         className="absolute inset-0 grain-overlay pointer-events-none"
         aria-hidden="true"
@@ -179,7 +164,7 @@ export function HeroSection() {
             </motion.p>
           </motion.div>
 
-          {/* Right — What you get (replaces terminal) */}
+          {/* Right — Realistic site mockup */}
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.97 }}
             animate={isHeroInView ? { opacity: 1, y: 0, scale: 1 } : {}}
@@ -191,90 +176,157 @@ export function HeroSection() {
             className="hidden lg:block"
           >
             <div className="relative">
-              {/* Glow effect */}
+              {/* Glow */}
               <div
                 className="absolute -inset-4 bg-accent-action/8 rounded-2xl blur-2xl"
                 aria-hidden="true"
               />
 
-              {/* Browser mockup */}
-              <div className="relative rounded-xl border border-accent-border bg-background-elevated/90 backdrop-blur-sm overflow-hidden shadow-2xl">
+              {/* Browser frame */}
+              <div className="relative rounded-xl border border-accent-border bg-background-elevated/95 backdrop-blur-sm overflow-hidden shadow-2xl">
                 {/* Browser bar */}
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-accent-border bg-background-overlay/60">
+                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-accent-border bg-background-overlay/60">
                   <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-status-error/60" />
-                    <div className="w-3 h-3 rounded-full bg-status-warning/60" />
-                    <div className="w-3 h-3 rounded-full bg-status-success/60" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-status-error/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-status-warning/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-status-success/50" />
                   </div>
                   <div className="flex-1 flex justify-center">
-                    <div className="flex items-center gap-2 px-4 py-1 rounded-md bg-background/60 border border-accent-border text-xs text-text-tertiary font-mono">
-                      <span className="w-2.5 h-2.5 rounded-full bg-status-success/60" />
-                      votre-entreprise.fr
+                    <div className="flex items-center gap-2 px-3 py-0.5 rounded-md bg-background/60 border border-accent-border text-[10px] text-text-tertiary font-mono">
+                      <span className="w-2 h-2 rounded-full bg-status-success/60" />
+                      votre-boulangerie.fr
                     </div>
                   </div>
                 </div>
 
-                {/* Mockup content — what the client gets */}
-                <div className="p-6 space-y-5">
-                  {/* Simulated hero area */}
-                  <div className="space-y-3">
-                    <div className="h-3 w-3/4 rounded-full bg-text-primary/15 animate-pulse" />
-                    <div className="h-3 w-1/2 rounded-full bg-text-primary/10 animate-pulse" />
-                    <div className="h-9 w-40 rounded-lg bg-accent-action/20 mt-4" />
+                {/* Mini site content */}
+                <div className="bg-background/80">
+                  {/* Mini navbar */}
+                  <div className="flex items-center justify-between px-5 py-2.5 border-b border-accent-border/40">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-4 h-4 rounded bg-accent-action/25" />
+                      <span className="text-[10px] font-medium text-text-primary/80">
+                        Boulangerie Martin
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[9px] text-text-tertiary">Nos pains</span>
+                      <span className="text-[9px] text-text-tertiary">À propos</span>
+                      <span className="text-[9px] px-2 py-0.5 rounded bg-accent-action/20 text-accent-action font-medium">Contact</span>
+                    </div>
                   </div>
 
-                  {/* Simulated content blocks */}
-                  <div className="grid grid-cols-3 gap-3 pt-2">
-                    {[1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        className="rounded-lg border border-accent-border/60 bg-background/40 p-3 space-y-2"
+                  {/* Mini hero */}
+                  <div className="px-5 py-4">
+                    <div className="flex gap-4">
+                      <div className="flex-1 space-y-2">
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={isHeroInView ? { opacity: 1 } : {}}
+                          transition={{ delay: 0.8, duration: 0.5 }}
+                          className="text-[11px] font-semibold text-text-primary leading-tight"
+                        >
+                          Pain artisanal,
+                          <br />
+                          <span className="text-accent-action">fait avec passion.</span>
+                        </motion.p>
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={isHeroInView ? { opacity: 1 } : {}}
+                          transition={{ delay: 1.0, duration: 0.5 }}
+                          className="text-[8px] text-text-tertiary leading-relaxed"
+                        >
+                          Depuis 1987 au coeur de Caen
+                        </motion.p>
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={isHeroInView ? { opacity: 1, scale: 1 } : {}}
+                          transition={{ delay: 1.2, duration: 0.4 }}
+                          className="flex items-center gap-1.5"
+                        >
+                          <div className="px-2 py-0.5 rounded bg-accent-action/20 text-[8px] text-accent-action font-medium">
+                            Commander
+                          </div>
+                          <div className="flex items-center gap-0.5">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} size={7} weight="fill" className="text-status-warning" />
+                            ))}
+                            <span className="text-[7px] text-text-tertiary ml-0.5">4.9</span>
+                          </div>
+                        </motion.div>
+                      </div>
+                      {/* Photo placeholder */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={isHeroInView ? { opacity: 1 } : {}}
+                        transition={{ delay: 0.9, duration: 0.6 }}
+                        className="w-24 h-16 rounded-lg bg-gradient-to-br from-amber-800/20 via-amber-700/15 to-amber-600/10 border border-accent-border/40 flex items-center justify-center shrink-0"
                       >
-                        <div className="w-8 h-8 rounded-md bg-accent-action/15" />
-                        <div className="h-2 w-full rounded-full bg-text-primary/10" />
-                        <div className="h-2 w-2/3 rounded-full bg-text-primary/6" />
+                        <Image size={14} weight="duotone" className="text-text-tertiary/50" alt="" />
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Mini services row */}
+                  <div className="px-5 pb-3">
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { name: "Pains", icon: "🥖" },
+                        { name: "Viennoiseries", icon: "🥐" },
+                        { name: "Pâtisseries", icon: "🎂" },
+                      ].map((item, i) => (
+                        <motion.div
+                          key={item.name}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+                          transition={{
+                            delay: 1.3 + i * 0.1,
+                            duration: 0.4,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                          className="text-center p-2 rounded-md border border-accent-border/30 bg-background-elevated/40"
+                        >
+                          <span className="text-sm leading-none">{item.icon}</span>
+                          <p className="text-[8px] text-text-tertiary mt-1">{item.name}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Mini footer with location */}
+                  <div className="px-5 py-2 border-t border-accent-border/30 flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <MapPin size={8} className="text-accent-action" />
+                      <span className="text-[8px] text-text-tertiary">12 rue Saint-Pierre, Caen</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Phone size={8} className="text-text-tertiary" />
+                      <span className="text-[8px] text-text-tertiary">02 31 ...</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Lighthouse scores bar */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={isHeroInView ? { opacity: 1 } : {}}
+                  transition={{ delay: 1.6, duration: 0.5 }}
+                  className="px-4 py-2.5 border-t border-accent-border bg-background-overlay/80 flex items-center justify-between"
+                >
+                  <span className="text-[9px] text-text-tertiary font-mono">
+                    Lighthouse
+                  </span>
+                  <div className="flex items-center gap-3">
+                    {lighthouseScores.map((score) => (
+                      <div key={score.label} className="flex items-center gap-1.5">
+                        <span className="text-[9px] text-text-tertiary">{score.label}</span>
+                        <span className={`text-[10px] font-mono font-semibold ${score.color}`}>
+                          {score.value}
+                        </span>
                       </div>
                     ))}
                   </div>
-
-                  {/* Feature badges */}
-                  <div className="space-y-2.5 pt-2">
-                    {mockupFeatures.map((feature, i) => {
-                      const Icon = feature.icon;
-                      return (
-                        <motion.div
-                          key={feature.title}
-                          initial={{ opacity: 0, x: -12 }}
-                          animate={
-                            isHeroInView ? { opacity: 1, x: 0 } : {}
-                          }
-                          transition={{
-                            delay: 0.8 + i * 0.15,
-                            duration: 0.5,
-                            ease: [0.16, 1, 0.3, 1],
-                          }}
-                          className="flex items-center gap-3 p-2.5 rounded-lg bg-background/50 border border-accent-border/40"
-                        >
-                          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-accent-action-subtle border border-accent-action/20 shrink-0">
-                            <Icon
-                              size={16}
-                              weight="duotone"
-                              className="text-accent-action"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-sm font-medium text-text-primary leading-tight">
-                              {feature.title}
-                            </p>
-                            <p className="text-xs text-text-tertiary leading-tight">
-                              {feature.desc}
-                            </p>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
