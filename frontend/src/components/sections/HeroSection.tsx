@@ -2,22 +2,27 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { EnvelopeSimple, ArrowDown } from "@phosphor-icons/react";
-import { expertise } from "@/data/posts";
+import { EnvelopeSimple, ArrowDown, Checks, Clock, CurrencyEur } from "@phosphor-icons/react";
 
 const staggerContainer = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.12,
     },
   },
 };
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+};
+
+const fadeInScale = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
 };
 
 function scrollToSection(id: string) {
@@ -28,129 +33,158 @@ function scrollToSection(id: string) {
   }
 }
 
+const stats = [
+  {
+    icon: Clock,
+    value: "7-10 jours",
+    label: "pour un site vitrine",
+  },
+  {
+    icon: Checks,
+    value: "< 2s",
+    label: "temps de chargement",
+  },
+  {
+    icon: CurrencyEur,
+    value: "800 €",
+    label: "à partir de · tout inclus",
+  },
+];
+
 export function HeroSection() {
   const heroRef = useRef(null);
-  const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
+  const isHeroInView = useInView(heroRef, { once: true, margin: "-50px" });
 
   return (
-    <section id="accueil" className="section pt-24 md:pt-32 relative" ref={heroRef}>
-      {/* Background glow */}
+    <section
+      id="accueil"
+      className="relative pt-24 md:pt-32 pb-20 md:pb-28 overflow-hidden"
+      ref={heroRef}
+    >
+      {/* Gradient mesh background */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse, var(--accent-action-glow) 0%, transparent 70%)",
-        }}
+        className="absolute inset-0 gradient-mesh pointer-events-none"
         aria-hidden="true"
       />
 
-      <motion.div
-        initial="initial"
-        animate={isHeroInView ? "animate" : "initial"}
-        variants={staggerContainer}
-        className="prose-width relative"
-      >
-        {/* Availability badge */}
-        <motion.div variants={fadeInUp} className="mb-8">
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent-border bg-background-elevated text-sm text-text-secondary">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-success opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-status-success" />
-            </span>
-            Disponible pour de nouveaux projets
-          </span>
-        </motion.div>
+      {/* Dot grid pattern */}
+      <div
+        className="absolute inset-0 bg-dot-pattern opacity-30 pointer-events-none"
+        aria-hidden="true"
+      />
 
-        <motion.h1
-          variants={fadeInUp}
-          className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[-0.02em] mb-6 leading-[1.1]"
-        >
-          Votre site pro en ligne{" "}
-          <span className="text-gradient-action">en 2 semaines</span>.
-        </motion.h1>
+      {/* Grain overlay */}
+      <div
+        className="absolute inset-0 grain-overlay pointer-events-none"
+        aria-hidden="true"
+      />
 
-        <motion.p
-          variants={fadeInUp}
-          className="text-text-secondary text-base md:text-lg lg:text-xl leading-[1.6] mb-10 max-w-[600px]"
-        >
-          Développeur web freelance à Caen. Je crée des sites vitrines modernes,
-          rapides et visibles sur Google — pour que vos clients vous trouvent.
-        </motion.p>
-
-        <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("contact");
-            }}
-            className="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-action text-background font-medium rounded-md hover:bg-accent-action-hover transition-all"
-          >
-            <EnvelopeSimple size={18} weight="bold" />
-            <span>Demander un devis gratuit</span>
-          </a>
-          <a
-            href="#realisations"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("realisations");
-            }}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-accent-border text-text-primary font-medium rounded-md hover:bg-background-elevated hover:border-text-tertiary transition-all"
-          >
-            <ArrowDown size={18} weight="bold" />
-            <span>Voir mes réalisations</span>
-          </a>
-        </motion.div>
-
-        {/* Credibility stats */}
+      <div className="relative z-10">
         <motion.div
-          variants={fadeInUp}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-10 text-sm text-text-tertiary font-mono"
+          initial="initial"
+          animate={isHeroInView ? "animate" : "initial"}
+          variants={staggerContainer}
+          className="prose-width"
         >
-          <div>
-            <span className="text-text-primary font-medium">7-10 jours</span> pour un site vitrine
-          </div>
-          <div>
-            <span className="text-text-primary font-medium">&lt; 2s</span> temps de chargement
-          </div>
-          <div>
-            <span className="text-text-primary font-medium">À partir de 800 €</span> tout inclus
+          {/* Availability badge */}
+          <motion.div variants={fadeInUp} className="mb-8">
+            <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-accent-border bg-background-elevated/80 backdrop-blur-sm text-sm text-text-secondary">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-success opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-status-success" />
+              </span>
+              Disponible pour de nouveaux projets
+            </span>
+          </motion.div>
+
+          <motion.h1
+            variants={fadeInUp}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-[-0.03em] mb-6 leading-[1.05]"
+          >
+            Votre site pro{" "}
+            <br className="hidden sm:block" />
+            en ligne{" "}
+            <span className="text-gradient-action font-normal">
+              en 2 semaines
+            </span>
+            <span className="text-accent-action">.</span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeInUp}
+            className="text-text-secondary text-lg md:text-xl leading-[1.65] mb-10 max-w-[540px]"
+          >
+            Développeur web freelance à Caen. Je crée des sites vitrines
+            modernes, rapides et visibles sur Google — pour que vos clients
+            vous trouvent.
+          </motion.p>
+
+          {/* CTA buttons */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex flex-col sm:flex-row gap-4 mb-16"
+          >
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("contact");
+              }}
+              className="btn-glow inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-all text-base"
+            >
+              <EnvelopeSimple size={20} weight="bold" />
+              <span>Demander un devis gratuit</span>
+            </a>
+            <a
+              href="#realisations"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("realisations");
+              }}
+              className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 border border-accent-border text-text-primary font-medium rounded-lg hover:bg-background-elevated hover:border-text-tertiary transition-all text-base"
+            >
+              <ArrowDown size={18} weight="bold" />
+              <span>Voir mes réalisations</span>
+            </a>
+          </motion.div>
+        </motion.div>
+
+        {/* Stats row — visual punch */}
+        <motion.div
+          variants={fadeInScale}
+          initial="initial"
+          animate={isHeroInView ? "animate" : "initial"}
+          transition={{ delay: 0.5, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={stat.label}
+                  className="group flex items-center gap-4 p-5 rounded-xl border border-accent-border bg-background-elevated/60 backdrop-blur-sm hover:border-accent-action/40 transition-all duration-300"
+                >
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-action-subtle border border-accent-action/20 shrink-0">
+                    <Icon
+                      size={20}
+                      weight="duotone"
+                      className="text-accent-action"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-lg font-medium text-text-primary stat-number leading-tight">
+                      {stat.value}
+                    </p>
+                    <p className="text-sm text-text-tertiary leading-snug">
+                      {stat.label}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
-      </motion.div>
-
-      {/* Expertise Grid */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="mt-20 relative"
-      >
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {expertise.map((item, index) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 + index * 0.1, duration: 0.5 }}
-              className="group"
-            >
-              <div className="p-6 border border-accent-border rounded-lg bg-background-elevated/50 transition-colors duration-200 group-hover:border-accent-action/50 group-hover:bg-background-elevated">
-                <h3 className="text-lg font-medium mb-3 tracking-[-0.01em] group-hover:text-text-primary transition-colors font-mono">
-                  <span className="text-text-tertiary opacity-60 mr-2">
-                    [{String(index + 1).padStart(2, "0")}]
-                  </span>
-                  {item.title}
-                </h3>
-                <p className="text-text-secondary text-sm leading-[1.6]">
-                  {item.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

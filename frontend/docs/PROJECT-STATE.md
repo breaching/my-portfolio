@@ -92,6 +92,17 @@
 **Phase 5 — Contenu SEO :**
 - **Article blog** : "Combien coûte un site vitrine en 2026 ?" — ~3000 mots, données de marché réelles (Malt, MajorFlow, AMN, BOFIP), tableaux comparatifs, TCO 3 ans, prix Caen/Normandie, fiscalité, FAQ
 
+**Phase 6 — Refonte design conversion :**
+- **globals.css** : ajout `.btn-glow` (CTA halo lumineux), `.gradient-mesh`, `.bg-dot-pattern`, `.grain-overlay`, `.section-accent`, `.stat-number`, `.card-interactive`, amélioration `.btn-primary` et `.text-gradient-action`
+- **HeroSection** : fond gradient mesh + dot grid + grain, headline 7xl, stats en cards avec icônes, CTA glow, suppression grille expertise
+- **ServicesSection** : labels mono uppercase, bannière "Le plus demandé" full-width, temps de livraison affiché, prix 4xl, CTA avec flèche animée
+- **DifferencesSection** : chiffres concrets (< 2s, 0 €/mois, 100%, A+), icônes dans containers, section-accent en fond, CTA discret
+- **RealisationsSection** : browser frame premium (barre URL + SSL), barres chart animées whileInView, métriques en mini-cards avec icônes, badge SaaS B2B
+- **ProcessSection** : timeline verticale avec ligne gradient, icônes contextuelles (ChatCircle, FileText, Code, Rocket), détail rapide par étape, animation slide-in-left
+- **ContactSection** : badges réassurance (24h, gratuit, sans engagement), contact links en cards, btn-glow submit, section-accent
+- **BlogSection + FaqSection** : labels mono uppercase cohérents, titres md:4xl
+- **Cohérence** : toutes sections ont label mono + titre 3xl/4xl + mb-14 + rounded-xl
+
 ---
 
 ## Architecture actuelle

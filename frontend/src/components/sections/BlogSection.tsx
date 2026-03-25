@@ -22,11 +22,15 @@ export function BlogSection({ posts }: BlogSectionProps) {
   return (
     <section id="blog" className="section border-t border-accent-border">
       <motion.div {...fadeIn}>
-        <h2 className="text-3xl font-light tracking-[-0.02em] mb-4">Blog</h2>
+        <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
+          Blog
+        </p>
+        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+          Articles & retours d&apos;expérience
+        </h2>
         <p className="text-text-secondary prose-width leading-relaxed mb-10">
-          Projets techniques et retours d&apos;expérience. Chaque projet est
-          documenté avec le problème résolu, les choix techniques et ce que
-          j&apos;ai appris.
+          Chaque projet est documenté avec le problème résolu, les choix
+          techniques et ce que j&apos;ai appris.
         </p>
 
         <div className="space-y-0">

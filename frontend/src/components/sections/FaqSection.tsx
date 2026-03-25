@@ -48,10 +48,13 @@ export function FaqSection() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-light tracking-[-0.02em] mb-4">
+        <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
+          FAQ
+        </p>
+        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
           Questions fréquentes
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-12">
+        <p className="text-text-secondary prose-width leading-relaxed mb-14">
           Les réponses aux questions que vous vous posez sûrement.
         </p>
       </motion.div>

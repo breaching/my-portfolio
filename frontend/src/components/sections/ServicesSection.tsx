@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Star } from "@phosphor-icons/react";
+import { Check, Star, ArrowRight, Timer } from "@phosphor-icons/react";
 import { services } from "@/data/services";
 
 const staggerContainer = {
@@ -16,7 +16,7 @@ const staggerContainer = {
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
 };
 
 function scrollToContact(serviceName?: string) {
@@ -25,7 +25,6 @@ function scrollToContact(serviceName?: string) {
     const offsetTop = contactSection.offsetTop - 80;
     window.scrollTo({ top: offsetTop, behavior: "smooth" });
 
-    // Pre-fill the project type select if possible
     if (serviceName) {
       setTimeout(() => {
         const select = document.getElementById(
@@ -49,25 +48,32 @@ function scrollToContact(serviceName?: string) {
 }
 
 function formatPrice(price: string) {
-  // Extract number from "À partir de X €" or return as-is for "Sur devis"
   const match = price.match(/(\d[\d\s]*)\s*€/);
   if (match) {
     const number = match[1].trim();
     return (
-      <>
-        <span className="text-3xl font-light tracking-tight text-text-primary">
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-4xl font-light tracking-tight text-text-primary stat-number">
           {number}
-        </span>{" "}
-        <span className="text-lg text-text-tertiary">€</span>
-        <p className="text-xs text-text-tertiary mt-1">À partir de · HT</p>
-      </>
+        </span>
+        <span className="text-lg text-text-tertiary font-light">€</span>
+      </div>
     );
   }
   return (
-    <span className="text-3xl font-light tracking-tight text-text-primary">
+    <span className="text-4xl font-light tracking-tight text-text-primary">
       {price}
     </span>
   );
+}
+
+function getDelivery(name: string) {
+  const map: Record<string, string> = {
+    "Site Essentiel": "7-10 jours",
+    "Site Pro": "2-3 semaines",
+    "Sur-Mesure": "Selon projet",
+  };
+  return map[name] || "";
 }
 
 export function ServicesSection() {
@@ -79,12 +85,15 @@ export function ServicesSection() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-light tracking-[-0.02em] mb-4">
-          Des offres claires, des prix transparents.
+        <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
+          Offres & tarifs
+        </p>
+        <h2 className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+          Des prix transparents, sans surprise.
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-12">
-          Pas de surprise. Vous savez exactement ce que vous obtenez et combien
-          ça coûte.
+        <p className="text-text-secondary prose-width leading-relaxed mb-14">
+          Vous savez exactement ce que vous obtenez et combien ça coûte.
+          Paiement en 2 fois, devis gratuit.
         </p>
       </motion.div>
 
@@ -93,74 +102,104 @@ export function ServicesSection() {
         whileInView="whileInView"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="grid md:grid-cols-3 gap-6"
+        className="grid md:grid-cols-3 gap-5 md:gap-6"
       >
         {services.map((service) => (
           <motion.div
             key={service.name}
             variants={fadeInUp}
             viewport={{ once: true }}
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.2 }}
             className="group"
           >
             <div
-              className={`relative flex flex-col h-full p-6 md:p-8 rounded-lg border transition-all duration-300 ${
+              className={`relative flex flex-col h-full rounded-xl border transition-all duration-300 overflow-hidden ${
                 service.popular
-                  ? "border-accent-action bg-background-elevated shadow-[0_0_30px_var(--accent-action-glow)] scale-[1.02]"
-                  : "border-accent-border bg-background-elevated/50 group-hover:border-accent-action/50"
+                  ? "border-accent-action/60 bg-background-elevated shadow-[0_0_40px_var(--accent-action-glow)] md:scale-[1.03]"
+                  : "border-accent-border bg-background-elevated/50 hover:border-accent-action/30"
               }`}
             >
-              {/* Popular badge */}
+              {/* Popular banner */}
               {service.popular && (
-                <div className="absolute -top-3 left-6">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent-action text-background text-xs font-medium">
-                    <Star size={12} weight="fill" />
-                    Populaire
+                <div className="bg-accent-action px-4 py-2 flex items-center justify-center gap-1.5">
+                  <Star size={14} weight="fill" className="text-background" />
+                  <span className="text-background text-xs font-semibold tracking-wide uppercase">
+                    Le plus demandé
                   </span>
                 </div>
               )}
 
-              <div className="mb-6">
-                <h3 className="text-xl font-medium tracking-[-0.01em] mb-3">
-                  {service.name}
-                </h3>
-                <div>{formatPrice(service.price)}</div>
-                <p className="text-sm text-text-secondary mt-3">
-                  {service.description}
-                </p>
+              <div className="p-7 md:p-8 flex flex-col h-full">
+                {/* Header */}
+                <div className="mb-6">
+                  <h3 className="text-xl font-medium tracking-[-0.01em] mb-4">
+                    {service.name}
+                  </h3>
+                  <div className="mb-2">
+                    {formatPrice(service.price)}
+                    {service.price !== "Sur devis" && (
+                      <p className="text-xs text-text-tertiary mt-1">
+                        À partir de · HT
+                      </p>
+                    )}
+                  </div>
+                  <p className="text-sm text-text-secondary mt-3 leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+
+                {/* Delivery time */}
+                <div className="flex items-center gap-2 mb-6 px-3 py-2 rounded-lg bg-background-overlay/60 border border-accent-border">
+                  <Timer
+                    size={16}
+                    weight="duotone"
+                    className="text-accent-action shrink-0"
+                  />
+                  <span className="text-sm text-text-secondary">
+                    Livraison :{" "}
+                    <span className="text-text-primary font-medium">
+                      {getDelivery(service.name)}
+                    </span>
+                  </span>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-3 mb-8 flex-1">
+                  {service.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-start gap-3 text-sm text-text-secondary"
+                    >
+                      <Check
+                        size={16}
+                        weight="bold"
+                        className="text-status-success mt-0.5 shrink-0"
+                      />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToContact(service.name);
+                  }}
+                  className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 font-medium rounded-lg transition-all text-sm group/btn ${
+                    service.popular
+                      ? "bg-accent-action text-background hover:bg-accent-action-hover btn-glow"
+                      : "border border-accent-border text-text-primary hover:border-accent-action hover:text-accent-action"
+                  }`}
+                >
+                  <span>Demander un devis</span>
+                  <ArrowRight
+                    size={16}
+                    weight="bold"
+                    className="group-hover/btn:translate-x-0.5 transition-transform"
+                  />
+                </a>
               </div>
-
-              <ul className="space-y-3 mb-8 flex-1">
-                {service.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-start gap-3 text-sm text-text-secondary"
-                  >
-                    <Check
-                      size={16}
-                      weight="bold"
-                      className="text-status-success mt-0.5 shrink-0"
-                    />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToContact(service.name);
-                }}
-                className={`inline-flex items-center justify-center gap-2 px-6 py-3 font-medium rounded-md transition-all text-sm ${
-                  service.popular
-                    ? "bg-accent-action text-background hover:bg-accent-action-hover btn-primary"
-                    : "border border-accent-border text-text-primary hover:border-accent-action hover:text-accent-action"
-                }`}
-              >
-                Demander un devis
-              </a>
             </div>
           </motion.div>
         ))}
