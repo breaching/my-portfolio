@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   ArrowRight,
 } from "@phosphor-icons/react";
+import { scrollToSection } from "@/lib/scroll";
 
 const differences = [
   {
@@ -64,11 +65,7 @@ const fadeInUp = {
 };
 
 function scrollToContact() {
-  const section = document.getElementById("contact");
-  if (section) {
-    const offsetTop = section.offsetTop - 80;
-    window.scrollTo({ top: offsetTop, behavior: "smooth" });
-  }
+  scrollToSection("contact");
 }
 
 export function DifferencesSection() {

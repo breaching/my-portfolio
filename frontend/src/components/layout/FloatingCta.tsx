@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EnvelopeSimple } from "@phosphor-icons/react";
+import { scrollToSection } from "@/lib/scroll";
 
 export function FloatingCta() {
   const [visible, setVisible] = useState(false);
@@ -26,11 +27,7 @@ export function FloatingCta() {
   }, []);
 
   const handleClick = () => {
-    const section = document.getElementById("contact");
-    if (section) {
-      const offsetTop = section.offsetTop - 80;
-      window.scrollTo({ top: offsetTop, behavior: "smooth" });
-    }
+    scrollToSection("contact");
   };
 
   return (

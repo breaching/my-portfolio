@@ -10,6 +10,7 @@ import {
   CreditCard,
   Globe,
 } from "@phosphor-icons/react";
+import { scrollToSection } from "@/lib/scroll";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -35,11 +36,7 @@ const clarmindMetrics = [
 ];
 
 function scrollToContact() {
-  const section = document.getElementById("contact");
-  if (section) {
-    const offsetTop = section.offsetTop - 80;
-    window.scrollTo({ top: offsetTop, behavior: "smooth" });
-  }
+  scrollToSection("contact");
 }
 
 export function RealisationsSection() {
@@ -300,18 +297,6 @@ export function RealisationsSection() {
         </motion.div>
       </motion.div>
 
-      {/* Testimonials placeholder */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="mt-12 text-center"
-      >
-        <p className="text-sm text-text-tertiary">
-          Les premiers retours clients arrivent bientôt.
-        </p>
-      </motion.div>
     </section>
   );
 }

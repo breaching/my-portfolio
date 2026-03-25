@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
 import remarkGfm from 'remark-gfm';
 import type { ReactNode, ReactElement } from "react";
+import Image from "next/image";
 
 function getTextContent(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -88,7 +89,17 @@ const components: Components = {
   pre: ({ children }) => <pre>{children}</pre>,
   img: ({ src, alt }) => (
     <figure className="blog-figure">
-      <img src={src} alt={alt || ""} loading="lazy" />
+      {src && typeof src === "string" && (
+        <Image
+          src={src}
+          alt={alt || ""}
+          width={680}
+          height={400}
+          className="w-full h-auto"
+          loading="lazy"
+          sizes="(max-width: 680px) 100vw, 680px"
+        />
+      )}
       {alt && <figcaption>{alt}</figcaption>}
     </figure>
   ),

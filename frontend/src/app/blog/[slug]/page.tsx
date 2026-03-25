@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Calendar, GithubLogo } from "@phosphor-icons/react/dist/ssr";
 import { BackButton } from "@/components/ui/BackButton";
 import { MarkdownContent } from "@/lib/markdown";
-import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/posts";
+import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
 
 interface PageProps {

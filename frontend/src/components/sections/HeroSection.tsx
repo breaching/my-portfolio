@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { EnvelopeSimple, ArrowDown, Checks, Clock, CurrencyEur } from "@phosphor-icons/react";
+import { scrollToSection } from "@/lib/scroll";
 
 const staggerContainer = {
   initial: {},
@@ -24,14 +25,6 @@ const fadeInScale = {
   animate: { opacity: 1, scale: 1 },
   transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
 };
-
-function scrollToSection(id: string) {
-  const section = document.getElementById(id);
-  if (section) {
-    const offsetTop = section.offsetTop - 80;
-    window.scrollTo({ top: offsetTop, behavior: "smooth" });
-  }
-}
 
 const stats = [
   {
@@ -105,7 +98,7 @@ export function HeroSection() {
             <br className="hidden sm:block" />
             en ligne{" "}
             <span className="text-gradient-action font-normal">
-              en 2 semaines
+              rapidement
             </span>
             <span className="text-accent-action">.</span>
           </motion.h1>

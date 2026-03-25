@@ -29,7 +29,7 @@ export const services: Service[] = [
       "3 à 5 pages optimisées",
       "Animations et transitions",
       "SEO technique complet",
-      "Google Analytics intégré",
+      "Analytics intégré (RGPD)",
       "Formulaire avancé",
       "Livré en 2-3 semaines",
     ],

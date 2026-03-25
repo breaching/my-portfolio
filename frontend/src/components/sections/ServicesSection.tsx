@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check, Star, ArrowRight, Timer } from "@phosphor-icons/react";
 import { services } from "@/data/services";
+import { scrollToSection } from "@/lib/scroll";
 
 const staggerContainer = {
   initial: {},
@@ -20,30 +21,26 @@ const fadeInUp = {
 };
 
 function scrollToContact(serviceName?: string) {
-  const contactSection = document.getElementById("contact");
-  if (contactSection) {
-    const offsetTop = contactSection.offsetTop - 80;
-    window.scrollTo({ top: offsetTop, behavior: "smooth" });
+  scrollToSection("contact");
 
-    if (serviceName) {
-      setTimeout(() => {
-        const select = document.getElementById(
-          "project_type"
-        ) as HTMLSelectElement | null;
-        if (select) {
-          const valueMap: Record<string, string> = {
-            "Site Essentiel": "site-essentiel",
-            "Site Pro": "site-pro",
-            "Sur-Mesure": "sur-mesure",
-          };
-          const value = valueMap[serviceName];
-          if (value) {
-            select.value = value;
-            select.dispatchEvent(new Event("change", { bubbles: true }));
-          }
+  if (serviceName) {
+    setTimeout(() => {
+      const select = document.getElementById(
+        "project_type"
+      ) as HTMLSelectElement | null;
+      if (select) {
+        const valueMap: Record<string, string> = {
+          "Site Essentiel": "site-essentiel",
+          "Site Pro": "site-pro",
+          "Sur-Mesure": "sur-mesure",
+        };
+        const value = valueMap[serviceName];
+        if (value) {
+          select.value = value;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
         }
-      }, 500);
-    }
+      }
+    }, 500);
   }
 }
 
@@ -138,7 +135,7 @@ export function ServicesSection() {
                     {formatPrice(service.price)}
                     {service.price !== "Sur devis" && (
                       <p className="text-xs text-text-tertiary mt-1">
-                        À partir de · HT
+                        À partir de · TVA non applicable
                       </p>
                     )}
                   </div>

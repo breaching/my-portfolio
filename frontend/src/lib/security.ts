@@ -132,11 +132,3 @@ export function validateContactInput(input: {
   };
 }
 
-/**
- * Generate a simple honeypot field name (changes based on date)
- */
-export function getHoneypotFieldName(): string {
-  const date = new Date();
-  const seed = date.getFullYear() * 1000 + date.getMonth() * 31 + date.getDate();
-  return `website_url_${seed}`;
-}
