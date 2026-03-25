@@ -76,6 +76,7 @@ export function FaqSection() {
 
   return (
     <section id="faq" aria-labelledby="faq-heading" className="section border-t border-accent-border">
+      <div className="container-main">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -169,6 +170,7 @@ export function FaqSection() {
           />
         </a>
       </motion.div>
+      </div>
     </section>
   );
 }

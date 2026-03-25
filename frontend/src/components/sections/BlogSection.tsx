@@ -21,6 +21,7 @@ export function BlogSection({ posts }: BlogSectionProps) {
 
   return (
     <section id="blog" aria-labelledby="blog-heading" className="section border-t border-accent-border">
+      <div className="container-main">
       <motion.div {...fadeIn}>
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Blog
@@ -95,6 +96,7 @@ export function BlogSection({ posts }: BlogSectionProps) {
           </Link>
         </motion.div>
       </motion.div>
+      </div>
     </section>
   );
 }

@@ -46,6 +46,7 @@ export function RealisationsSection() {
       aria-labelledby="realisations-heading"
       className="section border-t border-accent-border"
     >
+      <div className="container-main">
       <motion.div {...fadeIn}>
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Réalisations
@@ -325,6 +326,7 @@ export function RealisationsSection() {
           />
         </a>
       </motion.div>
+      </div>
     </section>
   );
 }

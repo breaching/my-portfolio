@@ -29,6 +29,7 @@ const garanties = [
 export function GarantiesSection() {
   return (
     <section className="py-12 md:py-16 border-t border-accent-border">
+      <div className="container-main">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -63,6 +64,7 @@ export function GarantiesSection() {
           })}
         </div>
       </motion.div>
+      </div>
     </section>
   );
 }

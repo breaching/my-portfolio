@@ -18,25 +18,16 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Full-bleed sections — backgrounds go edge-to-edge */}
       <HeroSection />
       <TechLogosSection />
       <DifferencesSection />
-
-      {/* Contained sections */}
-      <div className="container-main">
-        <RealisationsSection />
-        <ServicesSection />
-        <ProcessSection />
-        <GarantiesSection />
-        <FaqSection />
-      </div>
-
-      {/* Full-bleed sections */}
+      <RealisationsSection />
+      <ServicesSection />
+      <ProcessSection />
+      <GarantiesSection />
+      <FaqSection />
       <ContactSection />
-      <div className="container-main">
-        <BlogSection posts={posts} />
-      </div>
+      <BlogSection posts={posts} />
       <PreFooterCta />
     </>
   );

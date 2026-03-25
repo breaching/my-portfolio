@@ -91,6 +91,7 @@ function getDelivery(name: string) {
 export function ServicesSection() {
   return (
     <section id="services" aria-labelledby="services-heading" className="section border-t border-accent-border">
+      <div className="container-main">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -226,6 +227,7 @@ export function ServicesSection() {
           </motion.div>
         ))}
       </motion.div>
+      </div>
     </section>
   );
 }

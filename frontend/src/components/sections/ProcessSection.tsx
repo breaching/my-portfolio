@@ -48,6 +48,7 @@ const steps = [
 export function ProcessSection() {
   return (
     <section id="process" aria-labelledby="process-heading" className="section border-t border-accent-border">
+      <div className="container-main">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -153,6 +154,7 @@ export function ProcessSection() {
           <ArrowRight size={16} weight="bold" />
         </a>
       </motion.div>
+      </div>
     </section>
   );
 }
