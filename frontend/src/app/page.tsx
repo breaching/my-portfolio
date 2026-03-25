@@ -17,18 +17,27 @@ export default function HomePage() {
   const posts = getAllPosts();
 
   return (
-    <div className="container-main">
+    <>
+      {/* Full-bleed sections — backgrounds go edge-to-edge */}
       <HeroSection />
       <TechLogosSection />
       <DifferencesSection />
-      <RealisationsSection />
-      <ServicesSection />
-      <ProcessSection />
-      <GarantiesSection />
-      <FaqSection />
+
+      {/* Contained sections */}
+      <div className="container-main">
+        <RealisationsSection />
+        <ServicesSection />
+        <ProcessSection />
+        <GarantiesSection />
+        <FaqSection />
+      </div>
+
+      {/* Full-bleed sections */}
       <ContactSection />
-      <BlogSection posts={posts} />
+      <div className="container-main">
+        <BlogSection posts={posts} />
+      </div>
       <PreFooterCta />
-    </div>
+    </>
   );
 }

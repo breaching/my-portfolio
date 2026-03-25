@@ -81,7 +81,7 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 container-main">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left — Content */}
           <motion.div

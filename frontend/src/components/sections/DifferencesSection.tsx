@@ -71,7 +71,7 @@ function scrollToContact() {
 export function DifferencesSection() {
   return (
     <section aria-labelledby="differences-heading" className="section section-accent border-t border-accent-border">
-      <div className="relative z-10">
+      <div className="relative z-10 container-main">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

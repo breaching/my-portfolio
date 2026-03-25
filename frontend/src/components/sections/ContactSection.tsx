@@ -119,7 +119,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" aria-labelledby="contact-heading" className="section section-accent border-t border-accent-border">
-      <div className="relative z-10">
+      <div className="relative z-10 container-main">
         <motion.div {...fadeIn}>
           <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
             Contact
