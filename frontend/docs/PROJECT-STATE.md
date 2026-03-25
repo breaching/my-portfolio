@@ -51,6 +51,8 @@
 | 8 | dubus.pro ajouté comme réalisation | DONE |
 | 16 | Page /parcours — déjà propre (pas de stage/alternance) | DONE |
 | 17 | Calendly — en attente création compte | WAITING |
+| 21 | Refonte /parcours — page portfolio technique complète | DONE |
+| 22 | Lien "Vous recrutez ?" discret dans le footer | DONE |
 
 ---
 
@@ -84,6 +86,8 @@
 - dubus.pro ajouté comme 2e réalisation (stack Next.js 16, React 19, Tailwind 4, Framer Motion)
 - Page /parcours vérifiée : aucune mention stage/alternance/étudiant
 - Calendly : en attente de création du compte
+- **Refonte /parcours** : 5 projets détaillés (Clarmind, dubus.pro, homelab, pipeline Oura, reverse lookup) avec choix techniques justifiés, compétences avec contexte, timeline enrichie, approche, CTA collaborations
+- **Lien recruteur** : "Vous recrutez ? Voir mon parcours technique →" ajouté dans le footer
 
 ---
 
