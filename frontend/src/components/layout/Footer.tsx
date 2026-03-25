@@ -72,6 +72,16 @@ export function Footer() {
             ))}
           </div>
 
+          {/* Recruiter link */}
+          <div className="flex justify-center sm:justify-start">
+            <Link
+              href="/parcours"
+              className="text-xs text-text-tertiary hover:text-accent-action transition-colors duration-200"
+            >
+              Vous recrutez ? Voir mon parcours technique →
+            </Link>
+          </div>
+
           {/* Bottom — legal + SEO */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-accent-border">
             <p className="text-xs text-text-tertiary">
