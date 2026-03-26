@@ -28,19 +28,19 @@ const specialties = [
     name: "Baguette tradition",
     description: "Farine Label Rouge, 24h de fermentation",
     price: "1,30 €",
-    image: "https://images.unsplash.com/photo-1549931319-a545753467c8?w=400&h=300&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=400&h=300&fit=crop&q=80",
   },
   {
     name: "Pain au levain",
     description: "Levain naturel, cuisson au feu de bois",
     price: "4,50 €",
-    image: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?w=400&h=300&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=400&h=300&fit=crop&q=80",
   },
   {
     name: "Croissant pur beurre",
     description: "Beurre AOP Charentes-Poitou, feuilletage 72 couches",
     price: "1,40 €",
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=400&h=300&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1623334044303-241021148842?w=400&h=300&fit=crop&q=80",
   },
   {
     name: "Pain aux noix",

@@ -4,7 +4,7 @@ import Link from "next/link";
 const socialLinks = [
   { href: "https://github.com/breaching", icon: GithubLogo, label: "GitHub" },
   { href: "https://www.linkedin.com/in/alexis-dubus-603590284/", icon: LinkedinLogo, label: "LinkedIn" },
-  { href: "https://tryhackme.com/p/bremusic", icon: ShieldCheck, label: "TryHackMe" },
+  { href: "https://tryhackme.com/p/670", icon: ShieldCheck, label: "TryHackMe" },
 ];
 
 const navLinks = [

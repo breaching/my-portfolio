@@ -9,11 +9,12 @@ import {
   CurrencyEur,
   Clock,
   CheckCircle,
+  Code,
+  Terminal,
   Gauge,
   MapPin,
   Phone,
   Star,
-  ArrowUpRight,
 } from "@phosphor-icons/react";
 import { scrollToSection } from "@/lib/scroll";
 import { FlipWords } from "@/components/ui/FlipWords";
@@ -58,38 +59,42 @@ const stats = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   Browser Mockup — Real demo site preview
-   Clean single-window approach with live bakery content
+   Floating Screens Illustration — 3D isometric browser windows
+   Inspired by the premium freelance landing page mockup
    ────────────────────────────────────────────────────────── */
 
-function BrowserMockup({ isInView }: { isInView: boolean }) {
+function FloatingScreens({ isInView }: { isInView: boolean }) {
   return (
-    <div className="relative w-full h-[520px] lg:h-[580px]" style={{ perspective: "1200px" }}>
-      {/* Ambient glow */}
+    <div className="relative w-full h-[500px] lg:h-[560px]" style={{ perspective: "1200px" }}>
+      {/* Ambient glow layers */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[350px] rounded-full bg-indigo-500/20 blur-[100px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full bg-indigo-500/25 blur-[120px]"
         aria-hidden="true"
       />
       <div
-        className="absolute top-[25%] left-[60%] w-48 h-48 rounded-full bg-violet-600/10 blur-[60px]"
+        className="absolute top-[30%] left-[20%] w-64 h-64 rounded-full bg-violet-600/15 blur-[80px]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-[20%] right-[15%] w-48 h-48 rounded-full bg-sky-500/10 blur-[60px]"
         aria-hidden="true"
       />
 
-      {/* ── Main browser window ── */}
+      {/* ── Main browser window — front, largest, angled ── */}
       <motion.div
-        initial={{ opacity: 0, y: 40, rotateX: 15 }}
-        animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-        transition={{ delay: 0.35, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-x-0 top-0 z-20 mx-auto w-[95%]"
-        style={{ transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-[8%] left-[3%] w-[78%] z-30"
+        style={{ transform: "rotateY(-12deg) rotateX(8deg)", transformStyle: "preserve-3d" }}
       >
-        <div className="rounded-xl border border-white/[0.08] bg-[#0c0c1a]/95 backdrop-blur-xl shadow-[0_25px_80px_-15px_rgba(99,102,241,0.3),0_0_0_1px_rgba(99,102,241,0.08)] overflow-hidden">
+        <div className="rounded-xl border border-indigo-500/30 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_20px_80px_-15px_rgba(99,102,241,0.25)] overflow-hidden">
           {/* Browser chrome */}
           <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
             <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/70" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/70" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]/70" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
             </div>
             <div className="flex-1 flex justify-center">
               <div className="flex items-center gap-2 px-4 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-[10px] text-white/30 font-mono">
@@ -99,9 +104,9 @@ function BrowserMockup({ isInView }: { isInView: boolean }) {
             </div>
           </div>
 
-          {/* Site content — realistic bakery preview */}
+          {/* Realistic mini-site content — warm bakery theme */}
           <div className="bg-[#FFF8F0]">
-            {/* Mini navbar */}
+            {/* Navbar */}
             <div className="flex items-center justify-between px-4 py-2 border-b border-[#E8D5C0]/40">
               <span className="text-[10px] font-semibold text-[#3D2B1F]">Boulangerie Martin</span>
               <div className="flex items-center gap-3">
@@ -113,7 +118,7 @@ function BrowserMockup({ isInView }: { isInView: boolean }) {
             </div>
 
             {/* Hero with real image */}
-            <div className="relative h-[140px] overflow-hidden">
+            <div className="relative h-[120px] overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=600&h=250&fit=crop&q=80"
                 alt=""
@@ -126,30 +131,27 @@ function BrowserMockup({ isInView }: { isInView: boolean }) {
                 <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.7, duration: 0.5 }}
+                  transition={{ delay: 0.8, duration: 0.5 }}
                 >
-                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[7px] text-white/70 mb-2">
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[7px] text-white/70 mb-1.5">
                     <MapPin size={7} weight="fill" />
-                    12 Rue Saint-Pierre, Caen
+                    Caen
                   </div>
-                  <p className="text-[14px] font-light text-white leading-tight">
+                  <p className="text-[13px] font-light text-white leading-tight">
                     Pain artisanal,
                   </p>
-                  <p className="text-[14px] font-semibold text-[#E8C496] leading-tight">
+                  <p className="text-[13px] font-semibold text-[#E8C496] leading-tight">
                     fait avec passion.
                   </p>
-                  <p className="text-[7px] text-white/50 mt-1.5 max-w-[180px] leading-relaxed">
-                    Depuis 1987, la famille Martin perpétue la tradition du pain au levain naturel.
-                  </p>
                   <div className="flex items-center gap-2 mt-2">
-                    <div className="px-2.5 py-1 rounded-full bg-[#E8C496] text-[7px] text-[#3D2B1F] font-medium">
-                      Découvrir nos pains
+                    <div className="px-2.5 py-0.5 rounded-full bg-[#E8C496] text-[7px] text-[#3D2B1F] font-medium">
+                      Découvrir
                     </div>
                     <div className="flex items-center gap-0.5">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={7} weight="fill" className="text-[#E8C496]" />
+                        <Star key={i} size={6} weight="fill" className="text-[#E8C496]" />
                       ))}
-                      <span className="text-[6px] text-white/40 ml-1">4.9/5</span>
+                      <span className="text-[6px] text-white/40 ml-0.5">4.9</span>
                     </div>
                   </div>
                 </motion.div>
@@ -158,32 +160,26 @@ function BrowserMockup({ isInView }: { isInView: boolean }) {
 
             {/* Products grid with real images */}
             <div className="px-4 py-3">
-              <p className="text-[7px] font-medium text-[#8B5E3C] tracking-widest uppercase mb-2">Nos spécialités</p>
+              <p className="text-[7px] font-medium text-[#8B5E3C] tracking-widest uppercase mb-1.5">Nos spécialités</p>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { name: "Baguette tradition", price: "1,30 €", img: "https://images.unsplash.com/photo-1549931319-a545753467c8?w=200&h=120&fit=crop&q=70" },
-                  { name: "Pain au levain", price: "4,50 €", img: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?w=200&h=120&fit=crop&q=70" },
-                  { name: "Croissant pur beurre", price: "1,40 €", img: "https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=200&h=120&fit=crop&q=70" },
+                  { name: "Baguette tradition", price: "1,30 €", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=120&fit=crop&q=70" },
+                  { name: "Tarte aux pommes", price: "3,80 €", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=120&fit=crop&q=70" },
+                  { name: "Fougasse olives", price: "3,20 €", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=120&fit=crop&q=70" },
                 ].map((item, i) => (
                   <motion.div
                     key={item.name}
                     initial={{ opacity: 0, y: 8 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.9 + i * 0.1, duration: 0.4 }}
+                    transition={{ delay: 1.1 + i * 0.1, duration: 0.4 }}
                     className="rounded-lg border border-[#E8D5C0]/40 bg-white overflow-hidden"
                   >
-                    <div className="relative h-[48px]">
-                      <Image
-                        src={item.img}
-                        alt=""
-                        fill
-                        className="object-cover"
-                        sizes="130px"
-                      />
+                    <div className="relative h-[42px]">
+                      <Image src={item.img} alt="" fill className="object-cover" sizes="130px" />
                     </div>
-                    <div className="px-2 py-1.5">
+                    <div className="px-1.5 py-1">
                       <p className="text-[7px] font-semibold text-[#3D2B1F] truncate">{item.name}</p>
-                      <p className="text-[7px] font-mono text-[#8B5E3C]">{item.price}</p>
+                      <p className="text-[6px] font-mono text-[#8B5E3C]">{item.price}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -194,7 +190,7 @@ function BrowserMockup({ isInView }: { isInView: boolean }) {
             <div className="px-4 py-2 border-t border-[#E8D5C0]/30 flex items-center justify-between bg-[#FAF3EB]">
               <div className="flex items-center gap-1">
                 <MapPin size={8} className="text-[#8B5E3C]" />
-                <span className="text-[7px] text-[#6B5344]/60">12 rue Saint-Pierre, 14000 Caen</span>
+                <span className="text-[7px] text-[#6B5344]/60">12 rue Saint-Pierre, Caen</span>
               </div>
               <div className="flex items-center gap-1">
                 <Phone size={8} className="text-[#8B5E3C]/60" />
@@ -203,91 +199,181 @@ function BrowserMockup({ isInView }: { isInView: boolean }) {
             </div>
           </div>
         </div>
-
-        {/* "Voir la démo" link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 1.4, duration: 0.4 }}
-          className="mt-3 text-center"
-        >
-          <a
-            href="/demos/boulangerie"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[11px] text-text-tertiary hover:text-accent-action transition-colors"
-          >
-            Voir la démo interactive
-            <ArrowUpRight size={12} />
-          </a>
-        </motion.div>
       </motion.div>
 
-      {/* ── Lighthouse overlay — floating bottom right ── */}
+      {/* ── Code editor — back right, overlapping ── */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[2%] right-[-3%] w-[48%] z-30"
+        transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-[0%] right-[-5%] w-[55%] z-20"
+        style={{ transform: "rotateY(-16deg) rotateX(10deg)", transformStyle: "preserve-3d" }}
       >
-        <div className="rounded-xl border border-emerald-500/20 bg-[#0a0a18]/92 backdrop-blur-xl shadow-[0_15px_50px_-10px_rgba(16,185,129,0.15)] overflow-hidden">
-          <div className="px-3.5 py-2 border-b border-white/[0.04] flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <Gauge size={11} weight="bold" className="text-emerald-400/80" />
-              <span className="text-[8px] font-semibold text-white/50 font-mono">Lighthouse</span>
+        <div className="rounded-xl border border-indigo-500/20 bg-[#0a0a18]/85 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.15)] overflow-hidden">
+          {/* Editor tabs */}
+          <div className="flex items-center gap-0 border-b border-white/[0.04] bg-white/[0.01]">
+            <div className="flex items-center gap-1.5 px-3 py-2 border-b-2 border-indigo-500/60 bg-white/[0.02] text-[8px] text-white/50 font-mono">
+              <Code size={9} className="text-indigo-400/60" />
+              page.tsx
             </div>
-            <span className="text-[7px] text-white/20 font-mono">boulangerie-martin.fr</span>
+            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
+              layout.tsx
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
+              globals.css
+            </div>
           </div>
-          <div className="p-3">
+          {/* Code with line numbers */}
+          <div className="p-3 font-mono text-[8px] leading-[2]">
+            <div className="flex gap-3">
+              {/* Line numbers */}
+              <div className="text-white/10 text-right select-none w-4 shrink-0">
+                {[1,2,3,4,5,6,7,8,9,10,11].map(n => (
+                  <div key={n}>{n}</div>
+                ))}
+              </div>
+              {/* Code */}
+              <div className="space-y-0 overflow-hidden">
+                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Hero {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
+                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Services {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
+                <div className="text-white/10">&nbsp;</div>
+                <div><span className="text-violet-400/80">export</span> <span className="text-sky-400/70">default</span> <span className="text-amber-400/80">function</span> <span className="text-sky-300/80">Page</span><span className="text-white/30">() {"{"}</span></div>
+                <div className="pl-4"><span className="text-violet-400/80">return</span> <span className="text-white/30">(</span></div>
+                <div className="pl-8"><span className="text-sky-400/60">&lt;</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
+                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Hero</span> <span className="text-indigo-300/70">title</span><span className="text-white/20">=</span><span className="text-emerald-400/70">&quot;Votre site&quot;</span> <span className="text-sky-400/60">/&gt;</span></div>
+                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Services</span> <span className="text-indigo-300/70">grid</span><span className="text-white/20">=</span><span className="text-white/30">{"{"}</span><span className="text-orange-400/70">3</span><span className="text-white/30">{"}"}</span> <span className="text-sky-400/60">/&gt;</span></div>
+                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Contact</span> <span className="text-indigo-300/70">form</span> <span className="text-sky-400/60">/&gt;</span></div>
+                <div className="pl-8"><span className="text-sky-400/60">&lt;/</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
+                <div className="pl-4"><span className="text-white/30">)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Lighthouse dashboard — front bottom right ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[2%] right-[0%] w-[52%] z-40"
+        style={{ transform: "rotateY(-8deg) rotateX(4deg)", transformStyle: "preserve-3d" }}
+      >
+        <div className="rounded-xl border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-[0_15px_50px_-10px_rgba(16,185,129,0.12)] overflow-hidden">
+          <div className="px-4 py-2.5 border-b border-white/[0.04] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Gauge size={12} weight="bold" className="text-emerald-400/80" />
+              <span className="text-[9px] font-semibold text-white/50 font-mono">Lighthouse Report</span>
+            </div>
+            <span className="text-[7px] text-white/20 font-mono">votre-site.fr</span>
+          </div>
+          <div className="p-4">
+            {/* Score circles */}
             <div className="flex items-center justify-around">
               {[
-                { label: "Performance", score: 98 },
-                { label: "Accessibilité", score: 100 },
-                { label: "Best Practices", score: 100 },
-                { label: "SEO", score: 100 },
+                { label: "Performance", score: 98, color: "text-emerald-400 border-emerald-500/40" },
+                { label: "Accessibilité", score: 100, color: "text-emerald-400 border-emerald-500/40" },
+                { label: "Bonnes pratiques", score: 100, color: "text-emerald-400 border-emerald-500/40" },
+                { label: "SEO", score: 100, color: "text-emerald-400 border-emerald-500/40" },
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 1.3 + i * 0.08, duration: 0.35 }}
-                  className="flex flex-col items-center gap-1"
+                  transition={{ delay: 1.2 + i * 0.1, duration: 0.4 }}
+                  className="flex flex-col items-center gap-1.5"
                 >
-                  <div className="w-9 h-9 rounded-full border-2 border-emerald-500/40 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.05]">
-                    <span className="text-[10px] font-bold font-mono">{item.score}</span>
+                  <div className={`w-10 h-10 rounded-full border-2 ${item.color} flex items-center justify-center bg-emerald-500/[0.05]`}>
+                    <span className="text-[11px] font-bold font-mono">{item.score}</span>
                   </div>
-                  <span className="text-[5.5px] text-white/30 text-center leading-tight max-w-[45px]">{item.label}</span>
+                  <span className="text-[6px] text-white/30 text-center leading-tight max-w-[50px]">{item.label}</span>
                 </motion.div>
               ))}
             </div>
           </div>
         </div>
       </motion.div>
+
+      {/* ── Terminal — bottom left, subtle ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[15%] left-[-3%] w-[40%] z-10"
+        style={{ transform: "rotateY(-6deg) rotateX(5deg)", transformStyle: "preserve-3d" }}
+      >
+        <div className="rounded-lg border border-white/[0.06] bg-[#0a0a14]/80 backdrop-blur-xl shadow-lg overflow-hidden">
+          <div className="px-3 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
+            <Terminal size={9} className="text-white/25" />
+            <span className="text-[7px] text-white/25 font-mono">terminal</span>
+          </div>
+          <div className="p-3 font-mono text-[7px] leading-[2]">
+            <div><span className="text-emerald-400/70">❯</span> <span className="text-white/40">npm run build</span></div>
+            <div className="text-white/20">  ▸ Creating optimized build...</div>
+            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Compiled in 847ms</div>
+            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Generating static pages (7/7)</div>
+            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Collecting build traces</div>
+            <div className="text-emerald-400/70">  <span className="text-emerald-400/80">✓</span> Build complete — ready to deploy</div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Floating particles ── */}
+      {[
+        { top: "5%", left: "50%", size: 4, delay: 0.5, glow: true },
+        { top: "20%", left: "92%", size: 3, delay: 0.7, glow: false },
+        { top: "60%", left: "15%", size: 3, delay: 0.9, glow: false },
+        { top: "85%", left: "80%", size: 4, delay: 1.1, glow: true },
+        { top: "10%", left: "10%", size: 2, delay: 0.8, glow: false },
+        { top: "45%", left: "95%", size: 2, delay: 1.0, glow: false },
+        { top: "75%", left: "40%", size: 3, delay: 1.2, glow: false },
+        { top: "35%", left: "5%", size: 2, delay: 0.6, glow: false },
+      ].map((dot, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={isInView ? { opacity: dot.glow ? 0.8 : 0.4, scale: 1 } : {}}
+          transition={{ delay: dot.delay, duration: 0.6 }}
+          className={`absolute rounded-full ${dot.glow ? "bg-indigo-400/80 shadow-[0_0_8px_2px_rgba(129,140,248,0.4)]" : "bg-indigo-400/40"}`}
+          style={{ top: dot.top, left: dot.left, width: dot.size, height: dot.size }}
+          aria-hidden="true"
+        />
+      ))}
+
+      {/* ── Connecting lines (subtle grid effect) ── */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <line x1="20%" y1="80%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
+        <line x1="80%" y1="20%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
+        <line x1="85%" y1="85%" x2="55%" y2="55%" stroke="rgba(99,102,241,0.04)" strokeWidth="1" />
+      </svg>
     </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────
-   Mobile illustration — simplified browser mockup
+   Mobile-only simplified illustration
    ────────────────────────────────────────────────────────── */
 
 function MobileIllustration({ isInView }: { isInView: boolean }) {
   return (
-    <div className="relative w-full max-w-md mx-auto h-[350px]">
+    <div className="relative w-full max-w-md mx-auto h-[320px]">
       {/* Glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-indigo-500/20 blur-[80px]"
         aria-hidden="true"
       />
 
-      {/* Browser frame */}
+      {/* Main browser */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.4, duration: 0.6 }}
-        className="relative z-20 w-[90%] mx-auto"
+        className="relative z-20 w-[85%] mx-auto"
       >
-        <div className="rounded-xl border border-indigo-500/20 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_20px_60px_-10px_rgba(99,102,241,0.2)] overflow-hidden">
+        <div className="rounded-xl border border-indigo-500/25 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.2)] overflow-hidden">
           {/* Chrome */}
           <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.05] bg-white/[0.02]">
             <div className="flex gap-1.5">
@@ -299,46 +385,35 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
               <span className="text-[8px] text-white/25 font-mono">boulangerie-martin.fr</span>
             </div>
           </div>
-
-          {/* Content — bakery preview with real image */}
+          {/* Warm bakery content */}
           <div className="bg-[#FFF8F0]">
-            <div className="relative h-[100px] overflow-hidden">
+            {/* Mini hero */}
+            <div className="relative h-[72px] overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=400&h=180&fit=crop&q=75"
+                src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=400&h=150&fit=crop&q=70"
                 alt=""
                 fill
                 className="object-cover"
-                sizes="350px"
+                sizes="300px"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/85 via-[#3D2B1F]/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/80 to-transparent" />
               <div className="absolute inset-0 flex flex-col justify-center px-4">
-                <p className="text-[11px] font-light text-white leading-tight">Pain artisanal,</p>
-                <p className="text-[11px] font-semibold text-[#E8C496] leading-tight">fait avec passion.</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="px-2 py-0.5 rounded-full bg-[#E8C496] text-[6px] text-[#3D2B1F] font-medium">
-                    Découvrir
-                  </div>
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={6} weight="fill" className="text-[#E8C496]" />
-                    ))}
-                  </div>
-                </div>
+                <p className="text-[10px] font-light text-white">Pain artisanal,</p>
+                <p className="text-[10px] font-semibold text-[#E8C496]">fait avec passion.</p>
               </div>
             </div>
-
-            {/* Products */}
+            {/* Product cards */}
             <div className="grid grid-cols-3 gap-1.5 p-3">
               {[
-                { name: "Baguette", img: "https://images.unsplash.com/photo-1549931319-a545753467c8?w=150&h=90&fit=crop&q=60" },
-                { name: "Levain", img: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?w=150&h=90&fit=crop&q=60" },
-                { name: "Croissant", img: "https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=150&h=90&fit=crop&q=60" },
+                { name: "Baguette", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=120&h=80&fit=crop&q=60" },
+                { name: "Tarte", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=120&h=80&fit=crop&q=60" },
+                { name: "Fougasse", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=120&h=80&fit=crop&q=60" },
               ].map((item) => (
                 <div key={item.name} className="rounded-md border border-[#E8D5C0]/40 bg-white overflow-hidden">
-                  <div className="relative h-[36px]">
+                  <div className="relative h-[32px]">
                     <Image src={item.img} alt="" fill className="object-cover" sizes="100px" />
                   </div>
-                  <p className="text-[6px] font-semibold text-[#3D2B1F] px-1.5 py-1 truncate">{item.name}</p>
+                  <p className="text-[6px] font-medium text-[#3D2B1F] px-1 py-0.5 truncate">{item.name}</p>
                 </div>
               ))}
             </div>
@@ -351,10 +426,10 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
         initial={{ opacity: 0, y: 10 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.7, duration: 0.5 }}
-        className="absolute bottom-0 right-[2%] w-[58%] z-30"
+        className="absolute bottom-0 right-[5%] w-[60%] z-30"
       >
-        <div className="rounded-lg border border-emerald-500/20 bg-[#0a0a18]/92 backdrop-blur-xl shadow-lg overflow-hidden">
-          <div className="px-2.5 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
+        <div className="rounded-lg border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-lg overflow-hidden">
+          <div className="px-3 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
             <Gauge size={9} className="text-emerald-400/70" />
             <span className="text-[7px] font-medium text-white/40 font-mono">Lighthouse</span>
           </div>
@@ -365,32 +440,14 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
               { label: "SEO", score: "100" },
             ].map((item) => (
               <div key={item.label} className="flex flex-col items-center gap-1">
-                <div className="w-7 h-7 rounded-full border-2 border-emerald-500/40 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.05]">
-                  <span className="text-[8px] font-bold font-mono">{item.score}</span>
+                <div className="w-8 h-8 rounded-full border-2 border-emerald-500/40 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.05]">
+                  <span className="text-[9px] font-bold font-mono">{item.score}</span>
                 </div>
-                <span className="text-[5px] text-white/25">{item.label}</span>
+                <span className="text-[6px] text-white/25">{item.label}</span>
               </div>
             ))}
           </div>
         </div>
-      </motion.div>
-
-      {/* Demo link */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ delay: 1.0, duration: 0.4 }}
-        className="mt-3 text-center relative z-20"
-      >
-        <a
-          href="/demos/boulangerie"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-[11px] text-text-tertiary hover:text-accent-action transition-colors"
-        >
-          Voir la démo interactive
-          <ArrowUpRight size={12} />
-        </a>
       </motion.div>
     </div>
   );
@@ -444,7 +501,7 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* H1 */}
+            {/* H1 — close to the mockup */}
             <motion.h1
               variants={fadeInUp}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.5rem] xl:text-6xl font-light tracking-[-0.03em] mb-6 leading-[1.1]"
@@ -507,14 +564,14 @@ export function HeroSection() {
             </motion.p>
           </motion.div>
 
-          {/* Right — Browser mockup (desktop) */}
+          {/* Right — Floating screens illustration (desktop) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isHeroInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.3, duration: 0.5 }}
             className="hidden lg:block"
           >
-            <BrowserMockup isInView={isHeroInView} />
+            <FloatingScreens isInView={isHeroInView} />
           </motion.div>
         </div>
 
