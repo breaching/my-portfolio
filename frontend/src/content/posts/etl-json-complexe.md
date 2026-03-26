@@ -4,6 +4,7 @@ description: "Stratégies pour transformer des structures JSON complexes en donn
 type: "article"
 date: "2024-01-05"
 tags: ["Python", "ETL", "JSON", "Data Engineering"]
+image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=450&fit=crop&q=80"
 ---
 
 ## Le problème

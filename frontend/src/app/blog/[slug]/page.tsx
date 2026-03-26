@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { Calendar, GithubLogo } from "@phosphor-icons/react/dist/ssr";
 import { BackButton } from "@/components/ui/BackButton";
 import { MarkdownContent } from "@/lib/markdown";
@@ -118,11 +119,20 @@ export default async function PostPage({ params }: PageProps) {
           )}
         </header>
 
+        {post.image && (
+          <div className="relative w-full aspect-[16/7] rounded-xl overflow-hidden border border-accent-border mb-10">
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 720px"
+              priority
+            />
+          </div>
+        )}
 
-        
-
-
-                <div className="prose-content">
+        <div className="prose-content">
           <MarkdownContent content={post.content} />
         </div>
 

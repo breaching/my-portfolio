@@ -4,6 +4,7 @@ description: "Configuration complète du passthrough GPU (GTX 1070 Ti) pour une 
 type: "article"
 date: "2025-01-18"
 tags: ["Proxmox", "GPU", "Linux", "Virtualisation"]
+image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800&h=450&fit=crop&q=80"
 ---
 
 ## Prérequis

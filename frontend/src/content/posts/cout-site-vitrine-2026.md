@@ -4,6 +4,7 @@ description: "De 0 à 15 000 € : les vrais prix d'un site vitrine en 2026, par
 type: "article"
 date: "2026-03-25"
 tags: ["Site vitrine", "Prix", "Freelance", "Guide", "Caen"]
+image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop&q=80"
 ---
 
 Vous avez tapé "combien coûte un site vitrine" dans Google. Vous avez trouvé des articles qui disent "entre 500 et 50 000 €". Très utile.

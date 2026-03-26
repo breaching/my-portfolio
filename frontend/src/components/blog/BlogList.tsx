@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, ArrowDown } from "@phosphor-icons/react";
 import { formatDateShort } from "@/lib/utils";
 import { FilterTabs, type FilterOption } from "@/components/ui/FilterTabs";
@@ -72,11 +73,23 @@ export function BlogList({ posts }: BlogListProps) {
           >
             <Link
               href={`/blog/${post.slug}`}
-              className="group relative flex items-start justify-between py-5 border-b border-accent-border hover:bg-background-elevated/80 -mx-4 px-4 transition-all duration-300"
+              className="group relative flex items-start gap-5 py-5 border-b border-accent-border hover:bg-background-elevated/80 -mx-4 px-4 transition-all duration-300"
             >
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              <div className="flex-1 min-w-0 pl-3">
+              {post.image && (
+                <div className="relative hidden sm:block w-36 h-22 flex-shrink-0 rounded-lg overflow-hidden border border-accent-border ml-3">
+                  <Image
+                    src={post.image}
+                    alt=""
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="144px"
+                  />
+                </div>
+              )}
+
+              <div className="flex-1 min-w-0 pl-3 sm:pl-0">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-xs text-text-tertiary font-mono tabular-nums">
                     {formatDateShort(post.date)}

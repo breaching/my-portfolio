@@ -62,6 +62,16 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // Allow external images for demo sites
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
+
   // Disable powered-by header
   poweredByHeader: false,
 

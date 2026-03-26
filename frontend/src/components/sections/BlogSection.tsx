@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "@phosphor-icons/react";
 import type { Post } from "@/types";
@@ -45,11 +46,23 @@ export function BlogSection({ posts }: BlogSectionProps) {
             >
               <Link
                 href={`/blog/${post.slug}`}
-                className="group relative flex items-start justify-between py-5 border-b border-accent-border hover:bg-background-elevated/80 -mx-4 px-4 transition-all duration-300"
+                className="group relative flex items-start gap-5 py-5 border-b border-accent-border hover:bg-background-elevated/80 -mx-4 px-4 transition-all duration-300"
               >
                 <motion.div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="flex-1 min-w-0 pl-3">
+                {post.image && (
+                  <div className="relative hidden sm:block w-32 h-20 flex-shrink-0 rounded-lg overflow-hidden border border-accent-border ml-3">
+                    <Image
+                      src={post.image}
+                      alt=""
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="128px"
+                    />
+                  </div>
+                )}
+
+                <div className="flex-1 min-w-0 pl-3 sm:pl-0">
                   <div className="flex items-center gap-3 mb-2">
                     <span
                       className={`text-xs px-2 py-0.5 rounded border transition-all ${

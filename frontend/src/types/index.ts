@@ -8,6 +8,7 @@ export interface Post {
   date: string;
   tags: string[];
   github?: string;
+  image?: string;
   content: string;
 }
 

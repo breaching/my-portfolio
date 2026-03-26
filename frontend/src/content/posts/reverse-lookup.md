@@ -4,6 +4,7 @@ description: "Moteur de recherche inversée sur millions de records avec cross-r
 type: "projet"
 date: "2024-08-12"
 tags: ["Python", "SQLite", "FTS5", "Data Engineering"]
+image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=800&h=450&fit=crop&q=80"
 ---
 
 ## Le problème

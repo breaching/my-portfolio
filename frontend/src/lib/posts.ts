@@ -11,6 +11,7 @@ interface Frontmatter {
   date: string;
   tags: string[];
   github?: string;
+  image?: string;
 }
 
 function parseFrontmatter(content: string): { data: Frontmatter; content: string } {
@@ -77,6 +78,7 @@ export function getAllPosts(): Post[] {
         date: data.date,
         tags: data.tags,
         github: data.github,
+        image: data.image,
         content,
       } as Post;
     });

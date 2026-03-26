@@ -5,6 +5,7 @@ type: "projet"
 date: "2026-01-06"
 tags: ["Securite", "OWASP", "Next.js", "DevSecOps"]
 github: "https://github.com/breaching/my-portfolio"
+image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=450&fit=crop&q=80"
 ---
 
 ## Le contexte

@@ -4,6 +4,7 @@ description: "Infrastructure Proxmox avec GPU passthrough pour héberger des LLM
 type: "projet"
 date: "2025-08-15"
 tags: ["Proxmox", "Linux", "GPU Passthrough", "Ollama", "LLM"]
+image: "https://images.unsplash.com/photo-1600267185393-e158a98703de?w=800&h=450&fit=crop&q=80"
 ---
 
 ## Le problème

@@ -4,6 +4,7 @@ description: "Construire un pipeline ETL complet, de l'API Oura à InfluxDB et G
 type: "projet"
 date: "2025-11-21"
 tags: ["Python", "ETL", "InfluxDB", "Grafana", "API", "Time Series", "Data Visualization", "Santé", "IA"]
+image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop&q=80"
 ---
 
 ## Le problème : Reprendre un **contrôle partiel** de mes données de santé
