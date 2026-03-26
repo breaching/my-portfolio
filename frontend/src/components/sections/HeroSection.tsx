@@ -9,12 +9,10 @@ import {
   CurrencyEur,
   Clock,
   CheckCircle,
-  Code,
-  Terminal,
-  Gauge,
   MapPin,
-  Phone,
   Star,
+  Wrench,
+  Drop,
 } from "@phosphor-icons/react";
 import { scrollToSection } from "@/lib/scroll";
 import { FlipWords } from "@/components/ui/FlipWords";
@@ -59,8 +57,42 @@ const stats = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   Floating Screens Illustration — 3D isometric browser windows
-   Inspired by the premium freelance landing page mockup
+   Browser Window — reusable mini-browser chrome wrapper
+   ────────────────────────────────────────────────────────── */
+
+function BrowserWindow({
+  url,
+  children,
+  borderColor = "border-indigo-500/30",
+  shadow = "shadow-[0_20px_80px_-15px_rgba(99,102,241,0.25)]",
+}: {
+  url: string;
+  children: React.ReactNode;
+  borderColor?: string;
+  shadow?: string;
+}) {
+  return (
+    <div className={`rounded-xl border ${borderColor} bg-[#0c0c1a]/90 backdrop-blur-xl ${shadow} overflow-hidden`}>
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-white/[0.02]">
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-[#ff5f57]/80" />
+          <div className="w-2 h-2 rounded-full bg-[#febc2e]/80" />
+          <div className="w-2 h-2 rounded-full bg-[#28c840]/80" />
+        </div>
+        <div className="flex-1 flex justify-center">
+          <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[8px] text-white/30 font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
+            {url}
+          </div>
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   Floating Screens — 4 browser windows showing different demos
    ────────────────────────────────────────────────────────── */
 
 function FloatingScreens({ isInView }: { isInView: boolean }) {
@@ -80,242 +112,179 @@ function FloatingScreens({ isInView }: { isInView: boolean }) {
         aria-hidden="true"
       />
 
-      {/* ── Main browser window — front, largest, angled ── */}
+      {/* ── 1. Boulangerie — main, front-left, largest ── */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-[8%] left-[3%] w-[78%] z-30"
+        className="absolute top-[2%] left-[0%] w-[62%] z-30"
         style={{ transform: "rotateY(-12deg) rotateX(8deg)", transformStyle: "preserve-3d" }}
       >
-        <div className="rounded-xl border border-indigo-500/30 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_20px_80px_-15px_rgba(99,102,241,0.25)] overflow-hidden">
-          {/* Browser chrome */}
-          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
-            </div>
-            <div className="flex-1 flex justify-center">
-              <div className="flex items-center gap-2 px-4 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-[10px] text-white/30 font-mono">
-                <span className="w-2 h-2 rounded-full bg-emerald-400/60" />
-                boulangerie-martin.fr
-              </div>
-            </div>
-          </div>
-
-          {/* Realistic mini-site content — warm bakery theme */}
+        <BrowserWindow url="boulangerie-martin.fr">
           <div className="bg-[#FFF8F0]">
-            {/* Navbar */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-[#E8D5C0]/40">
-              <span className="text-[10px] font-semibold text-[#3D2B1F]">Boulangerie Martin</span>
-              <div className="flex items-center gap-3">
-                <span className="text-[8px] text-[#6B5344]/60">Nos pains</span>
-                <span className="text-[8px] text-[#6B5344]/60">Notre histoire</span>
-                <span className="text-[8px] text-[#6B5344]/60">Avis</span>
-                <span className="text-[8px] px-2 py-0.5 rounded-full bg-[#8B5E3C] text-white font-medium">Nous trouver</span>
-              </div>
-            </div>
-
-            {/* Hero with real image */}
-            <div className="relative h-[120px] overflow-hidden">
+            <div className="relative h-[100px] overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=600&h=250&fit=crop&q=80"
-                alt=""
-                fill
-                className="object-cover"
-                sizes="400px"
+                alt="" fill className="object-cover" sizes="400px"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/85 via-[#3D2B1F]/60 to-transparent" />
-              <div className="absolute inset-0 flex flex-col justify-center px-5">
-                <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.8, duration: 0.5 }}
-                >
-                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[7px] text-white/70 mb-1.5">
-                    <MapPin size={7} weight="fill" />
-                    Caen
-                  </div>
-                  <p className="text-[13px] font-light text-white leading-tight">
-                    Pain artisanal,
-                  </p>
-                  <p className="text-[13px] font-semibold text-[#E8C496] leading-tight">
-                    fait avec passion.
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="px-2.5 py-0.5 rounded-full bg-[#E8C496] text-[7px] text-[#3D2B1F] font-medium">
-                      Découvrir
-                    </div>
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={6} weight="fill" className="text-[#E8C496]" />
-                      ))}
-                      <span className="text-[6px] text-white/40 ml-0.5">4.9</span>
-                    </div>
-                  </div>
-                </motion.div>
+              <div className="absolute inset-0 flex flex-col justify-center px-4">
+                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[6px] text-white/70 mb-1 w-fit">
+                  <MapPin size={6} weight="fill" />
+                  Caen
+                </div>
+                <p className="text-[11px] font-light text-white leading-tight">Pain artisanal,</p>
+                <p className="text-[11px] font-semibold text-[#E8C496] leading-tight">fait avec passion.</p>
               </div>
             </div>
-
-            {/* Products grid with real images */}
-            <div className="px-4 py-3">
-              <p className="text-[7px] font-medium text-[#8B5E3C] tracking-widest uppercase mb-1.5">Nos spécialités</p>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { name: "Baguette tradition", price: "1,30 €", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=120&fit=crop&q=70" },
-                  { name: "Tarte aux pommes", price: "3,80 €", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=120&fit=crop&q=70" },
-                  { name: "Fougasse olives", price: "3,20 €", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=120&fit=crop&q=70" },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 1.1 + i * 0.1, duration: 0.4 }}
-                    className="rounded-lg border border-[#E8D5C0]/40 bg-white overflow-hidden"
-                  >
-                    <div className="relative h-[42px]">
-                      <Image src={item.img} alt="" fill className="object-cover" sizes="130px" />
-                    </div>
-                    <div className="px-1.5 py-1">
-                      <p className="text-[7px] font-semibold text-[#3D2B1F] truncate">{item.name}</p>
-                      <p className="text-[6px] font-mono text-[#8B5E3C]">{item.price}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Footer bar */}
-            <div className="px-4 py-2 border-t border-[#E8D5C0]/30 flex items-center justify-between bg-[#FAF3EB]">
-              <div className="flex items-center gap-1">
-                <MapPin size={8} className="text-[#8B5E3C]" />
-                <span className="text-[7px] text-[#6B5344]/60">12 rue Saint-Pierre, Caen</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Phone size={8} className="text-[#8B5E3C]/60" />
-                <span className="text-[7px] text-[#6B5344]/60">02 31 00 00 00</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ── Code editor — back right, overlapping ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-[0%] right-[-5%] w-[55%] z-20"
-        style={{ transform: "rotateY(-16deg) rotateX(10deg)", transformStyle: "preserve-3d" }}
-      >
-        <div className="rounded-xl border border-indigo-500/20 bg-[#0a0a18]/85 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.15)] overflow-hidden">
-          {/* Editor tabs */}
-          <div className="flex items-center gap-0 border-b border-white/[0.04] bg-white/[0.01]">
-            <div className="flex items-center gap-1.5 px-3 py-2 border-b-2 border-indigo-500/60 bg-white/[0.02] text-[8px] text-white/50 font-mono">
-              <Code size={9} className="text-indigo-400/60" />
-              page.tsx
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
-              layout.tsx
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
-              globals.css
-            </div>
-          </div>
-          {/* Code with line numbers */}
-          <div className="p-3 font-mono text-[8px] leading-[2]">
-            <div className="flex gap-3">
-              {/* Line numbers */}
-              <div className="text-white/10 text-right select-none w-4 shrink-0">
-                {[1,2,3,4,5,6,7,8,9,10,11].map(n => (
-                  <div key={n}>{n}</div>
-                ))}
-              </div>
-              {/* Code */}
-              <div className="space-y-0 overflow-hidden">
-                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Hero {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
-                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Services {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
-                <div className="text-white/10">&nbsp;</div>
-                <div><span className="text-violet-400/80">export</span> <span className="text-sky-400/70">default</span> <span className="text-amber-400/80">function</span> <span className="text-sky-300/80">Page</span><span className="text-white/30">() {"{"}</span></div>
-                <div className="pl-4"><span className="text-violet-400/80">return</span> <span className="text-white/30">(</span></div>
-                <div className="pl-8"><span className="text-sky-400/60">&lt;</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
-                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Hero</span> <span className="text-indigo-300/70">title</span><span className="text-white/20">=</span><span className="text-emerald-400/70">&quot;Votre site&quot;</span> <span className="text-sky-400/60">/&gt;</span></div>
-                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Services</span> <span className="text-indigo-300/70">grid</span><span className="text-white/20">=</span><span className="text-white/30">{"{"}</span><span className="text-orange-400/70">3</span><span className="text-white/30">{"}"}</span> <span className="text-sky-400/60">/&gt;</span></div>
-                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Contact</span> <span className="text-indigo-300/70">form</span> <span className="text-sky-400/60">/&gt;</span></div>
-                <div className="pl-8"><span className="text-sky-400/60">&lt;/</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
-                <div className="pl-4"><span className="text-white/30">)</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ── Lighthouse dashboard — front bottom right ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[2%] right-[0%] w-[52%] z-40"
-        style={{ transform: "rotateY(-8deg) rotateX(4deg)", transformStyle: "preserve-3d" }}
-      >
-        <div className="rounded-xl border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-[0_15px_50px_-10px_rgba(16,185,129,0.12)] overflow-hidden">
-          <div className="px-4 py-2.5 border-b border-white/[0.04] flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Gauge size={12} weight="bold" className="text-emerald-400/80" />
-              <span className="text-[9px] font-semibold text-white/50 font-mono">Lighthouse Report</span>
-            </div>
-            <span className="text-[7px] text-white/20 font-mono">votre-site.fr</span>
-          </div>
-          <div className="p-4">
-            {/* Score circles */}
-            <div className="flex items-center justify-around">
+            <div className="grid grid-cols-3 gap-1.5 p-3">
               {[
-                { label: "Performance", score: 98, color: "text-emerald-400 border-emerald-500/40" },
-                { label: "Accessibilité", score: 100, color: "text-emerald-400 border-emerald-500/40" },
-                { label: "Bonnes pratiques", score: 100, color: "text-emerald-400 border-emerald-500/40" },
-                { label: "SEO", score: 100, color: "text-emerald-400 border-emerald-500/40" },
+                { name: "Baguette", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=120&fit=crop&q=70" },
+                { name: "Tarte", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=120&fit=crop&q=70" },
+                { name: "Fougasse", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=120&fit=crop&q=70" },
               ].map((item, i) => (
                 <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 1.2 + i * 0.1, duration: 0.4 }}
-                  className="flex flex-col items-center gap-1.5"
+                  key={item.name}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.9 + i * 0.08, duration: 0.4 }}
+                  className="rounded-md border border-[#E8D5C0]/40 bg-white overflow-hidden"
                 >
-                  <div className={`w-10 h-10 rounded-full border-2 ${item.color} flex items-center justify-center bg-emerald-500/[0.05]`}>
-                    <span className="text-[11px] font-bold font-mono">{item.score}</span>
+                  <div className="relative h-[32px]">
+                    <Image src={item.img} alt="" fill className="object-cover" sizes="120px" />
                   </div>
-                  <span className="text-[6px] text-white/30 text-center leading-tight max-w-[50px]">{item.label}</span>
+                  <p className="text-[6px] font-medium text-[#3D2B1F] px-1 py-0.5 truncate">{item.name}</p>
                 </motion.div>
               ))}
             </div>
           </div>
-        </div>
+        </BrowserWindow>
       </motion.div>
 
-      {/* ── Terminal — bottom left, subtle ── */}
+      {/* ── 2. Restaurant — back-right, overlapping ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-[0%] right-[-2%] w-[52%] z-20"
+        style={{ transform: "rotateY(-14deg) rotateX(10deg)", transformStyle: "preserve-3d" }}
+      >
+        <BrowserWindow url="bistrot-normand.fr" borderColor="border-amber-500/25" shadow="shadow-[0_15px_60px_-10px_rgba(180,140,60,0.15)]">
+          <div className="bg-[#1A1A1A]">
+            <div className="relative h-[90px] overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=200&fit=crop&q=80"
+                alt="" fill className="object-cover" sizes="350px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
+              <div className="absolute inset-0 flex flex-col items-center justify-end pb-3">
+                <p className="text-[7px] text-[#C9A96E] tracking-[0.2em] uppercase mb-0.5">Restaurant gastronomique</p>
+                <p className="text-[12px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
+              </div>
+            </div>
+            <div className="p-3 space-y-1.5">
+              {[
+                { name: "Tartare de boeuf normand", price: "18 €" },
+                { name: "Camembert rôti au miel", price: "14 €" },
+              ].map((item) => (
+                <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-white/[0.06]">
+                  <span className="text-[7px] text-white/70">{item.name}</span>
+                  <span className="text-[7px] text-[#C9A96E] font-light">{item.price}</span>
+                </div>
+              ))}
+              <div className="flex items-center gap-0.5 pt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={6} weight="fill" className="text-[#C9A96E]" />
+                ))}
+                <span className="text-[6px] text-white/30 ml-1">4.8/5</span>
+              </div>
+            </div>
+          </div>
+        </BrowserWindow>
+      </motion.div>
+
+      {/* ── 3. Architecte — bottom-right ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[0%] right-[2%] w-[50%] z-40"
+        style={{ transform: "rotateY(-8deg) rotateX(4deg)", transformStyle: "preserve-3d" }}
+      >
+        <BrowserWindow url="studio-morel.fr" borderColor="border-neutral-400/20" shadow="shadow-[0_15px_50px_-10px_rgba(0,0,0,0.2)]">
+          <div className="bg-white">
+            <div className="relative h-[80px] overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=200&fit=crop&q=80"
+                alt="" fill className="object-cover" sizes="350px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+              <div className="absolute bottom-2 left-3">
+                <p className="text-[7px] text-neutral-400 tracking-[0.15em] uppercase">Architecture d&apos;intérieur</p>
+                <p className="text-[11px] font-light text-neutral-900">Des espaces qui vous <span className="italic">ressemblent.</span></p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-1.5 p-2.5">
+              {[
+                { title: "Loft Vaugueux", tag: "Rénovation", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&h=120&fit=crop&q=70" },
+                { title: "Maison Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=120&fit=crop&q=70" },
+              ].map((p) => (
+                <div key={p.title} className="rounded-md overflow-hidden border border-neutral-100">
+                  <div className="relative h-[36px]">
+                    <Image src={p.img} alt="" fill className="object-cover" sizes="120px" />
+                  </div>
+                  <div className="px-1.5 py-1">
+                    <p className="text-[5px] text-neutral-400 uppercase tracking-wider">{p.tag}</p>
+                    <p className="text-[6px] font-medium text-neutral-900 truncate">{p.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </BrowserWindow>
+      </motion.div>
+
+      {/* ── 4. Plombier — bottom-left, small ── */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[15%] left-[-3%] w-[40%] z-10"
+        className="absolute bottom-[12%] left-[-3%] w-[42%] z-10"
         style={{ transform: "rotateY(-6deg) rotateX(5deg)", transformStyle: "preserve-3d" }}
       >
-        <div className="rounded-lg border border-white/[0.06] bg-[#0a0a14]/80 backdrop-blur-xl shadow-lg overflow-hidden">
-          <div className="px-3 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
-            <Terminal size={9} className="text-white/25" />
-            <span className="text-[7px] text-white/25 font-mono">terminal</span>
+        <BrowserWindow url="dupont-plomberie.fr" borderColor="border-blue-500/20" shadow="shadow-[0_10px_40px_-10px_rgba(30,95,170,0.12)]">
+          <div className="bg-gradient-to-b from-[#F0F6FF] to-white p-3">
+            <div className="flex items-center gap-1.5 mb-2">
+              <div className="w-5 h-5 rounded bg-[#1E5FAA] flex items-center justify-center">
+                <Wrench size={10} weight="bold" className="text-white" />
+              </div>
+              <span className="text-[8px] font-semibold text-neutral-900">Dupont Plomberie</span>
+            </div>
+            <p className="text-[10px] font-bold text-neutral-900 leading-tight mb-1">
+              Votre plombier <span className="text-[#1E5FAA]">de confiance</span>
+            </p>
+            <p className="text-[6px] text-neutral-500 mb-2">Dépannage urgent, installation, rénovation.</p>
+            <div className="flex gap-1.5 mb-2">
+              <div className="flex-1 rounded bg-[#1E5FAA] text-center py-1">
+                <span className="text-[6px] text-white font-medium">Urgence 7j/7</span>
+              </div>
+              <div className="flex-1 rounded border border-neutral-200 text-center py-1">
+                <span className="text-[6px] text-neutral-600 font-medium">Devis gratuit</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-1.5">
+              {[
+                { icon: Drop, label: "Plomberie" },
+                { icon: Wrench, label: "Dépannage" },
+              ].map((s) => (
+                <div key={s.label} className="flex items-center gap-1 p-1.5 rounded border border-neutral-100 bg-white">
+                  <s.icon size={8} weight="duotone" className="text-[#1E5FAA]" />
+                  <span className="text-[6px] text-neutral-700">{s.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="p-3 font-mono text-[7px] leading-[2]">
-            <div><span className="text-emerald-400/70">❯</span> <span className="text-white/40">npm run build</span></div>
-            <div className="text-white/20">  ▸ Creating optimized build...</div>
-            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Compiled in 847ms</div>
-            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Generating static pages (7/7)</div>
-            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Collecting build traces</div>
-            <div className="text-emerald-400/70">  <span className="text-emerald-400/80">✓</span> Build complete — ready to deploy</div>
-          </div>
-        </div>
+        </BrowserWindow>
       </motion.div>
 
       {/* ── Floating particles ── */}
@@ -326,8 +295,6 @@ function FloatingScreens({ isInView }: { isInView: boolean }) {
         { top: "85%", left: "80%", size: 4, delay: 1.1, glow: true },
         { top: "10%", left: "10%", size: 2, delay: 0.8, glow: false },
         { top: "45%", left: "95%", size: 2, delay: 1.0, glow: false },
-        { top: "75%", left: "40%", size: 3, delay: 1.2, glow: false },
-        { top: "35%", left: "5%", size: 2, delay: 0.6, glow: false },
       ].map((dot, i) => (
         <motion.div
           key={i}
@@ -340,11 +307,8 @@ function FloatingScreens({ isInView }: { isInView: boolean }) {
         />
       ))}
 
-      {/* ── Connecting lines (subtle grid effect) ── */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none z-0"
-        aria-hidden="true"
-      >
+      {/* ── Connecting lines ── */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true">
         <line x1="20%" y1="80%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
         <line x1="80%" y1="20%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
         <line x1="85%" y1="85%" x2="55%" y2="55%" stroke="rgba(99,102,241,0.04)" strokeWidth="1" />
@@ -354,7 +318,7 @@ function FloatingScreens({ isInView }: { isInView: boolean }) {
 }
 
 /* ──────────────────────────────────────────────────────────
-   Mobile-only simplified illustration
+   Mobile-only simplified illustration — 2 overlapping demos
    ────────────────────────────────────────────────────────── */
 
 function MobileIllustration({ isInView }: { isInView: boolean }) {
@@ -366,35 +330,19 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
         aria-hidden="true"
       />
 
-      {/* Main browser */}
+      {/* Main — Bakery browser */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.4, duration: 0.6 }}
-        className="relative z-20 w-[85%] mx-auto"
+        className="relative z-20 w-[80%]"
       >
-        <div className="rounded-xl border border-indigo-500/25 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.2)] overflow-hidden">
-          {/* Chrome */}
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.05] bg-white/[0.02]">
-            <div className="flex gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-[#ff5f57]/70" />
-              <div className="w-2 h-2 rounded-full bg-[#febc2e]/70" />
-              <div className="w-2 h-2 rounded-full bg-[#28c840]/70" />
-            </div>
-            <div className="flex-1 text-center">
-              <span className="text-[8px] text-white/25 font-mono">boulangerie-martin.fr</span>
-            </div>
-          </div>
-          {/* Warm bakery content */}
+        <BrowserWindow url="boulangerie-martin.fr">
           <div className="bg-[#FFF8F0]">
-            {/* Mini hero */}
             <div className="relative h-[72px] overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=400&h=150&fit=crop&q=70"
-                alt=""
-                fill
-                className="object-cover"
-                sizes="300px"
+                alt="" fill className="object-cover" sizes="300px"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/80 to-transparent" />
               <div className="absolute inset-0 flex flex-col justify-center px-4">
@@ -402,15 +350,14 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
                 <p className="text-[10px] font-semibold text-[#E8C496]">fait avec passion.</p>
               </div>
             </div>
-            {/* Product cards */}
-            <div className="grid grid-cols-3 gap-1.5 p-3">
+            <div className="grid grid-cols-3 gap-1.5 p-2.5">
               {[
                 { name: "Baguette", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=120&h=80&fit=crop&q=60" },
                 { name: "Tarte", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=120&h=80&fit=crop&q=60" },
                 { name: "Fougasse", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=120&h=80&fit=crop&q=60" },
               ].map((item) => (
                 <div key={item.name} className="rounded-md border border-[#E8D5C0]/40 bg-white overflow-hidden">
-                  <div className="relative h-[32px]">
+                  <div className="relative h-[28px]">
                     <Image src={item.img} alt="" fill className="object-cover" sizes="100px" />
                   </div>
                   <p className="text-[6px] font-medium text-[#3D2B1F] px-1 py-0.5 truncate">{item.name}</p>
@@ -418,36 +365,42 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
               ))}
             </div>
           </div>
-        </div>
+        </BrowserWindow>
       </motion.div>
 
-      {/* Lighthouse overlay */}
+      {/* Overlapping — Restaurant browser */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.7, duration: 0.5 }}
-        className="absolute bottom-0 right-[5%] w-[60%] z-30"
+        className="absolute bottom-0 right-[0%] w-[65%] z-30"
       >
-        <div className="rounded-lg border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-lg overflow-hidden">
-          <div className="px-3 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
-            <Gauge size={9} className="text-emerald-400/70" />
-            <span className="text-[7px] font-medium text-white/40 font-mono">Lighthouse</span>
-          </div>
-          <div className="p-2.5 flex justify-around">
-            {[
-              { label: "Perf", score: "98" },
-              { label: "A11y", score: "100" },
-              { label: "SEO", score: "100" },
-            ].map((item) => (
-              <div key={item.label} className="flex flex-col items-center gap-1">
-                <div className="w-8 h-8 rounded-full border-2 border-emerald-500/40 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.05]">
-                  <span className="text-[9px] font-bold font-mono">{item.score}</span>
-                </div>
-                <span className="text-[6px] text-white/25">{item.label}</span>
+        <BrowserWindow url="bistrot-normand.fr" borderColor="border-amber-500/25" shadow="shadow-[0_10px_40px_-8px_rgba(180,140,60,0.15)]">
+          <div className="bg-[#1A1A1A]">
+            <div className="relative h-[60px] overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=150&fit=crop&q=70"
+                alt="" fill className="object-cover" sizes="250px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
+              <div className="absolute bottom-2 left-0 right-0 text-center">
+                <p className="text-[6px] text-[#C9A96E] tracking-[0.15em] uppercase">Restaurant</p>
+                <p className="text-[10px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
               </div>
-            ))}
+            </div>
+            <div className="p-2.5 space-y-1">
+              {[
+                { name: "Tartare de boeuf", price: "18 €" },
+                { name: "Camembert rôti", price: "14 €" },
+              ].map((item) => (
+                <div key={item.name} className="flex justify-between border-b border-white/[0.06] pb-1">
+                  <span className="text-[7px] text-white/60">{item.name}</span>
+                  <span className="text-[7px] text-[#C9A96E]">{item.price}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </BrowserWindow>
       </motion.div>
     </div>
   );
