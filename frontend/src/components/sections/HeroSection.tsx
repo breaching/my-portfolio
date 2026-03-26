@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import {
@@ -12,13 +12,13 @@ import {
   MapPin,
   Star,
   Wrench,
-  Drop,
 } from "@phosphor-icons/react";
 import { scrollToSection } from "@/lib/scroll";
 import { FlipWords } from "@/components/ui/FlipWords";
 import { NumberTicker } from "@/components/ui/NumberTicker";
 
-const flipWords = ["moderne", "performant", "sur mesure", "qui convertit", "rapide"];
+/* Words synced 1:1 with demoCards — same order, same count */
+const flipWords = ["artisanal", "élégant", "sur mesure", "de confiance"];
 
 const staggerContainer = {
   initial: {},
@@ -63,25 +63,30 @@ const stats = [
 function BrowserWindow({
   url,
   children,
-  borderColor = "border-indigo-500/30",
-  shadow = "shadow-[0_20px_80px_-15px_rgba(99,102,241,0.25)]",
+  accent = "indigo",
 }: {
   url: string;
   children: React.ReactNode;
-  borderColor?: string;
-  shadow?: string;
+  accent?: "indigo" | "amber" | "neutral" | "blue";
 }) {
+  const glowMap = {
+    indigo: "shadow-[0_8px_50px_-6px_rgba(99,102,241,0.35)]",
+    amber: "shadow-[0_8px_50px_-6px_rgba(200,160,80,0.25)]",
+    neutral: "shadow-[0_8px_50px_-6px_rgba(100,100,120,0.2)]",
+    blue: "shadow-[0_8px_50px_-6px_rgba(30,95,170,0.25)]",
+  };
   return (
-    <div className={`rounded-xl border ${borderColor} bg-[#0c0c1a]/90 backdrop-blur-xl ${shadow} overflow-hidden`}>
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-white/[0.02]">
+    <div className={`rounded-xl border border-white/[0.08] bg-[#1a1a2e]/80 backdrop-blur-xl ${glowMap[accent]} overflow-hidden ring-1 ring-white/[0.04]`}>
+      {/* Title bar — slightly lighter so it reads on dark bg */}
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.08] bg-white/[0.04]">
         <div className="flex gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-[#ff5f57]/80" />
-          <div className="w-2 h-2 rounded-full bg-[#febc2e]/80" />
-          <div className="w-2 h-2 rounded-full bg-[#28c840]/80" />
+          <div className="w-[7px] h-[7px] rounded-full bg-[#ff5f57]" />
+          <div className="w-[7px] h-[7px] rounded-full bg-[#febc2e]" />
+          <div className="w-[7px] h-[7px] rounded-full bg-[#28c840]" />
         </div>
         <div className="flex-1 flex justify-center">
-          <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[8px] text-white/30 font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
+          <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[9px] text-white/40 font-mono tracking-wide">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70" />
             {url}
           </div>
         </div>
@@ -92,227 +97,262 @@ function BrowserWindow({
 }
 
 /* ──────────────────────────────────────────────────────────
-   Floating Screens — 4 browser windows showing different demos
+   Demo card contents — each card is a React node
    ────────────────────────────────────────────────────────── */
 
-function FloatingScreens({ isInView }: { isInView: boolean }) {
+const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue"; content: React.ReactNode }[] = [
+  {
+    url: "boulangerie-martin.fr",
+    accent: "indigo",
+    content: (
+      <div className="bg-[#FFF8F0]">
+        <div className="relative h-[130px] overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&h=300&fit=crop&q=80"
+            alt="" fill className="object-cover" sizes="500px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/80 via-[#3D2B1F]/50 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-5">
+            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/15 text-[8px] text-white/80 mb-1.5 w-fit">
+              <MapPin size={8} weight="fill" />
+              Caen
+            </div>
+            <p className="text-[15px] font-light text-white leading-tight">Pain artisanal,</p>
+            <p className="text-[15px] font-semibold text-[#E8C496] leading-tight">fait avec passion.</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-2 p-3">
+          {[
+            { name: "Baguette", price: "1,20 €", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=130&fit=crop&q=70" },
+            { name: "Tarte citron", price: "3,50 €", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=130&fit=crop&q=70" },
+            { name: "Fougasse", price: "2,80 €", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=130&fit=crop&q=70" },
+          ].map((item) => (
+            <div key={item.name} className="rounded-lg border border-[#E8D5C0]/50 bg-white overflow-hidden">
+              <div className="relative h-[48px]">
+                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
+              </div>
+              <div className="px-1.5 py-1">
+                <p className="text-[8px] font-medium text-[#3D2B1F] truncate">{item.name}</p>
+                <p className="text-[7px] text-[#8B7355]">{item.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    url: "bistrot-normand.fr",
+    accent: "amber",
+    content: (
+      <div className="bg-[#1A1A1A]">
+        <div className="relative h-[120px] overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop&q=80"
+            alt="" fill className="object-cover" sizes="500px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/40 to-transparent" />
+          <div className="absolute inset-0 flex flex-col items-center justify-end pb-3">
+            <p className="text-[8px] text-[#C9A96E] tracking-[0.2em] uppercase mb-0.5">Restaurant gastronomique</p>
+            <p className="text-base font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
+          </div>
+        </div>
+        <div className="p-3.5 space-y-2">
+          {[
+            { name: "Tartare de boeuf normand", price: "18 €" },
+            { name: "Camembert rôti au miel", price: "14 €" },
+            { name: "Tarte tatin maison", price: "12 €" },
+          ].map((item) => (
+            <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-white/[0.06]">
+              <span className="text-[9px] text-white/70">{item.name}</span>
+              <span className="text-[9px] text-[#C9A96E] font-light">{item.price}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-0.5 pt-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={8} weight="fill" className="text-[#C9A96E]" />
+            ))}
+            <span className="text-[7px] text-white/30 ml-1.5">4.8/5</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    url: "studio-morel.fr",
+    accent: "neutral",
+    content: (
+      <div className="bg-white">
+        <div className="relative h-[120px] overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=250&fit=crop&q=80"
+            alt="" fill className="object-cover" sizes="500px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+          <div className="absolute bottom-3 left-4">
+            <p className="text-[8px] text-neutral-400 tracking-[0.15em] uppercase">Architecture d&apos;intérieur</p>
+            <p className="text-[14px] font-light text-neutral-900">Des espaces qui vous <span className="italic">ressemblent.</span></p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2 p-3">
+          {[
+            { title: "Loft Vaugueux", tag: "Rénovation", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&h=130&fit=crop&q=70" },
+            { title: "Maison Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=130&fit=crop&q=70" },
+          ].map((p) => (
+            <div key={p.title} className="rounded-lg overflow-hidden border border-neutral-100">
+              <div className="relative h-[48px]">
+                <Image src={p.img} alt="" fill className="object-cover" sizes="150px" />
+              </div>
+              <div className="px-2 py-1.5">
+                <p className="text-[6px] text-neutral-400 uppercase tracking-wider">{p.tag}</p>
+                <p className="text-[8px] font-medium text-neutral-900 truncate">{p.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    url: "dupont-plomberie.fr",
+    accent: "blue",
+    content: (
+      <div className="bg-gradient-to-b from-[#F0F6FF] to-white p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-6 h-6 rounded bg-[#1E5FAA] flex items-center justify-center">
+            <Wrench size={12} weight="bold" className="text-white" />
+          </div>
+          <span className="text-[10px] font-semibold text-neutral-900">Dupont Plomberie</span>
+        </div>
+        <p className="text-[13px] font-bold text-neutral-900 leading-tight mb-1.5">
+          Votre plombier <span className="text-[#1E5FAA]">de confiance</span>
+        </p>
+        <p className="text-[8px] text-neutral-500 mb-3">Dépannage urgent 7j/7, Caen et alentours</p>
+        <div className="flex gap-2 mb-3">
+          <div className="flex-1 rounded-lg bg-[#1E5FAA] text-center py-2">
+            <span className="text-[8px] text-white font-medium">Urgence 7j/7</span>
+          </div>
+          <div className="flex-1 rounded-lg border border-neutral-200 text-center py-2">
+            <span className="text-[8px] text-neutral-600 font-medium">Devis gratuit</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 text-[7px] text-neutral-400">
+          <CheckCircle size={10} weight="fill" className="text-emerald-500" />
+          Intervention en moins de 2h
+        </div>
+      </div>
+    ),
+  },
+];
+
+/* ──────────────────────────────────────────────────────────
+   Floating Screens — animated card-stack carousel
+   One card in front, others stacked behind, auto-cycling
+   ────────────────────────────────────────────────────────── */
+
+function FloatingScreens({
+  isInView,
+  active,
+  onNext,
+  onSelect,
+}: {
+  isInView: boolean;
+  active: number;
+  onNext: () => void;
+  onSelect: (i: number) => void;
+}) {
+  const total = demoCards.length;
+
+  /* Position config for each slot in the stack (0 = front) */
+  const slotStyles = [
+    { x: 0, y: 0, scale: 1, z: 40, opacity: 1 },       // front
+    { x: 24, y: -16, scale: 0.94, z: 20, opacity: 0.7 },  // behind-right
+    { x: 48, y: -32, scale: 0.88, z: 0, opacity: 0.45 },   // further back
+    { x: 72, y: -48, scale: 0.82, z: -20, opacity: 0.25 }, // deepest
+  ];
+
   return (
-    <div className="relative w-full h-[500px] lg:h-[560px]" style={{ perspective: "1200px" }}>
-      {/* Ambient glow layers */}
+    <div
+      className="relative w-full h-[480px] lg:h-[520px]"
+      style={{ perspective: "1800px" }}
+    >
+      {/* Ambient glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full bg-indigo-500/25 blur-[120px]"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-[30%] left-[20%] w-64 h-64 rounded-full bg-violet-600/15 blur-[80px]"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute bottom-[20%] right-[15%] w-48 h-48 rounded-full bg-sky-500/10 blur-[60px]"
+        className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-indigo-500/12 blur-[110px]"
         aria-hidden="true"
       />
 
-      {/* ── 1. Boulangerie — main, front-left, largest ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-[2%] left-[0%] w-[62%] z-30"
-        style={{ transform: "rotateY(-12deg) rotateX(8deg)", transformStyle: "preserve-3d" }}
+      {/* Card stack container — isometric tilt */}
+      <div
+        className="relative w-full h-full flex items-center justify-center"
+        style={{
+          transform: "rotateY(-10deg) rotateX(5deg)",
+          transformStyle: "preserve-3d",
+        }}
       >
-        <BrowserWindow url="boulangerie-martin.fr">
-          <div className="bg-[#FFF8F0]">
-            <div className="relative h-[100px] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=600&h=250&fit=crop&q=80"
-                alt="" fill className="object-cover" sizes="400px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/85 via-[#3D2B1F]/60 to-transparent" />
-              <div className="absolute inset-0 flex flex-col justify-center px-4">
-                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[6px] text-white/70 mb-1 w-fit">
-                  <MapPin size={6} weight="fill" />
-                  Caen
-                </div>
-                <p className="text-[11px] font-light text-white leading-tight">Pain artisanal,</p>
-                <p className="text-[11px] font-semibold text-[#E8C496] leading-tight">fait avec passion.</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-1.5 p-3">
-              {[
-                { name: "Baguette", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=120&fit=crop&q=70" },
-                { name: "Tarte", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=120&fit=crop&q=70" },
-                { name: "Fougasse", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=120&fit=crop&q=70" },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.9 + i * 0.08, duration: 0.4 }}
-                  className="rounded-md border border-[#E8D5C0]/40 bg-white overflow-hidden"
-                >
-                  <div className="relative h-[32px]">
-                    <Image src={item.img} alt="" fill className="object-cover" sizes="120px" />
-                  </div>
-                  <p className="text-[6px] font-medium text-[#3D2B1F] px-1 py-0.5 truncate">{item.name}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </BrowserWindow>
-      </motion.div>
+        {demoCards.map((card, i) => {
+          /* Which slot is this card in? 0 = front, 1 = behind, etc. */
+          const slot = (i - active + total) % total;
+          const s = slotStyles[slot];
 
-      {/* ── 2. Restaurant — back-right, overlapping ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-[0%] right-[-2%] w-[52%] z-20"
-        style={{ transform: "rotateY(-14deg) rotateX(10deg)", transformStyle: "preserve-3d" }}
-      >
-        <BrowserWindow url="bistrot-normand.fr" borderColor="border-amber-500/25" shadow="shadow-[0_15px_60px_-10px_rgba(180,140,60,0.15)]">
-          <div className="bg-[#1A1A1A]">
-            <div className="relative h-[90px] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=200&fit=crop&q=80"
-                alt="" fill className="object-cover" sizes="350px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
-              <div className="absolute inset-0 flex flex-col items-center justify-end pb-3">
-                <p className="text-[7px] text-[#C9A96E] tracking-[0.2em] uppercase mb-0.5">Restaurant gastronomique</p>
-                <p className="text-[12px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
-              </div>
-            </div>
-            <div className="p-3 space-y-1.5">
-              {[
-                { name: "Tartare de boeuf normand", price: "18 €" },
-                { name: "Camembert rôti au miel", price: "14 €" },
-              ].map((item) => (
-                <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-white/[0.06]">
-                  <span className="text-[7px] text-white/70">{item.name}</span>
-                  <span className="text-[7px] text-[#C9A96E] font-light">{item.price}</span>
-                </div>
-              ))}
-              <div className="flex items-center gap-0.5 pt-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={6} weight="fill" className="text-[#C9A96E]" />
-                ))}
-                <span className="text-[6px] text-white/30 ml-1">4.8/5</span>
-              </div>
-            </div>
-          </div>
-        </BrowserWindow>
-      </motion.div>
+          return (
+            <motion.div
+              key={card.url}
+              animate={{
+                x: s.x,
+                y: s.y,
+                scale: s.scale,
+                opacity: isInView ? s.opacity : 0,
+              }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute top-[8%] left-0 w-[95%] cursor-pointer"
+              style={{
+                zIndex: total - slot,
+                transformStyle: "preserve-3d",
+                transform: `translateZ(${s.z}px)`,
+              }}
+              onClick={onNext}
+            >
+              <BrowserWindow url={card.url} accent={card.accent}>
+                {card.content}
+              </BrowserWindow>
+            </motion.div>
+          );
+        })}
+      </div>
 
-      {/* ── 3. Architecte — bottom-right ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[0%] right-[2%] w-[50%] z-40"
-        style={{ transform: "rotateY(-8deg) rotateX(4deg)", transformStyle: "preserve-3d" }}
-      >
-        <BrowserWindow url="studio-morel.fr" borderColor="border-neutral-400/20" shadow="shadow-[0_15px_50px_-10px_rgba(0,0,0,0.2)]">
-          <div className="bg-white">
-            <div className="relative h-[80px] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=200&fit=crop&q=80"
-                alt="" fill className="object-cover" sizes="350px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
-              <div className="absolute bottom-2 left-3">
-                <p className="text-[7px] text-neutral-400 tracking-[0.15em] uppercase">Architecture d&apos;intérieur</p>
-                <p className="text-[11px] font-light text-neutral-900">Des espaces qui vous <span className="italic">ressemblent.</span></p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-1.5 p-2.5">
-              {[
-                { title: "Loft Vaugueux", tag: "Rénovation", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&h=120&fit=crop&q=70" },
-                { title: "Maison Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=120&fit=crop&q=70" },
-              ].map((p) => (
-                <div key={p.title} className="rounded-md overflow-hidden border border-neutral-100">
-                  <div className="relative h-[36px]">
-                    <Image src={p.img} alt="" fill className="object-cover" sizes="120px" />
-                  </div>
-                  <div className="px-1.5 py-1">
-                    <p className="text-[5px] text-neutral-400 uppercase tracking-wider">{p.tag}</p>
-                    <p className="text-[6px] font-medium text-neutral-900 truncate">{p.title}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </BrowserWindow>
-      </motion.div>
+      {/* Navigation dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
+        {demoCards.map((card, i) => (
+          <button
+            key={card.url}
+            onClick={() => onSelect(i)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              i === active
+                ? "bg-indigo-400 shadow-[0_0_6px_2px_rgba(129,140,248,0.4)] scale-125"
+                : "bg-white/20 hover:bg-white/40"
+            }`}
+            aria-label={`Voir ${card.url}`}
+          />
+        ))}
+      </div>
 
-      {/* ── 4. Plombier — bottom-left, small ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[12%] left-[-3%] w-[42%] z-10"
-        style={{ transform: "rotateY(-6deg) rotateX(5deg)", transformStyle: "preserve-3d" }}
-      >
-        <BrowserWindow url="dupont-plomberie.fr" borderColor="border-blue-500/20" shadow="shadow-[0_10px_40px_-10px_rgba(30,95,170,0.12)]">
-          <div className="bg-gradient-to-b from-[#F0F6FF] to-white p-3">
-            <div className="flex items-center gap-1.5 mb-2">
-              <div className="w-5 h-5 rounded bg-[#1E5FAA] flex items-center justify-center">
-                <Wrench size={10} weight="bold" className="text-white" />
-              </div>
-              <span className="text-[8px] font-semibold text-neutral-900">Dupont Plomberie</span>
-            </div>
-            <p className="text-[10px] font-bold text-neutral-900 leading-tight mb-1">
-              Votre plombier <span className="text-[#1E5FAA]">de confiance</span>
-            </p>
-            <p className="text-[6px] text-neutral-500 mb-2">Dépannage urgent, installation, rénovation.</p>
-            <div className="flex gap-1.5 mb-2">
-              <div className="flex-1 rounded bg-[#1E5FAA] text-center py-1">
-                <span className="text-[6px] text-white font-medium">Urgence 7j/7</span>
-              </div>
-              <div className="flex-1 rounded border border-neutral-200 text-center py-1">
-                <span className="text-[6px] text-neutral-600 font-medium">Devis gratuit</span>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-1.5">
-              {[
-                { icon: Drop, label: "Plomberie" },
-                { icon: Wrench, label: "Dépannage" },
-              ].map((s) => (
-                <div key={s.label} className="flex items-center gap-1 p-1.5 rounded border border-neutral-100 bg-white">
-                  <s.icon size={8} weight="duotone" className="text-[#1E5FAA]" />
-                  <span className="text-[6px] text-neutral-700">{s.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </BrowserWindow>
-      </motion.div>
-
-      {/* ── Floating particles ── */}
+      {/* Floating particles */}
       {[
-        { top: "5%", left: "50%", size: 4, delay: 0.5, glow: true },
-        { top: "20%", left: "92%", size: 3, delay: 0.7, glow: false },
-        { top: "60%", left: "15%", size: 3, delay: 0.9, glow: false },
-        { top: "85%", left: "80%", size: 4, delay: 1.1, glow: true },
-        { top: "10%", left: "10%", size: 2, delay: 0.8, glow: false },
-        { top: "45%", left: "95%", size: 2, delay: 1.0, glow: false },
+        { top: "5%", left: "5%", size: 3, delay: 0.5, glow: true },
+        { top: "15%", left: "95%", size: 2, delay: 0.7, glow: false },
+        { top: "85%", left: "90%", size: 3, delay: 1.0, glow: true },
       ].map((dot, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, scale: 0 }}
-          animate={isInView ? { opacity: dot.glow ? 0.8 : 0.4, scale: 1 } : {}}
-          transition={{ delay: dot.delay, duration: 0.6 }}
-          className={`absolute rounded-full ${dot.glow ? "bg-indigo-400/80 shadow-[0_0_8px_2px_rgba(129,140,248,0.4)]" : "bg-indigo-400/40"}`}
+          animate={isInView ? { opacity: dot.glow ? 0.7 : 0.3, scale: 1 } : {}}
+          transition={{ delay: dot.delay, duration: 0.5 }}
+          className={`absolute rounded-full ${dot.glow ? "bg-indigo-400/80 shadow-[0_0_8px_3px_rgba(129,140,248,0.4)]" : "bg-white/20"}`}
           style={{ top: dot.top, left: dot.left, width: dot.size, height: dot.size }}
           aria-hidden="true"
         />
       ))}
-
-      {/* ── Connecting lines ── */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true">
-        <line x1="20%" y1="80%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
-        <line x1="80%" y1="20%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
-        <line x1="85%" y1="85%" x2="55%" y2="55%" stroke="rgba(99,102,241,0.04)" strokeWidth="1" />
-      </svg>
     </div>
   );
 }
@@ -375,7 +415,7 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
         transition={{ delay: 0.7, duration: 0.5 }}
         className="absolute bottom-0 right-[0%] w-[65%] z-30"
       >
-        <BrowserWindow url="bistrot-normand.fr" borderColor="border-amber-500/25" shadow="shadow-[0_10px_40px_-8px_rgba(180,140,60,0.15)]">
+        <BrowserWindow url="bistrot-normand.fr" accent="amber">
           <div className="bg-[#1A1A1A]">
             <div className="relative h-[60px] overflow-hidden">
               <Image
@@ -406,9 +446,22 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
   );
 }
 
+const CYCLE_MS = 4000;
+
 export function HeroSection() {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-50px" });
+
+  /* Shared cycling index — drives both FlipWords and FloatingScreens */
+  const [activeDemo, setActiveDemo] = useState(0);
+  const total = demoCards.length;
+  const nextDemo = useCallback(() => setActiveDemo((a) => (a + 1) % total), [total]);
+
+  useEffect(() => {
+    if (!isHeroInView) return;
+    const id = setInterval(nextDemo, CYCLE_MS);
+    return () => clearInterval(id);
+  }, [isHeroInView, nextDemo]);
 
   return (
     <section
@@ -462,7 +515,7 @@ export function HeroSection() {
               Un site web
               <br />
               <span className="font-semibold text-accent-action">
-                <FlipWords words={flipWords} duration={2800} />
+                <FlipWords words={flipWords} activeIndex={activeDemo} />
               </span>
               <br />
               <span className="font-semibold">pour votre entreprise</span>
@@ -524,7 +577,7 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="hidden lg:block"
           >
-            <FloatingScreens isInView={isHeroInView} />
+            <FloatingScreens isInView={isHeroInView} active={activeDemo} onNext={nextDemo} onSelect={setActiveDemo} />
           </motion.div>
         </div>
 
