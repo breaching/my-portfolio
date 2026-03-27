@@ -116,7 +116,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t border-accent-border">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-10 mt-2 border-t border-accent-border/40">
           <p className="text-xs text-text-tertiary">
             © {new Date().getFullYear()} Alexis Dubus — Développeur web freelance à Caen
           </p>

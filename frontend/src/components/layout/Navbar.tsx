@@ -109,10 +109,10 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-[15px] font-medium text-text-primary hover:text-accent-primary transition-colors duration-200 tracking-[-0.01em] font-mono group"
+          className="text-[15px] font-medium text-text-primary hover:text-accent-primary transition-colors duration-200 tracking-[-0.02em] group"
         >
-          <span className="text-accent-action mr-1">$</span>
-          <span>Alexis Dubus</span>
+          <span className="text-accent-action mr-0.5 font-semibold">A</span>
+          <span>lexis Dubus</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -124,7 +124,7 @@ export function Navbar() {
                 key={link.id}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link)}
-                className={`relative px-4 py-2 text-sm transition-all duration-200 rounded-md font-mono ${
+                className={`relative px-4 py-2 text-sm transition-all duration-200 rounded-md ${
                   isActive
                     ? "text-text-primary"
                     : "text-text-secondary hover:text-text-primary"
@@ -139,13 +139,12 @@ export function Navbar() {
                     />
                     <motion.span
                       layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-primary"
+                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-action"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
                     />
                   </>
                 )}
                 <span className="relative z-10">
-                  {isActive && <span className="text-accent-primary mr-1">{">"}</span>}
                   {link.label}
                 </span>
               </Link>
@@ -227,13 +226,12 @@ export function Navbar() {
                     <Link
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link)}
-                      className={`block py-3 px-3 text-sm transition-colors duration-200 rounded-md font-mono ${
+                      className={`block py-3 px-3 text-sm transition-colors duration-200 rounded-md ${
                         isActive
                           ? "text-text-primary font-medium bg-background-elevated border border-accent-border"
                           : "text-text-secondary hover:text-text-primary hover:bg-background-elevated"
                       }`}
                     >
-                      {isActive && <span className="text-accent-primary mr-2">{">"}</span>}
                       {link.label}
                     </Link>
                   </motion.div>

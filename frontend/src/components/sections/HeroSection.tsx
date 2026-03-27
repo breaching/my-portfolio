@@ -145,33 +145,29 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
     accent: "amber",
     content: (
       <div className="bg-[#1A1A1A]">
-        <div className="relative h-[130px] overflow-hidden">
+        {/* Full-bleed hero — elegant restaurant landing */}
+        <div className="relative h-[200px] overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop&q=80"
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop&q=80"
             alt="" fill className="object-cover" sizes="500px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/60 to-transparent" />
-          <div className="absolute inset-0 flex flex-col items-center justify-end pb-3">
-            <p className="text-[8px] text-[#C9A96E] tracking-[0.2em] uppercase mb-0.5">Restaurant gastronomique</p>
-            <p className="text-base font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/40 to-[#1A1A1A]/20" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+            <p className="text-[8px] text-[#C9A96E] tracking-[0.25em] uppercase mb-2">Restaurant gastronomique · Caen</p>
+            <p className="text-xl font-light text-white leading-tight">Le Bistrot</p>
+            <p className="text-xl italic text-[#C9A96E] leading-tight">Normand</p>
+            <div className="w-8 h-px bg-[#C9A96E]/40 mt-2.5 mb-2" />
+            <p className="text-[8px] text-white/50 tracking-wide">Cuisine de saison · Produits locaux</p>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-2 p-3">
-          {[
-            { name: "Tartare de boeuf", price: "18 €", img: "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=200&h=130&fit=crop&q=70" },
-            { name: "Camembert rôti", price: "14 €", img: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=200&h=130&fit=crop&q=70" },
-            { name: "Tarte tatin", price: "12 €", img: "https://images.unsplash.com/photo-1562007908-17c67e878c88?w=200&h=130&fit=crop&q=70" },
-          ].map((item) => (
-            <div key={item.name} className="rounded-lg border border-[#C9A96E]/15 bg-[#222] overflow-hidden">
-              <div className="relative h-[48px]">
-                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
-              </div>
-              <div className="px-1.5 py-1">
-                <p className="text-[8px] font-medium text-white/80 truncate">{item.name}</p>
-                <p className="text-[7px] text-[#C9A96E]">{item.price}</p>
-              </div>
-            </div>
-          ))}
+        {/* Bottom action bar — not a product grid */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-t border-[#C9A96E]/10">
+          <div className="flex items-center gap-3">
+            {["La carte", "Réserver", "Horaires"].map((label) => (
+              <span key={label} className="text-[8px] text-white/50 hover:text-[#C9A96E] transition-colors cursor-pointer">{label}</span>
+            ))}
+          </div>
+          <span className="text-[8px] px-2.5 py-1 rounded-full bg-[#C9A96E]/15 text-[#C9A96E] border border-[#C9A96E]/20">02 31 00 00 00</span>
         </div>
       </div>
     ),
@@ -181,34 +177,28 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
     accent: "neutral",
     content: (
       <div className="bg-[#FAFAF9]">
-        <div className="relative h-[130px] overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=250&fit=crop&q=80"
-            alt="" fill className="object-cover" sizes="500px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/75 via-[#1a1a1a]/40 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <p className="text-[8px] text-white/60 tracking-[0.15em] uppercase mb-1">Architecture d&apos;intérieur</p>
-            <p className="text-[15px] font-light text-white leading-tight">Des espaces qui</p>
-            <p className="text-[15px] font-semibold text-white leading-tight">vous <span className="italic text-neutral-300">ressemblent.</span></p>
+        {/* Split layout — editorial portfolio style */}
+        <div className="flex h-[230px]">
+          {/* Large project image — 60% */}
+          <div className="relative w-[58%] overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=500&fit=crop&q=80"
+              alt="" fill className="object-cover" sizes="300px"
+            />
           </div>
-        </div>
-        <div className="grid grid-cols-3 gap-2 p-3">
-          {[
-            { title: "Loft Vaugueux", tag: "Rénovation", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&h=130&fit=crop&q=70" },
-            { title: "Villa Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=130&fit=crop&q=70" },
-            { title: "Café Demoiselle", tag: "Commercial", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=200&h=130&fit=crop&q=70" },
-          ].map((p) => (
-            <div key={p.title} className="rounded-lg overflow-hidden border border-neutral-200/80 bg-white">
-              <div className="relative h-[48px]">
-                <Image src={p.img} alt="" fill className="object-cover" sizes="150px" />
-              </div>
-              <div className="px-1.5 py-1">
-                <p className="text-[6px] text-neutral-400 uppercase tracking-wider">{p.tag}</p>
-                <p className="text-[8px] font-medium text-neutral-800 truncate">{p.title}</p>
-              </div>
+          {/* Text panel — 40% */}
+          <div className="w-[42%] flex flex-col justify-between p-4">
+            <div>
+              <p className="text-[7px] text-neutral-400 tracking-[0.15em] uppercase mb-3">Architecture d&apos;intérieur</p>
+              <p className="text-[13px] font-light text-neutral-800 leading-snug">Des espaces qui</p>
+              <p className="text-[13px] font-medium text-neutral-900 leading-snug">vous <span className="italic text-neutral-500">ressemblent.</span></p>
             </div>
-          ))}
+            <div>
+              <p className="text-[20px] font-light text-neutral-800 leading-none mb-0.5">24</p>
+              <p className="text-[7px] text-neutral-400 uppercase tracking-wider">projets réalisés</p>
+              <div className="mt-2.5 px-2.5 py-1 rounded bg-neutral-900 text-[7px] text-white text-center w-fit">Découvrir</div>
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -218,37 +208,39 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
     accent: "blue",
     content: (
       <div className="bg-white">
-        <div className="relative h-[130px] overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&h=300&fit=crop&q=80"
-            alt="" fill className="object-cover" sizes="500px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0C3B6F]/85 via-[#0C3B6F]/50 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/15 text-[8px] text-white/80 mb-1.5 w-fit">
-              <Wrench size={8} weight="fill" />
+        {/* Compact header — service-oriented, no hero photo */}
+        <div className="bg-[#0C3B6F] px-4 py-3.5">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[13px] font-semibold text-white">Dupont Plomberie</p>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 border border-red-400/30 text-[7px] text-red-300 font-medium">
+              <Wrench size={7} weight="fill" />
               Urgence 7j/7
-            </div>
-            <p className="text-[15px] font-light text-white leading-tight">Votre plombier</p>
-            <p className="text-[15px] font-semibold text-[#60A5FA] leading-tight">de confiance.</p>
+            </span>
           </div>
+          <p className="text-[9px] text-white/60">Plombier de confiance à Caen depuis 2008</p>
         </div>
+        {/* Service blocks with icons — NOT photos */}
         <div className="grid grid-cols-3 gap-2 p-3">
           {[
-            { name: "Plomberie", icon: "Devis gratuit", img: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=200&h=130&fit=crop&q=70" },
-            { name: "Chauffage", icon: "Certifié RGE", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=200&h=130&fit=crop&q=70" },
-            { name: "Rénovation", icon: "Sur devis", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=130&fit=crop&q=70" },
+            { name: "Plomberie", sub: "Devis gratuit", emoji: "🔧" },
+            { name: "Chauffage", sub: "Certifié RGE", emoji: "🔥" },
+            { name: "Rénovation", sub: "Sur devis", emoji: "🏠" },
           ].map((item) => (
-            <div key={item.name} className="rounded-lg border border-[#1E5FAA]/10 bg-[#F0F6FF] overflow-hidden">
-              <div className="relative h-[48px]">
-                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
-              </div>
-              <div className="px-1.5 py-1">
-                <p className="text-[8px] font-medium text-[#0C3B6F] truncate">{item.name}</p>
-                <p className="text-[7px] text-[#1E5FAA]/60">{item.icon}</p>
-              </div>
+            <div key={item.name} className="rounded-lg border border-[#1E5FAA]/10 bg-[#F0F6FF] p-2.5 text-center">
+              <p className="text-base mb-1">{item.emoji}</p>
+              <p className="text-[8px] font-semibold text-[#0C3B6F]">{item.name}</p>
+              <p className="text-[7px] text-[#1E5FAA]/60">{item.sub}</p>
             </div>
           ))}
+        </div>
+        {/* CTA bar */}
+        <div className="flex items-center justify-between px-3 pb-2.5">
+          <div className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md bg-[#0C3B6F] text-[8px] font-medium text-white">
+            📞 02 31 00 00 00
+          </div>
+          <div className="flex-1 ml-2 flex items-center justify-center gap-1.5 py-1.5 rounded-md border border-[#0C3B6F]/20 text-[8px] font-medium text-[#0C3B6F]">
+            Demander un devis
+          </div>
         </div>
       </div>
     ),
@@ -427,26 +419,21 @@ function MobileIllustration({ isInView }: { isInView: boolean }) {
       >
         <BrowserWindow url="bistrot-normand.fr" accent="amber">
           <div className="bg-[#1A1A1A]">
-            <div className="relative h-[60px] overflow-hidden">
+            <div className="relative h-[100px] overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=150&fit=crop&q=70"
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop&q=70"
                 alt="" fill className="object-cover" sizes="250px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
-              <div className="absolute bottom-2 left-0 right-0 text-center">
-                <p className="text-[6px] text-[#C9A96E] tracking-[0.15em] uppercase">Restaurant</p>
-                <p className="text-[10px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/40 to-transparent" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <p className="text-[6px] text-[#C9A96E] tracking-[0.2em] uppercase mb-1">Restaurant gastronomique</p>
+                <p className="text-[11px] font-light text-white">Le Bistrot</p>
+                <p className="text-[11px] italic text-[#C9A96E]">Normand</p>
               </div>
             </div>
-            <div className="p-2.5 space-y-1">
-              {[
-                { name: "Tartare de boeuf", price: "18 €" },
-                { name: "Camembert rôti", price: "14 €" },
-              ].map((item) => (
-                <div key={item.name} className="flex justify-between border-b border-white/[0.06] pb-1">
-                  <span className="text-[7px] text-white/60">{item.name}</span>
-                  <span className="text-[7px] text-[#C9A96E]">{item.price}</span>
-                </div>
+            <div className="flex items-center justify-center gap-3 px-2.5 py-1.5 border-t border-[#C9A96E]/10">
+              {["La carte", "Réserver"].map((label) => (
+                <span key={label} className="text-[7px] text-white/40">{label}</span>
               ))}
             </div>
           </div>
