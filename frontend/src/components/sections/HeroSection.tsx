@@ -10,7 +10,6 @@ import {
   Clock,
   CheckCircle,
   MapPin,
-  Star,
   Wrench,
 } from "@phosphor-icons/react";
 import { scrollToSection } from "@/lib/scroll";
@@ -146,34 +145,33 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
     accent: "amber",
     content: (
       <div className="bg-[#1A1A1A]">
-        <div className="relative h-[120px] overflow-hidden">
+        <div className="relative h-[130px] overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop&q=80"
             alt="" fill className="object-cover" sizes="500px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/60 to-transparent" />
           <div className="absolute inset-0 flex flex-col items-center justify-end pb-3">
             <p className="text-[8px] text-[#C9A96E] tracking-[0.2em] uppercase mb-0.5">Restaurant gastronomique</p>
             <p className="text-base font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
           </div>
         </div>
-        <div className="p-3.5 space-y-2">
+        <div className="grid grid-cols-3 gap-2 p-3">
           {[
-            { name: "Tartare de boeuf normand", price: "18 €" },
-            { name: "Camembert rôti au miel", price: "14 €" },
-            { name: "Tarte tatin maison", price: "12 €" },
+            { name: "Tartare de boeuf", price: "18 €", img: "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=200&h=130&fit=crop&q=70" },
+            { name: "Camembert rôti", price: "14 €", img: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=200&h=130&fit=crop&q=70" },
+            { name: "Tarte tatin", price: "12 €", img: "https://images.unsplash.com/photo-1562007908-17c67e878c88?w=200&h=130&fit=crop&q=70" },
           ].map((item) => (
-            <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-white/[0.06]">
-              <span className="text-[9px] text-white/70">{item.name}</span>
-              <span className="text-[9px] text-[#C9A96E] font-light">{item.price}</span>
+            <div key={item.name} className="rounded-lg border border-[#C9A96E]/15 bg-[#222] overflow-hidden">
+              <div className="relative h-[48px]">
+                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
+              </div>
+              <div className="px-1.5 py-1">
+                <p className="text-[8px] font-medium text-white/80 truncate">{item.name}</p>
+                <p className="text-[7px] text-[#C9A96E]">{item.price}</p>
+              </div>
             </div>
           ))}
-          <div className="flex items-center gap-0.5 pt-1">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={8} weight="fill" className="text-[#C9A96E]" />
-            ))}
-            <span className="text-[7px] text-white/30 ml-1.5">4.8/5</span>
-          </div>
         </div>
       </div>
     ),
@@ -182,30 +180,32 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
     url: "studio-morel.fr",
     accent: "neutral",
     content: (
-      <div className="bg-white">
-        <div className="relative h-[120px] overflow-hidden">
+      <div className="bg-[#FAFAF9]">
+        <div className="relative h-[130px] overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=250&fit=crop&q=80"
             alt="" fill className="object-cover" sizes="500px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
-          <div className="absolute bottom-3 left-4">
-            <p className="text-[8px] text-neutral-400 tracking-[0.15em] uppercase">Architecture d&apos;intérieur</p>
-            <p className="text-[14px] font-light text-neutral-900">Des espaces qui vous <span className="italic">ressemblent.</span></p>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/75 via-[#1a1a1a]/40 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-5">
+            <p className="text-[8px] text-white/60 tracking-[0.15em] uppercase mb-1">Architecture d&apos;intérieur</p>
+            <p className="text-[15px] font-light text-white leading-tight">Des espaces qui</p>
+            <p className="text-[15px] font-semibold text-white leading-tight">vous <span className="italic text-neutral-300">ressemblent.</span></p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2 p-3">
+        <div className="grid grid-cols-3 gap-2 p-3">
           {[
             { title: "Loft Vaugueux", tag: "Rénovation", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&h=130&fit=crop&q=70" },
-            { title: "Maison Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=130&fit=crop&q=70" },
+            { title: "Villa Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=130&fit=crop&q=70" },
+            { title: "Café Demoiselle", tag: "Commercial", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=200&h=130&fit=crop&q=70" },
           ].map((p) => (
-            <div key={p.title} className="rounded-lg overflow-hidden border border-neutral-100">
+            <div key={p.title} className="rounded-lg overflow-hidden border border-neutral-200/80 bg-white">
               <div className="relative h-[48px]">
                 <Image src={p.img} alt="" fill className="object-cover" sizes="150px" />
               </div>
-              <div className="px-2 py-1.5">
+              <div className="px-1.5 py-1">
                 <p className="text-[6px] text-neutral-400 uppercase tracking-wider">{p.tag}</p>
-                <p className="text-[8px] font-medium text-neutral-900 truncate">{p.title}</p>
+                <p className="text-[8px] font-medium text-neutral-800 truncate">{p.title}</p>
               </div>
             </div>
           ))}
@@ -217,28 +217,38 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
     url: "dupont-plomberie.fr",
     accent: "blue",
     content: (
-      <div className="bg-gradient-to-b from-[#F0F6FF] to-white p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-6 h-6 rounded bg-[#1E5FAA] flex items-center justify-center">
-            <Wrench size={12} weight="bold" className="text-white" />
-          </div>
-          <span className="text-[10px] font-semibold text-neutral-900">Dupont Plomberie</span>
-        </div>
-        <p className="text-[13px] font-bold text-neutral-900 leading-tight mb-1.5">
-          Votre plombier <span className="text-[#1E5FAA]">de confiance</span>
-        </p>
-        <p className="text-[8px] text-neutral-500 mb-3">Dépannage urgent 7j/7, Caen et alentours</p>
-        <div className="flex gap-2 mb-3">
-          <div className="flex-1 rounded-lg bg-[#1E5FAA] text-center py-2">
-            <span className="text-[8px] text-white font-medium">Urgence 7j/7</span>
-          </div>
-          <div className="flex-1 rounded-lg border border-neutral-200 text-center py-2">
-            <span className="text-[8px] text-neutral-600 font-medium">Devis gratuit</span>
+      <div className="bg-white">
+        <div className="relative h-[130px] overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&h=300&fit=crop&q=80"
+            alt="" fill className="object-cover" sizes="500px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0C3B6F]/85 via-[#0C3B6F]/50 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-5">
+            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/15 text-[8px] text-white/80 mb-1.5 w-fit">
+              <Wrench size={8} weight="fill" />
+              Urgence 7j/7
+            </div>
+            <p className="text-[15px] font-light text-white leading-tight">Votre plombier</p>
+            <p className="text-[15px] font-semibold text-[#60A5FA] leading-tight">de confiance.</p>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 text-[7px] text-neutral-400">
-          <CheckCircle size={10} weight="fill" className="text-emerald-500" />
-          Intervention en moins de 2h
+        <div className="grid grid-cols-3 gap-2 p-3">
+          {[
+            { name: "Plomberie", icon: "Devis gratuit", img: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=200&h=130&fit=crop&q=70" },
+            { name: "Chauffage", icon: "Certifié RGE", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=200&h=130&fit=crop&q=70" },
+            { name: "Rénovation", icon: "Sur devis", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=130&fit=crop&q=70" },
+          ].map((item) => (
+            <div key={item.name} className="rounded-lg border border-[#1E5FAA]/10 bg-[#F0F6FF] overflow-hidden">
+              <div className="relative h-[48px]">
+                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
+              </div>
+              <div className="px-1.5 py-1">
+                <p className="text-[8px] font-medium text-[#0C3B6F] truncate">{item.name}</p>
+                <p className="text-[7px] text-[#1E5FAA]/60">{item.icon}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     ),
