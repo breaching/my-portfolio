@@ -225,13 +225,13 @@ code, pre, .font-mono {
   background-size: 24px 24px;
 }
 
-/* Gradient mesh for hero — audacieux */
+/* Gradient mesh for hero — subtle ambient glow */
 .gradient-mesh {
   background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(129, 140, 248, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(99, 102, 241, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 50% at 70% 60%, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(129, 140, 248, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 70% 60%, rgba(34, 211, 238, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
 }
 
 /* Noise grain texture overlay */

@@ -9,6 +9,9 @@ import {
   CurrencyEur,
   Clock,
   CheckCircle,
+  Code,
+  Terminal,
+  Gauge,
   MapPin,
   Wrench,
   Drop,
@@ -59,49 +62,8 @@ const stats = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   Browser Window — reusable mini-browser chrome wrapper
-   ────────────────────────────────────────────────────────── */
-
-function BrowserWindow({
-  url,
-  children,
-  accent = "indigo",
-}: {
-  url: string;
-  children: React.ReactNode;
-  accent?: "indigo" | "amber" | "neutral" | "blue";
-}) {
-  const glowMap = {
-    indigo: "shadow-[0_8px_50px_-6px_rgba(99,102,241,0.35)]",
-    amber: "shadow-[0_8px_50px_-6px_rgba(200,160,80,0.25)]",
-    neutral: "shadow-[0_8px_50px_-6px_rgba(100,100,120,0.2)]",
-    blue: "shadow-[0_8px_50px_-6px_rgba(30,95,170,0.25)]",
-  };
-  return (
-    <div className={`rounded-xl border border-white/[0.08] bg-[#1a1a2e]/80 backdrop-blur-xl ${glowMap[accent]} overflow-hidden ring-1 ring-white/[0.04]`}>
-      {/* Title bar — slightly lighter so it reads on dark bg */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.08] bg-white/[0.04]">
-        <div className="flex gap-1.5">
-          <div className="w-[7px] h-[7px] rounded-full bg-[#ff5f57]" />
-          <div className="w-[7px] h-[7px] rounded-full bg-[#febc2e]" />
-          <div className="w-[7px] h-[7px] rounded-full bg-[#28c840]" />
-        </div>
-        <div className="flex-1 flex justify-center">
-          <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[9px] text-white/40 font-mono tracking-wide">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70" />
-            {url}
-          </div>
-        </div>
-      </div>
-      {children}
-    </div>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────
-   Demo card previews — faithful mini-representations of real
-   /demos/* pages, each with a distinct layout. Clicking opens
-   the full demo page.
+   Demo card data — faithful mini-representations of real
+   /demos/* pages, each with a distinct layout.
    ────────────────────────────────────────────────────────── */
 
 const demoCards: {
@@ -110,7 +72,7 @@ const demoCards: {
   accent: "indigo" | "amber" | "neutral" | "blue";
   content: React.ReactNode;
 }[] = [
-  /* ── Boulangerie: warm hero + product grid (matches /demos/boulangerie) ── */
+  /* ── Boulangerie ── */
   {
     url: "boulangerie-martin.fr",
     path: "boulangerie",
@@ -149,7 +111,7 @@ const demoCards: {
     ),
   },
 
-  /* ── Restaurant: dark full-bleed + centered text + nav bar (matches /demos/restaurant) ── */
+  /* ── Restaurant ── */
   {
     url: "bistrot-normand.fr",
     path: "restaurant",
@@ -176,7 +138,7 @@ const demoCards: {
     ),
   },
 
-  /* ── Architecte: light split layout — image left, text+stats right (matches /demos/architecte) ── */
+  /* ── Architecte ── */
   {
     url: "studio-morel.fr",
     path: "architecte",
@@ -216,7 +178,7 @@ const demoCards: {
     ),
   },
 
-  /* ── Plombier: blue header + service cards with icons + CTA (matches /demos/plombier) ── */
+  /* ── Plombier ── */
   {
     url: "dupont-plomberie.fr",
     path: "plombier",
@@ -270,190 +232,393 @@ const demoCards: {
 ];
 
 /* ──────────────────────────────────────────────────────────
-   Floating Screens — animated card-stack carousel
-   One card in front, others stacked behind, auto-cycling
+   FloatingScreens — 3D isometric illustration with 4 windows:
+   1. Main browser (cycles through demoCards)
+   2. Code editor (fixed — page.tsx)
+   3. Lighthouse dashboard (fixed — score circles)
+   4. Terminal (fixed — npm run build)
+   Plus floating particles and connecting lines.
    ────────────────────────────────────────────────────────── */
 
 function FloatingScreens({
   isInView,
-  active,
-  onNext,
-  onSelect,
+  activeDemo,
   onOpenGallery,
 }: {
   isInView: boolean;
-  active: number;
-  onNext: () => void;
-  onSelect: (i: number) => void;
+  activeDemo: number;
   onOpenGallery: (i: number) => void;
 }) {
-  const total = demoCards.length;
-
-  /* Position config for each slot in the stack (0 = front) */
-  const slotStyles = [
-    { x: 0, y: 0, scale: 1, z: 40, opacity: 1 },       // front
-    { x: 24, y: -16, scale: 0.94, z: 20, opacity: 0.7 },  // behind-right
-    { x: 48, y: -32, scale: 0.88, z: 0, opacity: 0.45 },   // further back
-    { x: 72, y: -48, scale: 0.82, z: -20, opacity: 0.25 }, // deepest
-  ];
+  const card = demoCards[activeDemo];
 
   return (
-    <div
-      className="relative w-full h-[480px] lg:h-[520px]"
-      style={{ perspective: "1800px" }}
-    >
-      {/* Ambient glow */}
+    <div className="relative w-full h-[500px] lg:h-[560px]" style={{ perspective: "1200px" }}>
+      {/* Ambient glow layers */}
       <div
-        className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-indigo-500/12 blur-[110px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full bg-indigo-500/25 blur-[120px]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-[30%] left-[20%] w-64 h-64 rounded-full bg-violet-600/15 blur-[80px]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-[20%] right-[15%] w-48 h-48 rounded-full bg-sky-500/10 blur-[60px]"
         aria-hidden="true"
       />
 
-      {/* Card stack container — isometric tilt */}
-      <div
-        className="relative w-full h-full flex items-center justify-center"
-        style={{
-          transform: "rotateY(-10deg) rotateX(5deg)",
-          transformStyle: "preserve-3d",
-        }}
+      {/* ── Main browser window — front center, largest ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-[10%] left-[5%] w-[72%] z-30 cursor-pointer"
+        style={{ transform: "rotateY(-10deg) rotateX(6deg)", transformStyle: "preserve-3d" }}
+        onClick={() => onOpenGallery(activeDemo)}
       >
-        {demoCards.map((card, i) => {
-          /* Which slot is this card in? 0 = front, 1 = behind, etc. */
-          const slot = (i - active + total) % total;
-          const s = slotStyles[slot];
+        <div className="rounded-xl border border-indigo-500/30 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_20px_80px_-15px_rgba(99,102,241,0.25)] overflow-hidden">
+          {/* Browser chrome */}
+          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div className="flex items-center gap-2 px-4 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-[10px] text-white/30 font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-400/60" />
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={card.url}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {card.url}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
 
-          return (
-            <motion.div
-              key={card.url}
-              animate={{
-                x: s.x,
-                y: s.y,
-                scale: s.scale,
-                opacity: isInView ? s.opacity : 0,
-              }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute top-[8%] left-0 w-[95%] cursor-pointer"
-              style={{
-                zIndex: total - slot,
-                transformStyle: "preserve-3d",
-                transform: `translateZ(${s.z}px)`,
-              }}
-              onClick={() => slot === 0 ? onOpenGallery(i) : onNext()}
-            >
-              <BrowserWindow url={card.url} accent={card.accent}>
+          {/* Demo content — cycles via AnimatePresence */}
+          <div className="relative overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={card.url}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              >
                 {card.content}
-              </BrowserWindow>
-            </motion.div>
-          );
-        })}
-      </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </motion.div>
 
-      {/* Navigation dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
-        {demoCards.map((card, i) => (
-          <button
-            key={card.url}
-            onClick={() => onSelect(i)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === active
-                ? "bg-indigo-400 shadow-[0_0_6px_2px_rgba(129,140,248,0.4)] scale-125"
-                : "bg-white/20 hover:bg-white/40"
-            }`}
-            aria-label={`Voir ${card.url}`}
-          />
-        ))}
-      </div>
+      {/* ── Code editor — back right, peeking behind browser ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-[-2%] right-[-2%] w-[50%] z-20"
+        style={{ transform: "rotateY(-14deg) rotateX(8deg)", transformStyle: "preserve-3d" }}
+      >
+        <div className="rounded-xl border border-indigo-500/20 bg-[#0a0a18]/85 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.15)] overflow-hidden">
+          {/* Editor tabs */}
+          <div className="flex items-center gap-0 border-b border-white/[0.04] bg-white/[0.01]">
+            <div className="flex items-center gap-1.5 px-3 py-2 border-b-2 border-indigo-500/60 bg-white/[0.02] text-[8px] text-white/50 font-mono">
+              <Code size={9} className="text-indigo-400/60" />
+              page.tsx
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
+              layout.tsx
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
+              globals.css
+            </div>
+          </div>
+          {/* Code with line numbers */}
+          <div className="p-3 font-mono text-[8px] leading-[2]">
+            <div className="flex gap-3">
+              {/* Line numbers */}
+              <div className="text-white/10 text-right select-none w-4 shrink-0">
+                {[1,2,3,4,5,6,7,8,9,10,11].map(n => (
+                  <div key={n}>{n}</div>
+                ))}
+              </div>
+              {/* Code */}
+              <div className="space-y-0 overflow-hidden">
+                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Hero {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
+                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Services {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
+                <div className="text-white/10">&nbsp;</div>
+                <div><span className="text-violet-400/80">export</span> <span className="text-sky-400/70">default</span> <span className="text-amber-400/80">function</span> <span className="text-sky-300/80">Page</span><span className="text-white/30">() {"{"}</span></div>
+                <div className="pl-4"><span className="text-violet-400/80">return</span> <span className="text-white/30">(</span></div>
+                <div className="pl-8"><span className="text-sky-400/60">&lt;</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
+                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Hero</span> <span className="text-indigo-300/70">title</span><span className="text-white/20">=</span><span className="text-emerald-400/70">&quot;Votre site&quot;</span> <span className="text-sky-400/60">/&gt;</span></div>
+                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Services</span> <span className="text-indigo-300/70">grid</span><span className="text-white/20">=</span><span className="text-white/30">{"{"}</span><span className="text-orange-400/70">3</span><span className="text-white/30">{"}"}</span> <span className="text-sky-400/60">/&gt;</span></div>
+                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Contact</span> <span className="text-indigo-300/70">form</span> <span className="text-sky-400/60">/&gt;</span></div>
+                <div className="pl-8"><span className="text-sky-400/60">&lt;/</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
+                <div className="pl-4"><span className="text-white/30">)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
-      {/* Floating particles */}
+      {/* ── Lighthouse dashboard — front bottom right, overlapping browser edge ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[4%] right-[2%] w-[50%] z-40"
+        style={{ transform: "rotateY(-6deg) rotateX(3deg)", transformStyle: "preserve-3d" }}
+      >
+        <div className="rounded-xl border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-[0_15px_50px_-10px_rgba(16,185,129,0.12)] overflow-hidden">
+          <div className="px-4 py-2.5 border-b border-white/[0.04] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Gauge size={12} weight="bold" className="text-emerald-400/80" />
+              <span className="text-[9px] font-semibold text-white/50 font-mono">Lighthouse Report</span>
+            </div>
+            <span className="text-[7px] text-white/20 font-mono">votre-site.fr</span>
+          </div>
+          <div className="p-4">
+            {/* Score circles */}
+            <div className="flex items-center justify-around">
+              {[
+                { label: "Performance", score: 98, color: "text-emerald-400 border-emerald-500/40" },
+                { label: "Accessibilité", score: 100, color: "text-emerald-400 border-emerald-500/40" },
+                { label: "Bonnes pratiques", score: 100, color: "text-emerald-400 border-emerald-500/40" },
+                { label: "SEO", score: 100, color: "text-emerald-400 border-emerald-500/40" },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 1.2 + i * 0.1, duration: 0.4 }}
+                  className="flex flex-col items-center gap-1.5"
+                >
+                  <div className={`w-10 h-10 rounded-full border-2 ${item.color} flex items-center justify-center bg-emerald-500/[0.05]`}>
+                    <span className="text-[11px] font-bold font-mono">{item.score}</span>
+                  </div>
+                  <span className="text-[6px] text-white/30 text-center leading-tight max-w-[50px]">{item.label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Terminal — bottom left, tucked behind ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[8%] left-[-1%] w-[38%] z-10"
+        style={{ transform: "rotateY(-4deg) rotateX(3deg)", transformStyle: "preserve-3d" }}
+      >
+        <div className="rounded-lg border border-white/[0.06] bg-[#0a0a14]/80 backdrop-blur-xl shadow-lg overflow-hidden">
+          <div className="px-3 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
+            <Terminal size={9} className="text-white/25" />
+            <span className="text-[7px] text-white/25 font-mono">terminal</span>
+          </div>
+          <div className="p-3 font-mono text-[7px] leading-[2]">
+            <div><span className="text-emerald-400/70">&gt;</span> <span className="text-white/40">npm run build</span></div>
+            <div className="text-white/20">  Creating optimized build...</div>
+            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Compiled in 847ms</div>
+            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Generating static pages (7/7)</div>
+            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Collecting build traces</div>
+            <div className="text-emerald-400/70">  <span className="text-emerald-400/80">✓</span> Build complete — ready to deploy</div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Floating particles ── */}
       {[
-        { top: "5%", left: "5%", size: 3, delay: 0.5, glow: true },
-        { top: "15%", left: "95%", size: 2, delay: 0.7, glow: false },
-        { top: "85%", left: "90%", size: 3, delay: 1.0, glow: true },
+        { top: "5%", left: "50%", size: 4, delay: 0.5, glow: true },
+        { top: "20%", left: "92%", size: 3, delay: 0.7, glow: false },
+        { top: "60%", left: "15%", size: 3, delay: 0.9, glow: false },
+        { top: "85%", left: "80%", size: 4, delay: 1.1, glow: true },
+        { top: "10%", left: "10%", size: 2, delay: 0.8, glow: false },
+        { top: "45%", left: "95%", size: 2, delay: 1.0, glow: false },
+        { top: "75%", left: "40%", size: 3, delay: 1.2, glow: false },
+        { top: "35%", left: "5%", size: 2, delay: 0.6, glow: false },
       ].map((dot, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, scale: 0 }}
-          animate={isInView ? { opacity: dot.glow ? 0.7 : 0.3, scale: 1 } : {}}
-          transition={{ delay: dot.delay, duration: 0.5 }}
-          className={`absolute rounded-full ${dot.glow ? "bg-indigo-400/80 shadow-[0_0_8px_3px_rgba(129,140,248,0.4)]" : "bg-white/20"}`}
+          animate={isInView ? { opacity: dot.glow ? 0.8 : 0.4, scale: 1 } : {}}
+          transition={{ delay: dot.delay, duration: 0.6 }}
+          className={`absolute rounded-full ${dot.glow ? "bg-indigo-400/80 shadow-[0_0_8px_2px_rgba(129,140,248,0.4)]" : "bg-indigo-400/40"}`}
           style={{ top: dot.top, left: dot.left, width: dot.size, height: dot.size }}
           aria-hidden="true"
         />
       ))}
+
+      {/* ── Connecting lines (subtle grid effect) ── */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <line x1="20%" y1="80%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
+        <line x1="80%" y1="20%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
+        <line x1="85%" y1="85%" x2="55%" y2="55%" stroke="rgba(99,102,241,0.04)" strokeWidth="1" />
+      </svg>
     </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────
-   Mobile-only simplified illustration — 2 overlapping demos
+   Mobile illustration — layered composition:
+   browser (cycling demos) + code snippet peek + lighthouse
    ────────────────────────────────────────────────────────── */
 
-function MobileIllustration({ isInView, onOpenGallery }: { isInView: boolean; onOpenGallery: (i: number) => void }) {
+function MobileIllustration({
+  isInView,
+  activeDemo,
+  onOpenGallery,
+}: {
+  isInView: boolean;
+  activeDemo: number;
+  onOpenGallery: (i: number) => void;
+}) {
+  const card = demoCards[activeDemo];
+
   return (
-    <div className="relative">
-      {/* Glow behind */}
+    <div className="relative w-full max-w-sm mx-auto">
+      {/* Glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-40 rounded-full bg-indigo-500/12 blur-[60px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-indigo-500/20 blur-[90px]"
         aria-hidden="true"
       />
 
-      {/* 2 demo previews — hero images only, clean and balanced */}
-      <div className="relative grid grid-cols-2 gap-2">
-        {/* Bakery — full hero image */}
+      {/* ── Code snippet — peeking top-right behind browser ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.5, duration: 0.5 }}
+        className="relative z-10 w-[55%] ml-auto mr-2 mb-[-28px]"
+      >
+        <div className="rounded-lg border border-indigo-500/15 bg-[#0a0a18]/80 backdrop-blur-xl shadow-lg overflow-hidden">
+          <div className="flex items-center gap-1.5 px-2.5 py-1.5 border-b border-white/[0.04] bg-white/[0.01]">
+            <Code size={8} className="text-indigo-400/50" />
+            <span className="text-[7px] text-white/35 font-mono">page.tsx</span>
+          </div>
+          <div className="p-2 font-mono text-[7px] leading-[1.8]">
+            <div><span className="text-violet-400/70">export</span> <span className="text-sky-400/60">default</span> <span className="text-amber-400/70">function</span> <span className="text-sky-300/70">Page</span><span className="text-white/25">() {"{"}</span></div>
+            <div className="pl-3"><span className="text-violet-400/70">return</span> <span className="text-white/25">(</span></div>
+            <div className="pl-5"><span className="text-sky-400/50">&lt;</span><span className="text-amber-300/70">Hero</span> <span className="text-sky-400/50">/&gt;</span></div>
+            <div className="pl-5"><span className="text-sky-400/50">&lt;</span><span className="text-amber-300/70">Services</span> <span className="text-sky-400/50">/&gt;</span></div>
+            <div className="pl-3"><span className="text-white/25">)</span></div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Main browser — cycling demos ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.4, duration: 0.6 }}
+        className="relative z-20 cursor-pointer"
+        onClick={() => onOpenGallery(activeDemo)}
+      >
+        <div className="rounded-xl border border-indigo-500/25 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.2)] overflow-hidden">
+          {/* Chrome */}
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.05] bg-white/[0.02]">
+            <div className="flex gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-[#ff5f57]/70" />
+              <div className="w-2 h-2 rounded-full bg-[#febc2e]/70" />
+              <div className="w-2 h-2 rounded-full bg-[#28c840]/70" />
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[9px] text-white/30 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={card.url}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {card.url}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+          {/* Demo content */}
+          <div className="relative overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={card.url}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {card.content}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Lighthouse + Terminal row — overlapping bottom of browser ── */}
+      <div className="relative z-30 flex gap-2 px-2 -mt-3">
+        {/* Lighthouse */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="flex-1"
         >
-          <button onClick={() => onOpenGallery(0)} className="block text-left w-full">
-            <BrowserWindow url="boulangerie-martin.fr">
-              <div className="relative h-[100px] overflow-hidden bg-[#FFF8F0]">
-                <Image src="/images/hero/boulangerie-hero.jpg" alt="" fill className="object-cover" sizes="200px" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#3D2B1F]/90 via-[#3D2B1F]/30 to-transparent" />
-                <div className="absolute bottom-0 inset-x-0 p-2.5">
-                  <p className="text-[8px] font-light text-white/80">Pain artisanal,</p>
-                  <p className="text-[9px] font-semibold text-[#E8C496]">fait avec passion.</p>
+          <div className="rounded-lg border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-lg overflow-hidden">
+            <div className="px-2.5 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
+              <Gauge size={8} className="text-emerald-400/70" />
+              <span className="text-[6px] font-medium text-white/40 font-mono">Lighthouse</span>
+            </div>
+            <div className="p-2 flex justify-around">
+              {[
+                { label: "Perf", score: "98" },
+                { label: "A11y", score: "100" },
+                { label: "SEO", score: "100" },
+              ].map((item) => (
+                <div key={item.label} className="flex flex-col items-center gap-0.5">
+                  <div className="w-7 h-7 rounded-full border-[1.5px] border-emerald-500/40 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.05]">
+                    <span className="text-[8px] font-bold font-mono">{item.score}</span>
+                  </div>
+                  <span className="text-[5px] text-white/25">{item.label}</span>
                 </div>
-              </div>
-            </BrowserWindow>
-          </button>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
-        {/* Restaurant — full hero image */}
+        {/* Mini terminal */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.45, duration: 0.5 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="w-[38%] shrink-0"
         >
-          <button onClick={() => onOpenGallery(1)} className="block text-left w-full">
-            <BrowserWindow url="bistrot-normand.fr" accent="amber">
-              <div className="relative h-[100px] overflow-hidden bg-[#1A1A1A]">
-                <Image src="/images/hero/restaurant-hero.jpg" alt="" fill className="object-cover" sizes="200px" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/30 to-transparent" />
-                <div className="absolute bottom-0 inset-x-0 p-2.5 text-center">
-                  <p className="text-[6px] text-[#C9A96E]/70 tracking-[0.15em] uppercase">Restaurant</p>
-                  <p className="text-[10px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
-                </div>
-              </div>
-            </BrowserWindow>
-          </button>
+          <div className="rounded-lg border border-white/[0.06] bg-[#0a0a14]/85 backdrop-blur-xl shadow-lg overflow-hidden h-full">
+            <div className="px-2 py-1.5 border-b border-white/[0.04] flex items-center gap-1">
+              <Terminal size={7} className="text-white/25" />
+              <span className="text-[6px] text-white/25 font-mono">terminal</span>
+            </div>
+            <div className="p-2 font-mono text-[6px] leading-[1.7]">
+              <div><span className="text-emerald-400/60">&gt;</span> <span className="text-white/35">npm run build</span></div>
+              <div className="text-white/15">  <span className="text-emerald-400/45">✓</span> Compiled 847ms</div>
+              <div className="text-white/15">  <span className="text-emerald-400/45">✓</span> Static pages</div>
+              <div className="text-emerald-400/60">  <span className="text-emerald-400/70">✓</span> Ready</div>
+            </div>
+          </div>
         </motion.div>
       </div>
-
-      {/* See all demos */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ delay: 0.6, duration: 0.4 }}
-        className="flex justify-center mt-2.5"
-      >
-        <button
-          onClick={() => onOpenGallery(0)}
-          className="inline-flex items-center gap-1.5 text-[11px] text-text-tertiary hover:text-accent-action transition-colors"
-        >
-          Voir les 4 démos
-          <ArrowDown size={11} />
-        </button>
-      </motion.div>
     </div>
   );
 }
@@ -482,13 +647,13 @@ export function HeroSection() {
       className="relative pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-10 md:pb-14 overflow-hidden"
       ref={heroRef}
     >
-      {/* Background layers */}
+      {/* Background layers — gradient mesh + dot pattern + grain */}
       <div
         className="absolute inset-0 gradient-mesh pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-dot-pattern opacity-30 pointer-events-none"
+        className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none"
         aria-hidden="true"
       />
       <div
@@ -497,7 +662,7 @@ export function HeroSection() {
       />
       {/* Extra central glow for depth */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] sm:w-[600px] h-[200px] sm:h-[400px] rounded-full bg-accent-action/8 blur-[80px] sm:blur-[120px] pointer-events-none"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-accent-action/8 blur-[120px] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -508,6 +673,7 @@ export function HeroSection() {
             initial="initial"
             animate={isHeroInView ? "animate" : "initial"}
             variants={staggerContainer}
+            className="relative z-20"
           >
             {/* Availability badge */}
             <motion.div variants={fadeInUp} className="mb-4 lg:mb-5">
@@ -525,7 +691,7 @@ export function HeroSection() {
               variants={fadeInUp}
               className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-light tracking-[-0.03em] mb-3 lg:mb-4 leading-[1.15]"
             >
-              {/* Mobile: FlipWord on its own line so width changes don't shift text */}
+              {/* Mobile: FlipWord on its own line */}
               <span className="sm:hidden">
                 Un site web<br />
                 <span className="font-semibold text-accent-action">
@@ -535,7 +701,7 @@ export function HeroSection() {
                 <span className="font-semibold">pour votre entreprise</span>
                 <span className="text-accent-action">.</span>
               </span>
-              {/* Desktop: original flow */}
+              {/* Desktop */}
               <span className="hidden sm:inline">
                 Un site web{" "}
                 <span className="font-semibold text-accent-action">
@@ -547,7 +713,7 @@ export function HeroSection() {
               </span>
             </motion.h1>
 
-            {/* Subtitle — shorter on mobile */}
+            {/* Subtitle */}
             <motion.p
               variants={fadeInUp}
               className="text-text-secondary text-[15px] sm:text-lg md:text-xl leading-[1.5] mb-5 lg:mb-7 max-w-[540px]"
@@ -562,7 +728,7 @@ export function HeroSection() {
               </span>
             </motion.p>
 
-            {/* CTAs — single primary on mobile, dual on sm+ */}
+            {/* CTAs */}
             <motion.div
               variants={fadeInUp}
               className="flex flex-col sm:flex-row gap-3 mb-3 lg:mb-4"
@@ -607,18 +773,68 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="hidden lg:block"
           >
-            <FloatingScreens isInView={isHeroInView} active={activeDemo} onNext={nextDemo} onSelect={setActiveDemo} onOpenGallery={(i) => setGalleryOpen(i)} />
+            <FloatingScreens
+              isInView={isHeroInView}
+              activeDemo={activeDemo}
+              onOpenGallery={(i) => setGalleryOpen(i)}
+            />
+
+            {/* Dots + counter */}
+            <div className="flex items-center justify-center gap-3 -mt-2">
+              <div className="flex gap-2">
+                {demoCards.map((c, i) => (
+                  <button
+                    key={c.url}
+                    onClick={() => setActiveDemo(i)}
+                    className={`rounded-full transition-all duration-300 ${
+                      i === activeDemo
+                        ? "w-6 h-2 bg-accent-action shadow-[0_0_8px_2px_var(--accent-action-glow)]"
+                        : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                    }`}
+                    aria-label={`Voir ${c.url}`}
+                  />
+                ))}
+              </div>
+              <span className="text-[11px] text-text-tertiary font-mono tabular-nums">
+                {String(activeDemo + 1).padStart(2, "0")}/{String(demoCards.length).padStart(2, "0")}
+              </span>
+            </div>
           </motion.div>
         </div>
 
-        {/* Mobile illustration — compact single demo preview */}
+        {/* Mobile illustration + dots */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.35, duration: 0.5 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
           className="mt-6 lg:hidden"
         >
-          <MobileIllustration isInView={isHeroInView} onOpenGallery={(i) => setGalleryOpen(i)} />
+          <MobileIllustration
+            isInView={isHeroInView}
+            activeDemo={activeDemo}
+            onOpenGallery={(i) => setGalleryOpen(i)}
+          />
+
+          {/* Dots + counter — mobile */}
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <div className="flex gap-2">
+              {demoCards.map((c, i) => (
+                <button
+                  key={c.url}
+                  onClick={() => setActiveDemo(i)}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === activeDemo
+                      ? "w-6 h-2 bg-accent-action shadow-[0_0_8px_2px_var(--accent-action-glow)]"
+                      : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                  }`}
+                  aria-label={`Voir ${c.url}`}
+                />
+              ))}
+            </div>
+            <span className="text-[11px] text-text-tertiary font-mono tabular-nums">
+              {String(activeDemo + 1).padStart(2, "0")}/{String(demoCards.length).padStart(2, "0")}
+            </span>
+          </div>
         </motion.div>
 
         {/* Stats row */}
