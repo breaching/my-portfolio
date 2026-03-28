@@ -9,7 +9,7 @@ const staggerContainer = {
   initial: {},
   whileInView: {
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.08,
     },
   },
 };
@@ -132,8 +132,8 @@ export function ServicesSection() {
             <div
               className={`relative flex flex-col h-full rounded-xl border transition-all duration-300 overflow-hidden ${
                 service.popular
-                  ? "border-accent-action/60 bg-gradient-to-b from-accent-action-subtle to-background-elevated ring-1 ring-accent-action/30 shadow-[0_0_50px_var(--accent-action-glow)] md:scale-[1.05]"
-                  : "border-accent-border bg-background-elevated/50 hover:border-accent-action/30"
+                  ? "border-accent-action/60 bg-gradient-to-b from-accent-action-subtle to-background-elevated ring-1 ring-accent-action/30 shadow-[0_0_60px_var(--accent-action-glow),0_20px_60px_-20px_rgba(99,102,241,0.15)] md:scale-[1.05]"
+                  : "border-accent-border bg-background-elevated/50 hover:border-accent-action/30 hover:shadow-[0_8px_30px_-10px_rgba(129,140,248,0.08)]"
               }`}
             >
               {/* Popular banner */}

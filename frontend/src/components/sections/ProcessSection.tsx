@@ -70,7 +70,7 @@ export function ProcessSection() {
       {/* Timeline */}
       <div className="relative">
         {/* Vertical connector line — desktop only */}
-        <div className="hidden lg:block absolute left-[23px] top-8 bottom-8 w-px bg-gradient-to-b from-accent-action/40 via-accent-action/20 to-transparent" />
+        <div className="hidden lg:block absolute left-[23px] top-8 bottom-8 w-px bg-gradient-to-b from-accent-action/50 via-accent-action/25 to-accent-action/10" />
 
         <div className="grid gap-4 lg:gap-0">
           {steps.map((step, index) => {
@@ -90,7 +90,7 @@ export function ProcessSection() {
               >
                 {/* Timeline dot — desktop */}
                 <div className="hidden lg:flex absolute left-0 top-6 w-[47px] h-[47px] items-center justify-center">
-                  <div className="w-[47px] h-[47px] rounded-full border-2 border-accent-action/40 bg-background flex items-center justify-center">
+                  <div className="w-[47px] h-[47px] rounded-full border-2 border-accent-action/40 bg-background flex items-center justify-center shadow-[0_0_15px_rgba(129,140,248,0.15)]">
                     <Icon
                       size={20}
                       weight="duotone"
@@ -99,10 +99,10 @@ export function ProcessSection() {
                   </div>
                 </div>
 
-                <div className="group p-4 sm:p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 hover:border-accent-action/30 transition-all duration-300">
+                <div className="group p-4 sm:p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 hover:border-accent-action/30 hover:bg-background-elevated/80 hover:shadow-[0_8px_40px_-12px_rgba(129,140,248,0.12)] transition-all duration-300">
                   <div className="flex items-start gap-4">
                     {/* Mobile icon */}
-                    <div className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl bg-accent-action-subtle border border-accent-action/20 shrink-0">
+                    <div className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl bg-accent-action-subtle border border-accent-action/20 shrink-0 shadow-[0_0_12px_rgba(129,140,248,0.1)]">
                       <Icon
                         size={20}
                         weight="duotone"
@@ -112,19 +112,19 @@ export function ProcessSection() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xs font-mono text-accent-action/60">
+                        <span className="text-sm font-mono text-accent-action/70 font-semibold">
                           {step.number}
                         </span>
                         <h3 className="text-lg font-medium tracking-[-0.01em]">
                           {step.title}
                         </h3>
                       </div>
-                      <p className="text-text-secondary text-sm leading-[1.65] mb-2">
+                      <p className="text-text-secondary text-sm leading-[1.65] mb-2.5">
                         {step.description}
                       </p>
-                      <p className="text-xs text-accent-action/70 font-medium">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent-action-subtle border border-accent-action/15 text-xs text-accent-action font-medium">
                         {step.detail}
-                      </p>
+                      </span>
                     </div>
                   </div>
                 </div>

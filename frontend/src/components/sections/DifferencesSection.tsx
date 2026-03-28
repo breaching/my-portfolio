@@ -53,7 +53,7 @@ const staggerContainer = {
   initial: {},
   whileInView: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.06,
     },
   },
 };
@@ -64,8 +64,8 @@ const fadeInUp = {
   transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
 };
 
-function scrollToContact() {
-  scrollToSection("contact");
+function scrollToServices() {
+  scrollToSection("services");
 }
 
 export function DifferencesSection() {
@@ -107,7 +107,7 @@ export function DifferencesSection() {
                 viewport={{ once: true }}
                 className="group"
               >
-                <div className="relative p-4 sm:p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 backdrop-blur-sm transition-all duration-300 group-hover:border-accent-action/40 group-hover:bg-background-elevated h-full">
+                <div className="relative p-4 sm:p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 backdrop-blur-sm transition-all duration-300 group-hover:border-accent-action/40 group-hover:bg-background-elevated group-hover:shadow-[0_8px_40px_-12px_rgba(129,140,248,0.1)] h-full">
                   {/* Metric badge */}
                   <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
                     <div className="text-right">
@@ -152,14 +152,14 @@ export function DifferencesSection() {
           className="mt-10 text-center"
         >
           <a
-            href="#contact"
+            href="#services"
             onClick={(e) => {
               e.preventDefault();
-              scrollToContact();
+              scrollToServices();
             }}
             className="group/link inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent-action transition-colors"
           >
-            Envie d&apos;en savoir plus ? Discutons de votre projet
+            Découvrir les tarifs
             <ArrowRight
               size={16}
               className="group-hover/link:translate-x-1 transition-transform"

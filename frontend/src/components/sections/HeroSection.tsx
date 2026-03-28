@@ -9,9 +9,6 @@ import {
   CurrencyEur,
   Clock,
   CheckCircle,
-  Code,
-  Terminal,
-  Gauge,
   MapPin,
   Wrench,
   Drop,
@@ -23,7 +20,7 @@ import { FlipWords } from "@/components/ui/FlipWords";
 import { NumberTicker } from "@/components/ui/NumberTicker";
 
 /* Words synced 1:1 with demoCards — same order, same count */
-const flipWords = ["artisanal", "élégant", "sur mesure", "de confiance"];
+const flipWords = ["professionnel", "élégant", "sur mesure", "de confiance"];
 
 const staggerContainer = {
   initial: {},
@@ -232,12 +229,8 @@ const demoCards: {
 ];
 
 /* ──────────────────────────────────────────────────────────
-   FloatingScreens — 3D isometric illustration with 4 windows:
-   1. Main browser (cycles through demoCards)
-   2. Code editor (fixed — page.tsx)
-   3. Lighthouse dashboard (fixed — score circles)
-   4. Terminal (fixed — npm run build)
-   Plus floating particles and connecting lines.
+   FloatingScreens — Premium 3D isometric browser showcase
+   with floating performance badges and ambient lighting
    ────────────────────────────────────────────────────────── */
 
 function FloatingScreens({
@@ -252,41 +245,55 @@ function FloatingScreens({
   const card = demoCards[activeDemo];
 
   return (
-    <div className="relative w-full h-[500px] lg:h-[560px]" style={{ perspective: "1200px" }}>
-      {/* Ambient glow layers */}
+    <div
+      className="relative w-full h-[420px] lg:h-[460px]"
+      style={{ perspective: "1400px" }}
+    >
+      {/* Multi-layer ambient glow — reacts to demo accent */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full bg-indigo-500/25 blur-[120px]"
+        className="absolute top-[40%] left-[48%] -translate-x-1/2 -translate-y-1/2 w-[550px] h-[420px] rounded-full bg-indigo-500/20 blur-[120px] transition-all duration-1000"
         aria-hidden="true"
       />
       <div
-        className="absolute top-[30%] left-[20%] w-64 h-64 rounded-full bg-violet-600/15 blur-[80px]"
+        className="absolute top-[25%] left-[30%] w-72 h-72 rounded-full bg-violet-600/12 blur-[90px]"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-[20%] right-[15%] w-48 h-48 rounded-full bg-sky-500/10 blur-[60px]"
+        className="absolute bottom-[15%] right-[10%] w-56 h-56 rounded-full bg-sky-500/8 blur-[70px]"
         aria-hidden="true"
       />
 
-      {/* ── Main browser window — front center, largest ── */}
+      {/* ── Main browser — 3D perspective with hover-ready transform ── */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-[10%] left-[5%] w-[72%] z-30 cursor-pointer"
-        style={{ transform: "rotateY(-10deg) rotateX(6deg)", transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, y: 40, rotateX: 10, rotateY: -14 }}
+        animate={
+          isInView
+            ? { opacity: 1, y: 0, rotateX: 4, rotateY: -8 }
+            : {}
+        }
+        transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute top-[2%] left-[2%] w-[92%] z-30 cursor-pointer group/browser"
+        style={{ transformStyle: "preserve-3d" }}
         onClick={() => onOpenGallery(activeDemo)}
       >
-        <div className="rounded-xl border border-indigo-500/30 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_20px_80px_-15px_rgba(99,102,241,0.25)] overflow-hidden">
-          {/* Browser chrome */}
-          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
+        {/* Browser reflection / shadow underneath */}
+        <div
+          className="absolute -bottom-8 left-[8%] right-[8%] h-20 bg-indigo-500/10 blur-[30px] rounded-full transition-all duration-500 group-hover/browser:bg-indigo-500/15 group-hover/browser:blur-[40px]"
+          style={{ transform: "translateZ(-40px) rotateX(-80deg)" }}
+          aria-hidden="true"
+        />
+
+        <div className="rounded-2xl border border-white/[0.08] bg-[#0c0c1a]/92 backdrop-blur-2xl shadow-[0_25px_100px_-20px_rgba(99,102,241,0.3),0_0_0_1px_rgba(255,255,255,0.03)_inset] overflow-hidden transition-shadow duration-500 group-hover/browser:shadow-[0_30px_120px_-20px_rgba(99,102,241,0.4),0_0_0_1px_rgba(255,255,255,0.05)_inset]">
+          {/* Browser chrome — refined with subtle inner glow */}
+          <div className="flex items-center gap-2 px-5 py-3 border-b border-white/[0.06] bg-gradient-to-r from-white/[0.02] to-transparent">
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-[0_0_6px_rgba(255,95,87,0.4)]" />
+              <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-[0_0_6px_rgba(254,188,46,0.3)]" />
+              <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-[0_0_6px_rgba(40,200,64,0.3)]" />
             </div>
             <div className="flex-1 flex justify-center">
-              <div className="flex items-center gap-2 px-4 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-[10px] text-white/30 font-mono">
-                <span className="w-2 h-2 rounded-full bg-emerald-400/60" />
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] text-white/35 font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-400/70 shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={card.url}
@@ -302,178 +309,150 @@ function FloatingScreens({
             </div>
           </div>
 
-          {/* Demo content — cycles via AnimatePresence */}
+          {/* Demo content — cycles with slide transition */}
           <div className="relative overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={card.url}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 {card.content}
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
+
+        {/* Glass highlight edge — top edge catch-light */}
+        <div
+          className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          aria-hidden="true"
+        />
       </motion.div>
 
-      {/* ── Code editor — back right, peeking behind browser ── */}
+      {/* ── Floating performance badge — top right ── */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-[-2%] right-[-2%] w-[50%] z-20"
-        style={{ transform: "rotateY(-14deg) rotateX(8deg)", transformStyle: "preserve-3d" }}
-      >
-        <div className="rounded-xl border border-indigo-500/20 bg-[#0a0a18]/85 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.15)] overflow-hidden">
-          {/* Editor tabs */}
-          <div className="flex items-center gap-0 border-b border-white/[0.04] bg-white/[0.01]">
-            <div className="flex items-center gap-1.5 px-3 py-2 border-b-2 border-indigo-500/60 bg-white/[0.02] text-[8px] text-white/50 font-mono">
-              <Code size={9} className="text-indigo-400/60" />
-              page.tsx
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
-              layout.tsx
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-2 text-[8px] text-white/20 font-mono">
-              globals.css
-            </div>
-          </div>
-          {/* Code with line numbers */}
-          <div className="p-3 font-mono text-[8px] leading-[2]">
-            <div className="flex gap-3">
-              {/* Line numbers */}
-              <div className="text-white/10 text-right select-none w-4 shrink-0">
-                {[1,2,3,4,5,6,7,8,9,10,11].map(n => (
-                  <div key={n}>{n}</div>
-                ))}
-              </div>
-              {/* Code */}
-              <div className="space-y-0 overflow-hidden">
-                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Hero {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
-                <div><span className="text-violet-400/80">import</span> <span className="text-sky-300/70">{"{"} Services {"}"}</span> <span className="text-violet-400/80">from</span> <span className="text-emerald-400/70">&apos;@/components&apos;</span></div>
-                <div className="text-white/10">&nbsp;</div>
-                <div><span className="text-violet-400/80">export</span> <span className="text-sky-400/70">default</span> <span className="text-amber-400/80">function</span> <span className="text-sky-300/80">Page</span><span className="text-white/30">() {"{"}</span></div>
-                <div className="pl-4"><span className="text-violet-400/80">return</span> <span className="text-white/30">(</span></div>
-                <div className="pl-8"><span className="text-sky-400/60">&lt;</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
-                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Hero</span> <span className="text-indigo-300/70">title</span><span className="text-white/20">=</span><span className="text-emerald-400/70">&quot;Votre site&quot;</span> <span className="text-sky-400/60">/&gt;</span></div>
-                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Services</span> <span className="text-indigo-300/70">grid</span><span className="text-white/20">=</span><span className="text-white/30">{"{"}</span><span className="text-orange-400/70">3</span><span className="text-white/30">{"}"}</span> <span className="text-sky-400/60">/&gt;</span></div>
-                <div className="pl-12"><span className="text-sky-400/60">&lt;</span><span className="text-amber-300/80">Contact</span> <span className="text-indigo-300/70">form</span> <span className="text-sky-400/60">/&gt;</span></div>
-                <div className="pl-8"><span className="text-sky-400/60">&lt;/</span><span className="text-emerald-400/80">main</span><span className="text-sky-400/60">&gt;</span></div>
-                <div className="pl-4"><span className="text-white/30">)</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ── Lighthouse dashboard — front bottom right, overlapping browser edge ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
         transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[4%] right-[2%] w-[50%] z-40"
-        style={{ transform: "rotateY(-6deg) rotateX(3deg)", transformStyle: "preserve-3d" }}
+        className="absolute top-[-4%] right-[-6%] z-40"
+        style={{
+          transform: "translateZ(60px)",
+          transformStyle: "preserve-3d",
+        }}
       >
-        <div className="rounded-xl border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-[0_15px_50px_-10px_rgba(16,185,129,0.12)] overflow-hidden">
-          <div className="px-4 py-2.5 border-b border-white/[0.04] flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Gauge size={12} weight="bold" className="text-emerald-400/80" />
-              <span className="text-[9px] font-semibold text-white/50 font-mono">Lighthouse Report</span>
-            </div>
-            <span className="text-[7px] text-white/20 font-mono">votre-site.fr</span>
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="rounded-xl border border-emerald-500/25 bg-[#0a0a18]/90 backdrop-blur-xl shadow-[0_12px_40px_-8px_rgba(16,185,129,0.2)] p-3"
+        >
+          <div className="flex items-center gap-3">
+            {[
+              { label: "Perf", score: "98" },
+              { label: "SEO", score: "100" },
+            ].map((item) => (
+              <div key={item.label} className="flex flex-col items-center gap-1">
+                <div className="w-9 h-9 rounded-full border-2 border-emerald-500/50 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.08] shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+                  <span className="text-[10px] font-bold font-mono">{item.score}</span>
+                </div>
+                <span className="text-[7px] text-white/30">{item.label}</span>
+              </div>
+            ))}
           </div>
-          <div className="p-4">
-            {/* Score circles */}
-            <div className="flex items-center justify-around">
-              {[
-                { label: "Performance", score: 98, color: "text-emerald-400 border-emerald-500/40" },
-                { label: "Accessibilité", score: 100, color: "text-emerald-400 border-emerald-500/40" },
-                { label: "Bonnes pratiques", score: 100, color: "text-emerald-400 border-emerald-500/40" },
-                { label: "SEO", score: 100, color: "text-emerald-400 border-emerald-500/40" },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 1.2 + i * 0.1, duration: 0.4 }}
-                  className="flex flex-col items-center gap-1.5"
-                >
-                  <div className={`w-10 h-10 rounded-full border-2 ${item.color} flex items-center justify-center bg-emerald-500/[0.05]`}>
-                    <span className="text-[11px] font-bold font-mono">{item.score}</span>
-                  </div>
-                  <span className="text-[6px] text-white/30 text-center leading-tight max-w-[50px]">{item.label}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </motion.div>
 
-      {/* ── Terminal — bottom left, tucked behind ── */}
+      {/* ── Floating speed badge — bottom left ── */}
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-[8%] left-[-1%] w-[38%] z-10"
-        style={{ transform: "rotateY(-4deg) rotateX(3deg)", transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+        transition={{ delay: 1.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[28%] left-[-6%] z-40"
+        style={{
+          transform: "translateZ(40px)",
+          transformStyle: "preserve-3d",
+        }}
       >
-        <div className="rounded-lg border border-white/[0.06] bg-[#0a0a14]/80 backdrop-blur-xl shadow-lg overflow-hidden">
-          <div className="px-3 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
-            <Terminal size={9} className="text-white/25" />
-            <span className="text-[7px] text-white/25 font-mono">terminal</span>
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          className="rounded-xl border border-indigo-500/25 bg-[#0a0a18]/90 backdrop-blur-xl shadow-[0_12px_40px_-8px_rgba(99,102,241,0.2)] px-4 py-3"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center">
+              <span className="text-[10px] font-bold text-indigo-400 font-mono">0.8s</span>
+            </div>
+            <div>
+              <p className="text-[9px] font-medium text-white/50">Chargement</p>
+              <p className="text-[7px] text-emerald-400/70">2x plus rapide</p>
+            </div>
           </div>
-          <div className="p-3 font-mono text-[7px] leading-[2]">
-            <div><span className="text-emerald-400/70">&gt;</span> <span className="text-white/40">npm run build</span></div>
-            <div className="text-white/20">  Creating optimized build...</div>
-            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Compiled in 847ms</div>
-            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Generating static pages (7/7)</div>
-            <div className="text-white/20">  <span className="text-emerald-400/50">✓</span> Collecting build traces</div>
-            <div className="text-emerald-400/70">  <span className="text-emerald-400/80">✓</span> Build complete — ready to deploy</div>
-          </div>
-        </div>
+        </motion.div>
       </motion.div>
 
-      {/* ── Floating particles ── */}
+      {/* ── Floating SSL badge — bottom right ── */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ delay: 1.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[28%] right-[-2%] z-40"
+        style={{
+          transform: "translateZ(30px)",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <motion.div
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+          className="rounded-lg border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-lg px-3 py-2 flex items-center gap-2"
+        >
+          <div className="w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center">
+            <CheckCircle size={12} weight="fill" className="text-emerald-400" />
+          </div>
+          <span className="text-[8px] font-medium text-white/40">SSL · RGPD · A+</span>
+        </motion.div>
+      </motion.div>
+
+      {/* ── Ambient particles — subtle depth cues ── */}
       {[
-        { top: "5%", left: "50%", size: 4, delay: 0.5, glow: true },
-        { top: "20%", left: "92%", size: 3, delay: 0.7, glow: false },
-        { top: "60%", left: "15%", size: 3, delay: 0.9, glow: false },
-        { top: "85%", left: "80%", size: 4, delay: 1.1, glow: true },
-        { top: "10%", left: "10%", size: 2, delay: 0.8, glow: false },
-        { top: "45%", left: "95%", size: 2, delay: 1.0, glow: false },
-        { top: "75%", left: "40%", size: 3, delay: 1.2, glow: false },
-        { top: "35%", left: "5%", size: 2, delay: 0.6, glow: false },
+        { top: "8%", left: "15%", size: 3, delay: 0.6, dur: 7 },
+        { top: "75%", left: "90%", size: 4, delay: 0.9, dur: 5 },
+        { top: "45%", left: "95%", size: 2, delay: 1.2, dur: 8 },
+        { top: "90%", left: "45%", size: 3, delay: 0.7, dur: 6 },
+        { top: "15%", left: "80%", size: 2, delay: 1.0, dur: 9 },
       ].map((dot, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, scale: 0 }}
-          animate={isInView ? { opacity: dot.glow ? 0.8 : 0.4, scale: 1 } : {}}
-          transition={{ delay: dot.delay, duration: 0.6 }}
-          className={`absolute rounded-full ${dot.glow ? "bg-indigo-400/80 shadow-[0_0_8px_2px_rgba(129,140,248,0.4)]" : "bg-indigo-400/40"}`}
-          style={{ top: dot.top, left: dot.left, width: dot.size, height: dot.size }}
+          animate={
+            isInView
+              ? { opacity: [0, 0.6, 0.3, 0.6], scale: 1 }
+              : {}
+          }
+          transition={{
+            delay: dot.delay,
+            duration: dot.dur,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className="absolute rounded-full bg-indigo-400/60 shadow-[0_0_6px_2px_rgba(129,140,248,0.3)]"
+          style={{
+            top: dot.top,
+            left: dot.left,
+            width: dot.size,
+            height: dot.size,
+          }}
           aria-hidden="true"
         />
       ))}
-
-      {/* ── Connecting lines (subtle grid effect) ── */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none z-0"
-        aria-hidden="true"
-      >
-        <line x1="20%" y1="80%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
-        <line x1="80%" y1="20%" x2="50%" y2="50%" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
-        <line x1="85%" y1="85%" x2="55%" y2="55%" stroke="rgba(99,102,241,0.04)" strokeWidth="1" />
-      </svg>
     </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────
-   Mobile illustration — layered composition:
-   browser (cycling demos) + code snippet peek + lighthouse
+   Mobile illustration — polished browser with floating badges
    ────────────────────────────────────────────────────────── */
 
 function MobileIllustration({
@@ -489,53 +468,35 @@ function MobileIllustration({
 
   return (
     <div className="relative w-full max-w-sm mx-auto">
-      {/* Glow */}
+      {/* Multi-layer glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-indigo-500/20 blur-[90px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-64 rounded-full bg-indigo-500/25 blur-[100px]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-[60%] left-[30%] w-40 h-40 rounded-full bg-violet-600/15 blur-[70px]"
         aria-hidden="true"
       />
 
-      {/* ── Code snippet — peeking top-right behind browser ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="relative z-10 w-[55%] ml-auto mr-2 mb-[-28px]"
-      >
-        <div className="rounded-lg border border-indigo-500/15 bg-[#0a0a18]/80 backdrop-blur-xl shadow-lg overflow-hidden">
-          <div className="flex items-center gap-1.5 px-2.5 py-1.5 border-b border-white/[0.04] bg-white/[0.01]">
-            <Code size={8} className="text-indigo-400/50" />
-            <span className="text-[7px] text-white/35 font-mono">page.tsx</span>
-          </div>
-          <div className="p-2 font-mono text-[7px] leading-[1.8]">
-            <div><span className="text-violet-400/70">export</span> <span className="text-sky-400/60">default</span> <span className="text-amber-400/70">function</span> <span className="text-sky-300/70">Page</span><span className="text-white/25">() {"{"}</span></div>
-            <div className="pl-3"><span className="text-violet-400/70">return</span> <span className="text-white/25">(</span></div>
-            <div className="pl-5"><span className="text-sky-400/50">&lt;</span><span className="text-amber-300/70">Hero</span> <span className="text-sky-400/50">/&gt;</span></div>
-            <div className="pl-5"><span className="text-sky-400/50">&lt;</span><span className="text-amber-300/70">Services</span> <span className="text-sky-400/50">/&gt;</span></div>
-            <div className="pl-3"><span className="text-white/25">)</span></div>
-          </div>
-        </div>
-      </motion.div>
-
       {/* ── Main browser — cycling demos ── */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.4, duration: 0.6 }}
+        transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-20 cursor-pointer"
         onClick={() => onOpenGallery(activeDemo)}
       >
-        <div className="rounded-xl border border-indigo-500/25 bg-[#0c0c1a]/90 backdrop-blur-xl shadow-[0_15px_60px_-10px_rgba(99,102,241,0.2)] overflow-hidden">
+        <div className="rounded-2xl border border-white/[0.10] bg-[#0c0c1a]/92 backdrop-blur-2xl shadow-[0_25px_80px_-15px_rgba(99,102,241,0.3),0_0_0_1px_rgba(255,255,255,0.04)_inset,0_0_60px_-10px_rgba(139,92,246,0.12)] overflow-hidden">
           {/* Chrome */}
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.05] bg-white/[0.02]">
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-gradient-to-r from-white/[0.03] to-transparent">
             <div className="flex gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-[#ff5f57]/70" />
-              <div className="w-2 h-2 rounded-full bg-[#febc2e]/70" />
-              <div className="w-2 h-2 rounded-full bg-[#28c840]/70" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] shadow-[0_0_6px_rgba(255,95,87,0.4)]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e] shadow-[0_0_6px_rgba(254,188,46,0.3)]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#28c840] shadow-[0_0_6px_rgba(40,200,64,0.3)]" />
             </div>
             <div className="flex-1 flex justify-center">
-              <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-[9px] text-white/30 font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.05] border border-white/[0.07] text-[10px] text-white/35 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={card.url}
@@ -555,67 +516,65 @@ function MobileIllustration({
             <AnimatePresence mode="wait">
               <motion.div
                 key={card.url}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 {card.content}
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
+        {/* Top edge catch-light */}
+        <div
+          className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          aria-hidden="true"
+        />
+        {/* Bottom reflection */}
+        <div
+          className="absolute -bottom-4 left-[8%] right-[8%] h-8 rounded-full bg-indigo-500/10 blur-xl"
+          aria-hidden="true"
+        />
       </motion.div>
 
-      {/* ── Lighthouse + Terminal row — overlapping bottom of browser ── */}
-      <div className="relative z-30 flex gap-2 px-2 -mt-3">
-        {/* Lighthouse */}
+      {/* ── Floating badges — overlapping browser edges ── */}
+      <div className="relative z-30 flex justify-center gap-3 -mt-4 px-2">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.7, duration: 0.5 }}
-          className="flex-1"
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="rounded-xl border border-emerald-500/25 bg-[#0a0a18]/95 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(52,211,153,0.15)] px-3 py-2 flex items-center gap-2"
         >
-          <div className="rounded-lg border border-emerald-500/20 bg-[#0a0a18]/90 backdrop-blur-xl shadow-lg overflow-hidden">
-            <div className="px-2.5 py-1.5 border-b border-white/[0.04] flex items-center gap-1.5">
-              <Gauge size={8} className="text-emerald-400/70" />
-              <span className="text-[6px] font-medium text-white/40 font-mono">Lighthouse</span>
-            </div>
-            <div className="p-2 flex justify-around">
-              {[
-                { label: "Perf", score: "98" },
-                { label: "A11y", score: "100" },
-                { label: "SEO", score: "100" },
-              ].map((item) => (
-                <div key={item.label} className="flex flex-col items-center gap-0.5">
-                  <div className="w-7 h-7 rounded-full border-[1.5px] border-emerald-500/40 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.05]">
-                    <span className="text-[8px] font-bold font-mono">{item.score}</span>
-                  </div>
-                  <span className="text-[5px] text-white/25">{item.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="w-7 h-7 rounded-full border-2 border-emerald-500/50 text-emerald-400 flex items-center justify-center bg-emerald-500/[0.1]">
+            <span className="text-[9px] font-bold font-mono">100</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-semibold text-white/70">Perf</span>
+            <span className="text-[8px] text-white/30 font-medium">SEO</span>
           </div>
         </motion.div>
 
-        {/* Mini terminal */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="rounded-xl border border-indigo-500/25 bg-[#0a0a18]/95 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(99,102,241,0.15)] px-3 py-2 flex items-center gap-2"
+        >
+          <span className="text-sm font-bold text-indigo-400 font-mono">0.8s</span>
+          <span className="text-[9px] text-white/40 font-medium leading-tight">charge-<br/>ment</span>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="w-[38%] shrink-0"
+          className="rounded-xl border border-emerald-500/25 bg-[#0a0a18]/95 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(52,211,153,0.15)] px-3 py-2 flex items-center gap-2"
         >
-          <div className="rounded-lg border border-white/[0.06] bg-[#0a0a14]/85 backdrop-blur-xl shadow-lg overflow-hidden h-full">
-            <div className="px-2 py-1.5 border-b border-white/[0.04] flex items-center gap-1">
-              <Terminal size={7} className="text-white/25" />
-              <span className="text-[6px] text-white/25 font-mono">terminal</span>
-            </div>
-            <div className="p-2 font-mono text-[6px] leading-[1.7]">
-              <div><span className="text-emerald-400/60">&gt;</span> <span className="text-white/35">npm run build</span></div>
-              <div className="text-white/15">  <span className="text-emerald-400/45">✓</span> Compiled 847ms</div>
-              <div className="text-white/15">  <span className="text-emerald-400/45">✓</span> Static pages</div>
-              <div className="text-emerald-400/60">  <span className="text-emerald-400/70">✓</span> Ready</div>
-            </div>
+          <CheckCircle size={16} weight="fill" className="text-emerald-400" />
+          <div className="flex flex-col">
+            <span className="text-[10px] font-semibold text-white/70">SSL</span>
+            <span className="text-[8px] text-white/30 font-medium">RGPD</span>
           </div>
         </motion.div>
       </div>
@@ -644,7 +603,7 @@ export function HeroSection() {
   return (
     <section
       id="accueil"
-      className="relative pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-10 md:pb-14 overflow-hidden"
+      className="relative pt-16 sm:pt-24 md:pt-28 pb-6 sm:pb-10 md:pb-14 overflow-hidden"
       ref={heroRef}
     >
       {/* Background layers — gradient mesh + dot pattern + grain */}
@@ -676,11 +635,11 @@ export function HeroSection() {
             className="relative z-20"
           >
             {/* Availability badge */}
-            <motion.div variants={fadeInUp} className="mb-4 lg:mb-5">
-              <span className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-accent-border bg-background-elevated/80 backdrop-blur-sm text-xs sm:text-sm text-text-secondary">
-                <span className="relative flex h-2 w-2">
+            <motion.div variants={fadeInUp} className="mb-3 lg:mb-5">
+              <span className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-2 rounded-full border border-accent-border bg-background-elevated/80 backdrop-blur-sm text-[11px] sm:text-sm text-text-secondary">
+                <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-success opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-status-success" />
+                  <span className="relative inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-status-success" />
                 </span>
                 Disponible — Caen & remote
               </span>
@@ -689,7 +648,7 @@ export function HeroSection() {
             {/* H1 */}
             <motion.h1
               variants={fadeInUp}
-              className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-light tracking-[-0.03em] mb-3 lg:mb-4 leading-[1.15]"
+              className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-light tracking-[-0.03em] mb-2 sm:mb-3 lg:mb-4 leading-[1.1]"
             >
               {/* Mobile: FlipWord on its own line */}
               <span className="sm:hidden">
@@ -716,7 +675,7 @@ export function HeroSection() {
             {/* Subtitle */}
             <motion.p
               variants={fadeInUp}
-              className="text-text-secondary text-[15px] sm:text-lg md:text-xl leading-[1.5] mb-5 lg:mb-7 max-w-[540px]"
+              className="text-text-secondary text-sm sm:text-lg md:text-xl leading-[1.5] mb-4 lg:mb-7 max-w-[540px]"
             >
               <span className="hidden sm:inline">
                 Développeur web freelance en Normandie. Je crée des sites
@@ -731,7 +690,7 @@ export function HeroSection() {
             {/* CTAs */}
             <motion.div
               variants={fadeInUp}
-              className="flex flex-col sm:flex-row gap-3 mb-3 lg:mb-4"
+              className="flex flex-col sm:flex-row gap-3 mb-2 lg:mb-4"
             >
               <a
                 href="#contact"
@@ -807,7 +766,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="mt-6 lg:hidden"
+          className="mt-4 lg:hidden"
         >
           <MobileIllustration
             isInView={isHeroInView}

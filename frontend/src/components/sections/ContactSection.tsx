@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   EnvelopeSimple,
-  GithubLogo,
   LinkedinLogo,
   PaperPlaneTilt,
   Check,
@@ -23,12 +22,6 @@ const contactLinks = [
     value: "contact@dubus.pro",
     href: "mailto:contact@dubus.pro",
     icon: EnvelopeSimple,
-  },
-  {
-    label: "GitHub",
-    value: "@breaching",
-    href: "https://github.com/breaching",
-    icon: GithubLogo,
   },
   {
     label: "LinkedIn",
@@ -371,7 +364,7 @@ export function ContactSection() {
               <button
                 type="submit"
                 disabled={formStatus === "loading"}
-                className="btn-glow w-full py-4 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-colors text-base disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                className="btn-glow w-full py-4 bg-accent-action text-background font-medium rounded-xl hover:bg-accent-action-hover transition-all text-base disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 shadow-[0_0_25px_var(--accent-action-glow)]"
               >
                 {formStatus === "loading" ? (
                   "Envoi..."

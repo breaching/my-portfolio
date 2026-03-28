@@ -208,17 +208,6 @@ code, pre, .font-mono {
   transform: translateY(0) scale(0.98);
 }
 
-/* Card hover lift */
-.card-interactive {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
-}
-
-.card-interactive:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.08);
-}
-
 /* Dot grid pattern background */
 .bg-dot-pattern {
   background-image: radial-gradient(circle, var(--accent-border) 1px, transparent 1px);
@@ -245,22 +234,6 @@ code, pre, .font-mono {
   pointer-events: none;
   z-index: 1;
   border-radius: inherit;
-}
-
-/* Marquee infinite scroll */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-100% - var(--gap))); }
-}
-
-.animate-marquee {
-  animation: marquee var(--duration) linear infinite;
-}
-
-/* Animated gradient border */
-@keyframes border-rotate {
-  0% { --border-angle: 0deg; }
-  100% { --border-angle: 360deg; }
 }
 
 /* Section accent — full-width background highlight */

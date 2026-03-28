@@ -1,24 +1,3 @@
-const CONFIG = {
-  yOffset: 4,
-  mOffset: 4,
-  dOffset: 15,
-};
-
-export function getYearsOfExperience(): number {
-  const now = new Date();
-  const refYear = 2000 + CONFIG.yOffset;
-  const refDate = new Date(refYear, CONFIG.mOffset, CONFIG.dOffset);
-
-  let years = now.getFullYear() - refDate.getFullYear();
-  const monthDiff = now.getMonth() - refDate.getMonth();
-
-  if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < refDate.getDate())) {
-    years--;
-  }
-
-  return years;
-}
-
 export interface FormatDateOptions {
   locale?: string;
   includeDay?: boolean;

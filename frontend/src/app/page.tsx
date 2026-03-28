@@ -1,34 +1,27 @@
-import { getAllPosts } from "@/lib/posts";
 import {
   HeroSection,
-  TechLogosSection,
   DifferencesSection,
-  RealisationsSection,
   ServicesSection,
+  RealisationsSection,
   ProcessSection,
   GarantiesSection,
   FaqSection,
-  ContactSection,
-  BlogSection,
   PreFooterCta,
+  ContactSection,
 } from "@/components/sections";
 
 export default function HomePage() {
-  const posts = getAllPosts();
-
   return (
     <>
       <HeroSection />
-      <TechLogosSection />
       <DifferencesSection />
-      <RealisationsSection />
       <ServicesSection />
+      <RealisationsSection />
       <ProcessSection />
       <GarantiesSection />
       <FaqSection />
-      <ContactSection />
-      <BlogSection posts={posts} />
       <PreFooterCta />
+      <ContactSection />
     </>
   );
 }
