@@ -27,25 +27,25 @@ const projects = [
     title: "Loft Vaugueux",
     category: "Rénovation",
     description: "Transformation d'un atelier en loft contemporain de 120m²",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&q=80",
+    image: "/images/demos/architecte-projet1.jpg",
   },
   {
     title: "Maison Ouistreham",
     category: "Construction neuve",
     description: "Villa bord de mer, lignes épurées et matériaux naturels",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&q=80",
+    image: "/images/demos/architecte-projet2.jpg",
   },
   {
     title: "Appartement Château",
     category: "Rénovation",
     description: "Haussmannien revisité, 85m² lumineux près du château de Caen",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=600&fit=crop&q=80",
+    image: "/images/demos/architecte-projet3.jpg",
   },
   {
     title: "Café Demoiselle",
     category: "Commerce",
     description: "Aménagement d'un coffee shop de 60m² en centre-ville",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop&q=80",
+    image: "/images/demos/architecte-projet4.jpg",
   },
 ];
 
@@ -88,7 +88,7 @@ function HeroSection() {
     <section className="relative min-h-[90vh] flex items-end pt-16 overflow-hidden bg-neutral-50">
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=1080&fit=crop&q=85"
+          src="/images/demos/architecte-banner.jpg"
           alt="Intérieur design contemporain"
           fill
           className="object-cover"

@@ -7,12 +7,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { List, X } from "@phosphor-icons/react";
 
 // Types de navigation : "page" pour lien direct, "anchor" pour scroll sur homepage
+// Ordre = ordre de scroll sur la page (pour que l'indicateur avance toujours vers la droite)
 const navLinks = [
   { href: "/", id: "accueil", label: "Accueil", type: "page" as const },
-  { href: "/#services", id: "services", label: "Tarifs", type: "anchor" as const },
   { href: "/#realisations", id: "realisations", label: "Réalisations", type: "anchor" as const },
-  { href: "/blog", id: "blog", label: "Blog", type: "page" as const },
+  { href: "/#services", id: "services", label: "Tarifs", type: "anchor" as const },
   { href: "/#contact", id: "contact", label: "Contact", type: "anchor" as const },
+  { href: "/blog", id: "blog", label: "Blog", type: "page" as const },
 ];
 
 export function Navbar() {
@@ -39,7 +40,9 @@ export function Navbar() {
       const scrollPosition = window.scrollY + 100;
 
       // Chercher quelle section est visible (ordre inversé pour priorité)
-      const sections = ["contact", "blog", "process", "realisations", "services", "accueil"];
+      // Uniquement les sections qui ont un lien dans la navbar
+      // (sinon le pill layoutId disparaît et perd son origine d'animation)
+      const sections = ["blog", "contact", "services", "realisations", "accueil"];
       for (const sectionId of sections) {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -123,25 +126,31 @@ export function Navbar() {
                 key={link.id}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link)}
-                className={`relative px-4 py-2 text-sm transition-all duration-200 rounded-md ${
+                className={`relative px-4 py-2 text-sm transition-colors duration-200 rounded-md ${
                   isActive
                     ? "text-text-primary"
                     : "text-text-secondary hover:text-text-primary"
                 }`}
               >
                 {isActive && (
-                  <>
-                    <motion.span
-                      layoutId="navbar-pill"
-                      className="absolute inset-0 bg-background-elevated/80 rounded-md"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-                    />
-                    <motion.span
-                      layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-action"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-                    />
-                  </>
+                  <motion.span
+                    layoutId="navbar-pill"
+                    layout="position"
+                    className="absolute inset-0 bg-background-elevated/80 rounded-md"
+                    style={{ borderRadius: 6 }}
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                {isActive && (
+                  <motion.span
+                    layoutId="navbar-indicator"
+                    layout="position"
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-action"
+                    style={{ borderRadius: 1 }}
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
                 )}
                 <span className="relative z-10">
                   {link.label}

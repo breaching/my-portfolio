@@ -29,25 +29,25 @@ const menuItems = [
     name: "Tartare de boeuf normand",
     description: "Boeuf race normande, câpres, cornichons, jaune d'oeuf fermier",
     price: "18 €",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/restaurant-plat1.jpg",
   },
   {
     name: "Camembert rôti",
     description: "Camembert AOP au four, miel de Normandie, noix, pain grillé",
     price: "14 €",
-    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/restaurant-plat2.jpg",
   },
   {
     name: "Filet de bar",
     description: "Bar de ligne, beurre blanc cidré, légumes de saison",
     price: "24 €",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/restaurant-plat3.jpg",
   },
   {
     name: "Tarte Tatin",
     description: "Pommes caramélisées, crème fraîche d'Isigny",
     price: "10 €",
-    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/restaurant-plat4.jpg",
   },
 ];
 
@@ -99,7 +99,7 @@ function HeroSection() {
     <section className="relative min-h-[90vh] flex items-center pt-16 overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&h=1080&fit=crop&q=85"
+          src="/images/demos/restaurant-banner.jpg"
           alt="Intérieur élégant du restaurant"
           fill
           className="object-cover"
@@ -234,7 +234,7 @@ function StorySection() {
           <motion.div variants={fadeIn} className="relative">
             <div className="relative rounded-xl overflow-hidden aspect-[4/5]">
               <Image
-                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=1000&fit=crop&q=80"
+                src="/images/demos/restaurant-ambiance.jpg"
                 alt="Plat dressé avec soin"
                 fill
                 className="object-cover"

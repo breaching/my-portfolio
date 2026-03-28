@@ -28,37 +28,37 @@ const specialties = [
     name: "Baguette tradition",
     description: "Farine Label Rouge, 24h de fermentation",
     price: "1,30 €",
-    image: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/boulangerie-pain.jpg",
   },
   {
     name: "Pain au levain",
     description: "Levain naturel, cuisson au feu de bois",
     price: "4,50 €",
-    image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/boulangerie-viennoiserie.jpg",
   },
   {
     name: "Croissant pur beurre",
     description: "Beurre AOP Charentes-Poitou, feuilletage 72 couches",
     price: "1,40 €",
-    image: "https://images.unsplash.com/photo-1623334044303-241021148842?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/boulangerie-croissant.jpg",
   },
   {
     name: "Pain aux noix",
     description: "Noix du Périgord, mie dense et parfumée",
     price: "5,20 €",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/boulangerie-sandwich.jpg",
   },
   {
     name: "Tarte aux pommes",
     description: "Pommes Normandie, pâte feuilletée maison",
     price: "3,80 €",
-    image: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/boulangerie-tarte.jpg",
   },
   {
     name: "Fougasse aux olives",
     description: "Olives noires de Nyons, herbes de Provence",
     price: "3,20 €",
-    image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop&q=80",
+    image: "/images/demos/boulangerie-macaron.jpg",
   },
 ];
 
@@ -112,7 +112,7 @@ function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=1920&h=1080&fit=crop&q=85"
+          src="/images/demos/boulangerie-banner.jpg"
           alt="Intérieur chaleureux de boulangerie"
           fill
           className="object-cover"
@@ -251,7 +251,7 @@ function StorySection() {
           <motion.div variants={fadeIn} className="relative">
             <div className="relative rounded-2xl overflow-hidden aspect-[4/5]">
               <Image
-                src="https://images.unsplash.com/photo-1556471013-0001958d2f12?w=800&h=1000&fit=crop&q=80"
+                src="/images/demos/boulangerie-artisan.jpg"
                 alt="Boulanger au travail"
                 fill
                 className="object-cover"
@@ -414,7 +414,7 @@ function HoursSection() {
             {/* Map placeholder */}
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-[#E8D5C0] mb-6">
               <Image
-                src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=600&fit=crop&q=80"
+                src="/images/demos/boulangerie-shop.jpg"
                 alt="Localisation de la boulangerie"
                 fill
                 className="object-cover opacity-60"

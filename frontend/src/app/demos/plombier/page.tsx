@@ -159,7 +159,7 @@ function HeroSection() {
           <motion.div variants={fadeIn} className="relative hidden lg:block">
             <div className="relative rounded-2xl overflow-hidden aspect-square">
               <Image
-                src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&h=800&fit=crop&q=80"
+                src="/images/demos/plombier-portrait.jpg"
                 alt="Plombier professionnel au travail"
                 fill
                 className="object-cover"
@@ -382,7 +382,7 @@ function ContactSection() {
           <motion.div variants={fadeIn} className="relative hidden lg:block">
             <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
               <Image
-                src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&h=600&fit=crop&q=80"
+                src="/images/demos/plombier-chantier.jpg"
                 alt="Salle de bain rénovée"
                 fill
                 className="object-cover"

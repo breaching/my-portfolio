@@ -118,7 +118,7 @@ const demoCards: {
     content: (
       <div className="bg-[#FFF8F0] h-[230px] flex flex-col">
         <div className="relative h-[120px] shrink-0 overflow-hidden">
-          <Image src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&h=300&fit=crop&q=80" alt="" fill className="object-cover" sizes="500px" />
+          <Image src="/images/hero/boulangerie-hero.jpg" alt="" fill className="object-cover" sizes="500px" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/80 via-[#3D2B1F]/50 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-center px-5">
             <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[7px] text-white/80 mb-1 w-fit">
@@ -130,9 +130,9 @@ const demoCards: {
         </div>
         <div className="grid grid-cols-3 gap-1.5 p-2.5 flex-1">
           {[
-            { name: "Baguette tradition", price: "1,30 €", img: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=200&h=130&fit=crop&q=70" },
-            { name: "Croissant", price: "1,40 €", img: "https://images.unsplash.com/photo-1623334044303-241021148842?w=200&h=130&fit=crop&q=70" },
-            { name: "Tarte pommes", price: "3,80 €", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=130&fit=crop&q=70" },
+            { name: "Baguette tradition", price: "1,30 €", img: "/images/demos/baguette.jpg" },
+            { name: "Croissant", price: "1,40 €", img: "/images/demos/croissant.jpg" },
+            { name: "Tarte pommes", price: "3,80 €", img: "/images/demos/tarte-pommes.jpg" },
           ].map((item) => (
             <div key={item.name} className="rounded-lg border border-[#E8D5C0]/50 bg-white overflow-hidden">
               <div className="relative h-[44px]">
@@ -157,7 +157,7 @@ const demoCards: {
     content: (
       <div className="bg-[#1A1A1A] h-[230px] flex flex-col">
         <div className="relative flex-1 overflow-hidden">
-          <Image src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop&q=80" alt="" fill className="object-cover" sizes="500px" />
+          <Image src="/images/hero/restaurant-hero.jpg" alt="" fill className="object-cover" sizes="500px" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/60 to-[#1A1A1A]/30" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
             <p className="text-[6px] text-[#C9A96E] tracking-[0.3em] uppercase mb-1.5">Restaurant gastronomique · Caen</p>
@@ -193,7 +193,7 @@ const demoCards: {
         </div>
         <div className="flex flex-1 overflow-hidden">
           <div className="relative w-[55%] shrink-0">
-            <Image src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop&q=80" alt="" fill className="object-cover" sizes="300px" />
+            <Image src="/images/hero/architecte-hero.jpg" alt="" fill className="object-cover" sizes="300px" />
           </div>
           <div className="flex-1 flex flex-col justify-center px-4 py-3">
             <p className="text-[6px] text-neutral-400 tracking-[0.15em] uppercase mb-1">Architecture d&apos;intérieur</p>
@@ -238,7 +238,7 @@ const demoCards: {
           </div>
         </div>
         <div className="relative h-[90px] shrink-0 overflow-hidden">
-          <Image src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&h=300&fit=crop&q=80" alt="" fill className="object-cover" sizes="500px" />
+          <Image src="/images/hero/plombier-hero.jpg" alt="" fill className="object-cover" sizes="500px" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1E5FAA]/80 via-[#1E5FAA]/40 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-center px-4">
             <p className="text-[12px] font-bold text-white leading-tight">Votre plombier</p>
@@ -407,7 +407,7 @@ function MobileIllustration({ isInView, onOpenGallery }: { isInView: boolean; on
           <button onClick={() => onOpenGallery(0)} className="block text-left w-full">
             <BrowserWindow url="boulangerie-martin.fr">
               <div className="relative h-[100px] overflow-hidden bg-[#FFF8F0]">
-                <Image src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=300&h=200&fit=crop&q=60" alt="" fill className="object-cover" sizes="200px" />
+                <Image src="/images/hero/boulangerie-hero.jpg" alt="" fill className="object-cover" sizes="200px" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#3D2B1F]/90 via-[#3D2B1F]/30 to-transparent" />
                 <div className="absolute bottom-0 inset-x-0 p-2.5">
                   <p className="text-[8px] font-light text-white/80">Pain artisanal,</p>
@@ -427,7 +427,7 @@ function MobileIllustration({ isInView, onOpenGallery }: { isInView: boolean; on
           <button onClick={() => onOpenGallery(1)} className="block text-left w-full">
             <BrowserWindow url="bistrot-normand.fr" accent="amber">
               <div className="relative h-[100px] overflow-hidden bg-[#1A1A1A]">
-                <Image src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&q=60" alt="" fill className="object-cover" sizes="200px" />
+                <Image src="/images/hero/restaurant-hero.jpg" alt="" fill className="object-cover" sizes="200px" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/30 to-transparent" />
                 <div className="absolute bottom-0 inset-x-0 p-2.5 text-center">
                   <p className="text-[6px] text-[#C9A96E]/70 tracking-[0.15em] uppercase">Restaurant</p>
