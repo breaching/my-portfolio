@@ -90,10 +90,10 @@ export function FaqSection() {
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           FAQ
         </p>
-        <h2 id="faq-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+        <h2 id="faq-heading" className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
           Questions fréquentes
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-14">
+        <p className="text-sm sm:text-base text-text-secondary prose-width leading-relaxed mb-8 sm:mb-14">
           Les réponses aux questions que vous vous posez sûrement.
         </p>
       </motion.div>
@@ -112,7 +112,7 @@ export function FaqSection() {
             >
               <button
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-background-elevated/50 transition-colors"
+                className="w-full flex items-center justify-between gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 text-left hover:bg-background-elevated/50 transition-colors"
                 aria-expanded={isOpen}
               >
                 <span className="text-sm font-medium text-text-primary leading-snug">
@@ -136,7 +136,7 @@ export function FaqSection() {
                     transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="px-6 pb-5 text-sm text-text-secondary leading-[1.7]">
+                    <p className="px-4 sm:px-6 pb-4 sm:pb-5 text-sm text-text-secondary leading-[1.7]">
                       {faq.answer}
                     </p>
                   </motion.div>

@@ -124,16 +124,16 @@ export function ContactSection() {
           <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
             Contact
           </p>
-          <h2 id="contact-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+          <h2 id="contact-heading" className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
             Un projet web à Caen ?{" "}
             <span className="font-medium">Parlons-en.</span>
           </h2>
-          <p className="text-text-secondary prose-width leading-relaxed mb-14">
+          <p className="text-sm sm:text-base text-text-secondary prose-width leading-relaxed mb-8 sm:mb-14">
             Décrivez votre projet en quelques mots — création de site vitrine, refonte
             ou application web. Je vous réponds sous 24h avec une première estimation.
           </p>
 
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
             {/* Contact Info */}
             <div>
               {/* Reassurance badges */}

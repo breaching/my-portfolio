@@ -58,11 +58,11 @@ export function ProcessSection() {
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Processus
         </p>
-        <h2 id="process-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+        <h2 id="process-heading" className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
           Comment ça se passe ?{" "}
           <span className="font-medium">4 étapes simples.</span>
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-14">
+        <p className="text-sm sm:text-base text-text-secondary prose-width leading-relaxed mb-8 sm:mb-14">
           Un process simple en 4 étapes. Vous êtes informé à chaque moment.
         </p>
       </motion.div>
@@ -99,7 +99,7 @@ export function ProcessSection() {
                   </div>
                 </div>
 
-                <div className="group p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 hover:border-accent-action/30 transition-all duration-300">
+                <div className="group p-4 sm:p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 hover:border-accent-action/30 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     {/* Mobile icon */}
                     <div className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl bg-accent-action-subtle border border-accent-action/20 shrink-0">
@@ -148,9 +148,9 @@ export function ProcessSection() {
             e.preventDefault();
             scrollToSection("contact");
           }}
-          className="btn-glow inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-all text-sm"
+          className="btn-glow inline-flex items-center justify-center gap-2.5 px-5 sm:px-7 py-3 sm:py-3.5 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-all text-xs sm:text-sm"
         >
-          <span>Prêt à démarrer ? Étape 1 : votre devis gratuit</span>
+          <span className="text-center">Prêt à démarrer ? Étape 1 : votre devis gratuit</span>
           <ArrowRight size={16} weight="bold" />
         </a>
       </motion.div>

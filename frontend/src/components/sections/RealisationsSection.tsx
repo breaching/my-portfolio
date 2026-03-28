@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import {
   ArrowUpRight,
   EnvelopeSimple,
@@ -11,6 +13,46 @@ import {
   Globe,
 } from "@phosphor-icons/react";
 import { scrollToSection } from "@/lib/scroll";
+import { DemoGallery, demos } from "@/components/ui/DemoGallery";
+
+const demoSites = [
+  {
+    name: "Boulangerie Martin",
+    sector: "Commerce",
+    path: "boulangerie",
+    description: "Catalogue produits, localisation, ambiance artisanale",
+    image: "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=600&h=400&fit=crop&q=80",
+    accent: "#E8C496",
+    bg: "bg-[#3D2B1F]",
+  },
+  {
+    name: "Le Bistrot Normand",
+    sector: "Restaurant",
+    path: "restaurant",
+    description: "Landing gastronomique, réservation, carte en ligne",
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop&q=80",
+    accent: "#C9A96E",
+    bg: "bg-[#1A1A1A]",
+  },
+  {
+    name: "Studio Morel",
+    sector: "Architecture",
+    path: "architecte",
+    description: "Portfolio éditorial, galerie projets, minimaliste",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop&q=80",
+    accent: "#A8A29E",
+    bg: "bg-[#2C2C2C]",
+  },
+  {
+    name: "Dupont Plomberie",
+    sector: "Artisan",
+    path: "plombier",
+    description: "Page services, urgence 24h, devis en ligne",
+    image: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=600&h=400&fit=crop&q=80",
+    accent: "#93C5FD",
+    bg: "bg-[#1E5FAA]",
+  },
+];
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -40,6 +82,8 @@ function scrollToContact() {
 }
 
 export function RealisationsSection() {
+  const [galleryOpen, setGalleryOpen] = useState<number | null>(null);
+
   return (
     <section
       id="realisations"
@@ -51,10 +95,10 @@ export function RealisationsSection() {
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Réalisations
         </p>
-        <h2 id="realisations-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+        <h2 id="realisations-heading" className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
           Ce que je construis.
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-14">
+        <p className="text-sm sm:text-base text-text-secondary prose-width leading-relaxed mb-8 sm:mb-14">
           Projets réels, en production, utilisés par de vrais utilisateurs.
         </p>
       </motion.div>
@@ -144,7 +188,7 @@ export function RealisationsSection() {
           </div>
 
           {/* Project info */}
-          <div className="p-7 md:p-10">
+          <div className="p-5 sm:p-7 md:p-10">
             <div className="flex flex-wrap items-center gap-2.5 mb-5">
               <span className="px-2.5 py-1 rounded-full bg-status-success/10 text-status-success text-xs font-medium border border-status-success/20">
                 En production
@@ -154,7 +198,7 @@ export function RealisationsSection() {
               </span>
             </div>
 
-            <h3 className="text-2xl md:text-3xl font-light tracking-[-0.02em] mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
               Clarmind — Suivi émotionnel TCC
             </h3>
 
@@ -193,7 +237,7 @@ export function RealisationsSection() {
             </div>
 
             {/* Metrics — visual cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-accent-border">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-5 sm:pt-6 border-t border-accent-border">
               {clarmindMetrics.map((metric) => {
                 const Icon = metric.icon;
                 return (
@@ -222,6 +266,69 @@ export function RealisationsSection() {
         </div>
       </motion.div>
 
+      {/* Demo sites showcase */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <p className="text-sm text-text-tertiary mb-5">
+          Exemples de sites vitrines — chaque projet est unique, pas de template.
+        </p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          {demoSites.map((demo, i) => {
+            const galleryIndex = demos.findIndex((d) => d.path === demo.path);
+            return (
+              <motion.div
+                key={demo.path}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <button
+                  onClick={() => setGalleryOpen(galleryIndex)}
+                  className="group block w-full text-left rounded-xl overflow-hidden border border-accent-border hover:border-accent-action/40 transition-all duration-300 cursor-pointer"
+                >
+                  {/* Image */}
+                  <div className={`relative h-28 sm:h-40 ${demo.bg} overflow-hidden`}>
+                    <Image
+                      src={demo.image}
+                      alt={demo.name}
+                      fill
+                      className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-4">
+                      <span
+                        className="inline-block px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-medium mb-1 sm:mb-1.5 border border-white/15"
+                        style={{ backgroundColor: `${demo.accent}20`, color: demo.accent }}
+                      >
+                        {demo.sector}
+                      </span>
+                      <p className="text-xs sm:text-sm font-medium text-white leading-tight">{demo.name}</p>
+                    </div>
+                  </div>
+                  {/* Info */}
+                  <div className="p-2.5 sm:p-4 bg-background-elevated/50">
+                    <p className="text-[11px] sm:text-xs text-text-tertiary leading-relaxed mb-2 sm:mb-2.5 line-clamp-2">
+                      {demo.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-xs text-text-tertiary group-hover:text-accent-action transition-colors">
+                      Voir la démo
+                      <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </span>
+                  </div>
+                </button>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
+
       {/* Secondary projects */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -236,7 +343,7 @@ export function RealisationsSection() {
             href="https://github.com/breaching"
             target="_blank"
             rel="noopener noreferrer"
-            className="group block p-7 rounded-xl border border-accent-border bg-background-elevated/50 hover:border-accent-action/40 transition-all duration-300 h-full"
+            className="group block p-5 sm:p-7 rounded-xl border border-accent-border bg-background-elevated/50 hover:border-accent-action/40 transition-all duration-300 h-full"
           >
             <div className="flex flex-wrap items-center gap-2 mb-4">
               <span className="px-2.5 py-1 rounded-full bg-status-success/10 text-status-success text-xs font-medium border border-status-success/20">
@@ -280,7 +387,7 @@ export function RealisationsSection() {
               e.preventDefault();
               scrollToContact();
             }}
-            className="group block p-7 rounded-xl border border-dashed border-accent-border bg-transparent hover:border-accent-action hover:bg-accent-action-subtle transition-all duration-300 text-center h-full flex flex-col items-center justify-center"
+            className="group block p-5 sm:p-7 rounded-xl border border-dashed border-accent-border bg-transparent hover:border-accent-action hover:bg-accent-action-subtle transition-all duration-300 text-center h-full flex flex-col items-center justify-center"
           >
             <div className="w-14 h-14 rounded-xl bg-accent-action-subtle border border-accent-action/20 flex items-center justify-center mb-5 group-hover:bg-accent-action/15 transition-colors">
               <Plus
@@ -327,6 +434,16 @@ export function RealisationsSection() {
         </a>
       </motion.div>
       </div>
+
+      {/* Demo gallery overlay */}
+      <AnimatePresence>
+        {galleryOpen !== null && (
+          <DemoGallery
+            initial={galleryOpen}
+            onClose={() => setGalleryOpen(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 import {
   EnvelopeSimple,
@@ -11,7 +11,10 @@ import {
   CheckCircle,
   MapPin,
   Wrench,
+  Drop,
+  ThermometerHot,
 } from "@phosphor-icons/react";
+import { DemoGallery } from "@/components/ui/DemoGallery";
 import { scrollToSection } from "@/lib/scroll";
 import { FlipWords } from "@/components/ui/FlipWords";
 import { NumberTicker } from "@/components/ui/NumberTicker";
@@ -96,43 +99,48 @@ function BrowserWindow({
 }
 
 /* ──────────────────────────────────────────────────────────
-   Demo card contents — each card is a React node
+   Demo card previews — faithful mini-representations of real
+   /demos/* pages, each with a distinct layout. Clicking opens
+   the full demo page.
    ────────────────────────────────────────────────────────── */
 
-const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue"; content: React.ReactNode }[] = [
+const demoCards: {
+  url: string;
+  path: string;
+  accent: "indigo" | "amber" | "neutral" | "blue";
+  content: React.ReactNode;
+}[] = [
+  /* ── Boulangerie: warm hero + product grid (matches /demos/boulangerie) ── */
   {
     url: "boulangerie-martin.fr",
+    path: "boulangerie",
     accent: "indigo",
     content: (
       <div className="bg-[#FFF8F0] h-[230px] flex flex-col">
-        <div className="relative h-[130px] shrink-0 overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&h=300&fit=crop&q=80"
-            alt="" fill className="object-cover" sizes="500px"
-          />
+        <div className="relative h-[120px] shrink-0 overflow-hidden">
+          <Image src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&h=300&fit=crop&q=80" alt="" fill className="object-cover" sizes="500px" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/80 via-[#3D2B1F]/50 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/15 text-[8px] text-white/80 mb-1.5 w-fit">
-              <MapPin size={8} weight="fill" />
-              Caen
+            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[7px] text-white/80 mb-1 w-fit">
+              <MapPin size={7} weight="fill" /> Caen
             </div>
-            <p className="text-[15px] font-light text-white leading-tight">Pain artisanal,</p>
-            <p className="text-[15px] font-semibold text-[#E8C496] leading-tight">fait avec passion.</p>
+            <p className="text-[13px] font-light text-white leading-tight">Pain artisanal,</p>
+            <p className="text-[13px] font-semibold text-[#E8C496] leading-tight">fait avec passion.</p>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-2 p-3 flex-1">
+        <div className="grid grid-cols-3 gap-1.5 p-2.5 flex-1">
           {[
-            { name: "Baguette", price: "1,20 €", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=130&fit=crop&q=70" },
-            { name: "Tarte citron", price: "3,50 €", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=130&fit=crop&q=70" },
-            { name: "Fougasse", price: "2,80 €", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=130&fit=crop&q=70" },
+            { name: "Baguette tradition", price: "1,30 €", img: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=200&h=130&fit=crop&q=70" },
+            { name: "Croissant", price: "1,40 €", img: "https://images.unsplash.com/photo-1623334044303-241021148842?w=200&h=130&fit=crop&q=70" },
+            { name: "Tarte pommes", price: "3,80 €", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=200&h=130&fit=crop&q=70" },
           ].map((item) => (
             <div key={item.name} className="rounded-lg border border-[#E8D5C0]/50 bg-white overflow-hidden">
-              <div className="relative h-[48px]">
+              <div className="relative h-[44px]">
                 <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
               </div>
               <div className="px-1.5 py-1">
-                <p className="text-[8px] font-medium text-[#3D2B1F] truncate">{item.name}</p>
-                <p className="text-[7px] text-[#8B7355]">{item.price}</p>
+                <p className="text-[7px] font-medium text-[#3D2B1F] truncate">{item.name}</p>
+                <p className="text-[6px] text-[#8B7355]">{item.price}</p>
               </div>
             </div>
           ))}
@@ -140,115 +148,121 @@ const demoCards: { url: string; accent: "indigo" | "amber" | "neutral" | "blue";
       </div>
     ),
   },
+
+  /* ── Restaurant: dark full-bleed + centered text + nav bar (matches /demos/restaurant) ── */
   {
     url: "bistrot-normand.fr",
+    path: "restaurant",
     accent: "amber",
     content: (
       <div className="bg-[#1A1A1A] h-[230px] flex flex-col">
-        <div className="relative h-[130px] shrink-0 overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop&q=80"
-            alt="" fill className="object-cover" sizes="500px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
-          <div className="absolute inset-0 flex flex-col items-center justify-end pb-3">
-            <p className="text-[8px] text-[#C9A96E] tracking-[0.25em] uppercase mb-1">Restaurant gastronomique</p>
-            <p className="text-lg font-light text-white leading-tight">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
+        <div className="relative flex-1 overflow-hidden">
+          <Image src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop&q=80" alt="" fill className="object-cover" sizes="500px" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/60 to-[#1A1A1A]/30" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <p className="text-[6px] text-[#C9A96E] tracking-[0.3em] uppercase mb-1.5">Restaurant gastronomique · Caen</p>
+            <p className="text-lg font-light text-white leading-tight">Le Bistrot</p>
+            <p className="text-lg italic text-[#C9A96E] leading-tight -mt-0.5">Normand</p>
+            <div className="w-6 h-px bg-[#C9A96E]/40 mt-2 mb-1.5" />
+            <p className="text-[7px] text-white/40 max-w-[160px] leading-relaxed">Cuisine de saison, produits normands d&apos;exception</p>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-2 p-3 flex-1">
-          {[
-            { name: "Tartare de bœuf", price: "18 €", img: "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=200&h=130&fit=crop&q=70" },
-            { name: "Camembert rôti", price: "14 €", img: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=200&h=130&fit=crop&q=70" },
-            { name: "Tarte tatin", price: "12 €", img: "https://images.unsplash.com/photo-1562007908-17c67e878c88?w=200&h=130&fit=crop&q=70" },
-          ].map((item) => (
-            <div key={item.name} className="rounded-lg border border-[#C9A96E]/15 bg-[#222] overflow-hidden">
-              <div className="relative h-[48px]">
-                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
-              </div>
-              <div className="px-1.5 py-1">
-                <p className="text-[8px] font-medium text-white/80 truncate">{item.name}</p>
-                <p className="text-[7px] text-[#C9A96E]">{item.price}</p>
-              </div>
-            </div>
+        <div className="flex items-center justify-around px-4 py-2 border-t border-[#C9A96E]/15 bg-[#111]">
+          {["La carte", "Réserver", "Horaires"].map((l) => (
+            <span key={l} className="text-[7px] text-[#C9A96E]/60 tracking-wider uppercase">{l}</span>
           ))}
         </div>
       </div>
     ),
   },
+
+  /* ── Architecte: light split layout — image left, text+stats right (matches /demos/architecte) ── */
   {
     url: "studio-morel.fr",
+    path: "architecte",
     accent: "neutral",
     content: (
       <div className="bg-[#FAFAF9] h-[230px] flex flex-col">
-        <div className="relative h-[130px] shrink-0 overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=300&fit=crop&q=80"
-            alt="" fill className="object-cover" sizes="500px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/70 via-[#1a1a1a]/30 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <p className="text-[8px] text-white/60 tracking-[0.15em] uppercase mb-1">Architecture d&apos;intérieur</p>
-            <p className="text-[15px] font-light text-white leading-tight">Des espaces qui</p>
-            <p className="text-[15px] font-medium text-white leading-tight">vous <span className="italic text-neutral-300">ressemblent.</span></p>
+        <div className="flex items-center justify-between px-4 py-2 border-b border-neutral-100">
+          <p className="text-[8px] font-medium text-neutral-800 tracking-tight">Studio <span className="font-light">Morel</span></p>
+          <div className="flex gap-3">
+            {["Projets", "Approche", "Contact"].map((l) => (
+              <span key={l} className="text-[6px] text-neutral-400">{l}</span>
+            ))}
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-2 p-3 flex-1">
-          {[
-            { title: "Loft Vaugueux", tag: "Rénovation", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&h=130&fit=crop&q=70" },
-            { title: "Villa Ouistreham", tag: "Neuf", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=130&fit=crop&q=70" },
-            { title: "Café Demoiselle", tag: "Commercial", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=200&h=130&fit=crop&q=70" },
-          ].map((p) => (
-            <div key={p.title} className="rounded-lg overflow-hidden border border-neutral-200/80 bg-white">
-              <div className="relative h-[48px]">
-                <Image src={p.img} alt="" fill className="object-cover" sizes="150px" />
+        <div className="flex flex-1 overflow-hidden">
+          <div className="relative w-[55%] shrink-0">
+            <Image src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop&q=80" alt="" fill className="object-cover" sizes="300px" />
+          </div>
+          <div className="flex-1 flex flex-col justify-center px-4 py-3">
+            <p className="text-[6px] text-neutral-400 tracking-[0.15em] uppercase mb-1">Architecture d&apos;intérieur</p>
+            <p className="text-[12px] font-light text-neutral-800 leading-snug">Des espaces qui</p>
+            <p className="text-[12px] font-medium text-neutral-800 leading-snug">vous <span className="italic text-neutral-500">ressemblent.</span></p>
+            <div className="flex gap-4 mt-2.5">
+              <div>
+                <p className="text-[13px] font-semibold text-neutral-800">4</p>
+                <p className="text-[5px] text-neutral-400 uppercase tracking-wide">Projets</p>
               </div>
-              <div className="px-1.5 py-1">
-                <p className="text-[6px] text-neutral-400 uppercase tracking-wider">{p.tag}</p>
-                <p className="text-[8px] font-medium text-neutral-800 truncate">{p.title}</p>
+              <div>
+                <p className="text-[13px] font-semibold text-neutral-800">8</p>
+                <p className="text-[5px] text-neutral-400 uppercase tracking-wide">Ans</p>
               </div>
             </div>
-          ))}
+            <div className="mt-2.5 px-2 py-1 rounded bg-neutral-800 text-[6px] text-white w-fit">Découvrir</div>
+          </div>
         </div>
       </div>
     ),
   },
+
+  /* ── Plombier: blue header + service cards with icons + CTA (matches /demos/plombier) ── */
   {
     url: "dupont-plomberie.fr",
+    path: "plombier",
     accent: "blue",
     content: (
       <div className="bg-white h-[230px] flex flex-col">
-        <div className="relative h-[130px] shrink-0 overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&h=300&fit=crop&q=80"
-            alt="" fill className="object-cover" sizes="500px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0C3B6F]/85 via-[#0C3B6F]/50 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[7px] text-white/80 mb-1.5 w-fit">
-              <Wrench size={7} weight="fill" />
-              Urgence 7j/7
+        <div className="bg-[#1E5FAA] px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <div className="w-5 h-5 rounded-md bg-white/15 flex items-center justify-center">
+              <Wrench size={10} weight="bold" className="text-white" />
             </div>
-            <p className="text-[15px] font-light text-white leading-tight">Votre plombier</p>
-            <p className="text-[15px] font-semibold text-[#60A5FA] leading-tight">de confiance.</p>
+            <div>
+              <p className="text-[9px] font-semibold text-white tracking-tight">Dupont Plomberie</p>
+              <p className="text-[5px] text-blue-200/60">Caen & agglomération</p>
+            </div>
+          </div>
+          <div className="px-2 py-0.5 rounded-full bg-orange-500 text-[6px] text-white font-semibold">
+            Urgence 24h
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-2 p-3 flex-1">
+        <div className="relative h-[90px] shrink-0 overflow-hidden">
+          <Image src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&h=300&fit=crop&q=80" alt="" fill className="object-cover" sizes="500px" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1E5FAA]/80 via-[#1E5FAA]/40 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-4">
+            <p className="text-[12px] font-bold text-white leading-tight">Votre plombier</p>
+            <p className="text-[12px] font-bold text-[#93C5FD] leading-tight">de confiance.</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-1 px-2.5 py-2 flex-1">
           {[
-            { name: "Plomberie", sub: "Devis gratuit", img: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=200&h=130&fit=crop&q=70" },
-            { name: "Chauffage", sub: "Certifié RGE", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=200&h=130&fit=crop&q=70" },
-            { name: "Salle de bain", sub: "Sur devis", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=200&h=130&fit=crop&q=70" },
-          ].map((item) => (
-            <div key={item.name} className="rounded-lg border border-[#1E5FAA]/10 bg-[#F0F6FF] overflow-hidden">
-              <div className="relative h-[48px]">
-                <Image src={item.img} alt="" fill className="object-cover" sizes="150px" />
+            { icon: Drop, name: "Plomberie" },
+            { icon: ThermometerHot, name: "Chauffage" },
+            { icon: Wrench, name: "Dépannage" },
+          ].map((svc) => {
+            const Icon = svc.icon;
+            return (
+              <div key={svc.name} className="rounded-md bg-[#F0F6FF] flex flex-col items-center justify-center py-2 px-1">
+                <Icon size={14} weight="duotone" className="text-[#1E5FAA] mb-1" />
+                <p className="text-[7px] font-semibold text-[#1E5FAA]">{svc.name}</p>
               </div>
-              <div className="px-1.5 py-1">
-                <p className="text-[8px] font-semibold text-[#0C3B6F] truncate">{item.name}</p>
-                <p className="text-[7px] text-[#1E5FAA]/60">{item.sub}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
+        </div>
+        <div className="bg-[#1E5FAA] px-4 py-1.5 flex items-center justify-center gap-2">
+          <span className="text-[7px] text-white/70">Devis gratuit</span>
+          <span className="text-[7px] font-bold text-white">02 31 00 00 00</span>
         </div>
       </div>
     ),
@@ -265,11 +279,13 @@ function FloatingScreens({
   active,
   onNext,
   onSelect,
+  onOpenGallery,
 }: {
   isInView: boolean;
   active: number;
   onNext: () => void;
   onSelect: (i: number) => void;
+  onOpenGallery: (i: number) => void;
 }) {
   const total = demoCards.length;
 
@@ -321,7 +337,7 @@ function FloatingScreens({
                 transformStyle: "preserve-3d",
                 transform: `translateZ(${s.z}px)`,
               }}
-              onClick={onNext}
+              onClick={() => slot === 0 ? onOpenGallery(i) : onNext()}
             >
               <BrowserWindow url={card.url} accent={card.accent}>
                 {card.content}
@@ -371,89 +387,72 @@ function FloatingScreens({
    Mobile-only simplified illustration — 2 overlapping demos
    ────────────────────────────────────────────────────────── */
 
-function MobileIllustration({ isInView }: { isInView: boolean }) {
+function MobileIllustration({ isInView, onOpenGallery }: { isInView: boolean; onOpenGallery: (i: number) => void }) {
   return (
-    <div className="relative w-full max-w-md mx-auto h-[320px]">
-      {/* Glow */}
+    <div className="relative">
+      {/* Glow behind */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-indigo-500/20 blur-[80px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-40 rounded-full bg-indigo-500/12 blur-[60px]"
         aria-hidden="true"
       />
 
-      {/* Main — Bakery browser */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.4, duration: 0.6 }}
-        className="relative z-20 w-[80%]"
-      >
-        <BrowserWindow url="boulangerie-martin.fr">
-          <div className="bg-[#FFF8F0]">
-            <div className="relative h-[72px] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=400&h=150&fit=crop&q=70"
-                alt="" fill className="object-cover" sizes="300px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#3D2B1F]/80 to-transparent" />
-              <div className="absolute inset-0 flex flex-col justify-center px-4">
-                <p className="text-[10px] font-light text-white">Pain artisanal,</p>
-                <p className="text-[10px] font-semibold text-[#E8C496]">fait avec passion.</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-1.5 p-2.5">
-              {[
-                { name: "Baguette", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=120&h=80&fit=crop&q=60" },
-                { name: "Tarte", img: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=120&h=80&fit=crop&q=60" },
-                { name: "Fougasse", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=120&h=80&fit=crop&q=60" },
-              ].map((item) => (
-                <div key={item.name} className="rounded-md border border-[#E8D5C0]/40 bg-white overflow-hidden">
-                  <div className="relative h-[28px]">
-                    <Image src={item.img} alt="" fill className="object-cover" sizes="100px" />
-                  </div>
-                  <p className="text-[6px] font-medium text-[#3D2B1F] px-1 py-0.5 truncate">{item.name}</p>
+      {/* 2 demo previews — hero images only, clean and balanced */}
+      <div className="relative grid grid-cols-2 gap-2">
+        {/* Bakery — full hero image */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <button onClick={() => onOpenGallery(0)} className="block text-left w-full">
+            <BrowserWindow url="boulangerie-martin.fr">
+              <div className="relative h-[100px] overflow-hidden bg-[#FFF8F0]">
+                <Image src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=300&h=200&fit=crop&q=60" alt="" fill className="object-cover" sizes="200px" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#3D2B1F]/90 via-[#3D2B1F]/30 to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 p-2.5">
+                  <p className="text-[8px] font-light text-white/80">Pain artisanal,</p>
+                  <p className="text-[9px] font-semibold text-[#E8C496]">fait avec passion.</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </BrowserWindow>
-      </motion.div>
+              </div>
+            </BrowserWindow>
+          </button>
+        </motion.div>
 
-      {/* Overlapping — Restaurant browser */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        className="absolute bottom-0 right-[0%] w-[65%] z-30"
-      >
-        <BrowserWindow url="bistrot-normand.fr" accent="amber">
-          <div className="bg-[#1A1A1A]">
-            <div className="relative h-[72px] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=150&fit=crop&q=70"
-                alt="" fill className="object-cover" sizes="250px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
-              <div className="absolute bottom-2 left-0 right-0 text-center">
-                <p className="text-[6px] text-[#C9A96E] tracking-[0.15em] uppercase">Restaurant</p>
-                <p className="text-[10px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-1.5 p-2.5">
-              {[
-                { name: "Tartare", img: "https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=120&h=80&fit=crop&q=60" },
-                { name: "Camembert", img: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=120&h=80&fit=crop&q=60" },
-                { name: "Tarte tatin", img: "https://images.unsplash.com/photo-1562007908-17c67e878c88?w=120&h=80&fit=crop&q=60" },
-              ].map((item) => (
-                <div key={item.name} className="rounded-md border border-[#C9A96E]/15 bg-[#222] overflow-hidden">
-                  <div className="relative h-[28px]">
-                    <Image src={item.img} alt="" fill className="object-cover" sizes="100px" />
-                  </div>
-                  <p className="text-[6px] font-medium text-white/70 px-1 py-0.5 truncate">{item.name}</p>
+        {/* Restaurant — full hero image */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.45, duration: 0.5 }}
+        >
+          <button onClick={() => onOpenGallery(1)} className="block text-left w-full">
+            <BrowserWindow url="bistrot-normand.fr" accent="amber">
+              <div className="relative h-[100px] overflow-hidden bg-[#1A1A1A]">
+                <Image src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&q=60" alt="" fill className="object-cover" sizes="200px" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/30 to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 p-2.5 text-center">
+                  <p className="text-[6px] text-[#C9A96E]/70 tracking-[0.15em] uppercase">Restaurant</p>
+                  <p className="text-[10px] font-light text-white">Le Bistrot <span className="italic text-[#C9A96E]">Normand</span></p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </BrowserWindow>
+              </div>
+            </BrowserWindow>
+          </button>
+        </motion.div>
+      </div>
+
+      {/* See all demos */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ delay: 0.6, duration: 0.4 }}
+        className="flex justify-center mt-2.5"
+      >
+        <button
+          onClick={() => onOpenGallery(0)}
+          className="inline-flex items-center gap-1.5 text-[11px] text-text-tertiary hover:text-accent-action transition-colors"
+        >
+          Voir les 4 démos
+          <ArrowDown size={11} />
+        </button>
       </motion.div>
     </div>
   );
@@ -467,6 +466,7 @@ export function HeroSection() {
 
   /* Shared cycling index — drives both FlipWords and FloatingScreens */
   const [activeDemo, setActiveDemo] = useState(0);
+  const [galleryOpen, setGalleryOpen] = useState<number | null>(null);
   const total = demoCards.length;
   const nextDemo = useCallback(() => setActiveDemo((a) => (a + 1) % total), [total]);
 
@@ -479,7 +479,7 @@ export function HeroSection() {
   return (
     <section
       id="accueil"
-      className="relative pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden"
+      className="relative pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-10 md:pb-14 overflow-hidden"
       ref={heroRef}
     >
       {/* Background layers */}
@@ -497,7 +497,7 @@ export function HeroSection() {
       />
       {/* Extra central glow for depth */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-accent-action/8 blur-[120px] pointer-events-none"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] sm:w-[600px] h-[200px] sm:h-[400px] rounded-full bg-accent-action/8 blur-[80px] sm:blur-[120px] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -510,8 +510,8 @@ export function HeroSection() {
             variants={staggerContainer}
           >
             {/* Availability badge */}
-            <motion.div variants={fadeInUp} className="mb-8">
-              <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-accent-border bg-background-elevated/80 backdrop-blur-sm text-sm text-text-secondary">
+            <motion.div variants={fadeInUp} className="mb-4 lg:mb-5">
+              <span className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-accent-border bg-background-elevated/80 backdrop-blur-sm text-xs sm:text-sm text-text-secondary">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-success opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-status-success" />
@@ -520,35 +520,52 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* H1 — close to the mockup */}
+            {/* H1 */}
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.5rem] xl:text-6xl font-light tracking-[-0.03em] mb-6 leading-[1.1]"
+              className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-light tracking-[-0.03em] mb-3 lg:mb-4 leading-[1.15]"
             >
-              Un site web
-              <br />
-              <span className="font-semibold text-accent-action">
-                <FlipWords words={flipWords} activeIndex={activeDemo} />
+              {/* Mobile: FlipWord on its own line so width changes don't shift text */}
+              <span className="sm:hidden">
+                Un site web<br />
+                <span className="font-semibold text-accent-action">
+                  <FlipWords words={flipWords} activeIndex={activeDemo} />
+                </span>
+                <br />
+                <span className="font-semibold">pour votre entreprise</span>
+                <span className="text-accent-action">.</span>
               </span>
-              <br />
-              <span className="font-semibold">pour votre entreprise</span>
-              <span className="text-accent-action">.</span>
+              {/* Desktop: original flow */}
+              <span className="hidden sm:inline">
+                Un site web{" "}
+                <span className="font-semibold text-accent-action">
+                  <FlipWords words={flipWords} activeIndex={activeDemo} />
+                </span>
+                <br />
+                <span className="font-semibold">pour votre entreprise</span>
+                <span className="text-accent-action">.</span>
+              </span>
             </motion.h1>
 
-            {/* Subtitle */}
+            {/* Subtitle — shorter on mobile */}
             <motion.p
               variants={fadeInUp}
-              className="text-text-secondary text-lg md:text-xl leading-[1.65] mb-10 max-w-[540px]"
+              className="text-text-secondary text-[15px] sm:text-lg md:text-xl leading-[1.5] mb-5 lg:mb-7 max-w-[540px]"
             >
-              Développeur web freelance en Normandie. Je crée des sites
-              vitrines sur mesure qui inspirent confiance — et vous
-              amènent des clients.
+              <span className="hidden sm:inline">
+                Développeur web freelance en Normandie. Je crée des sites
+                vitrines sur mesure qui inspirent confiance — et vous
+                amènent des clients.
+              </span>
+              <span className="sm:hidden">
+                Sites vitrines sur mesure en Normandie — confiance, performance et clients.
+              </span>
             </motion.p>
 
-            {/* Dual CTAs */}
+            {/* CTAs — single primary on mobile, dual on sm+ */}
             <motion.div
               variants={fadeInUp}
-              className="flex flex-col sm:flex-row gap-4 mb-6"
+              className="flex flex-col sm:flex-row gap-3 mb-3 lg:mb-4"
             >
               <a
                 href="#contact"
@@ -556,9 +573,9 @@ export function HeroSection() {
                   e.preventDefault();
                   scrollToSection("contact");
                 }}
-                className="btn-glow inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-all text-base shadow-[0_0_20px_var(--accent-action-glow)]"
+                className="btn-glow inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 bg-accent-action text-background font-medium rounded-lg hover:bg-accent-action-hover transition-all text-sm sm:text-base shadow-[0_0_20px_var(--accent-action-glow)] w-full sm:w-auto"
               >
-                <EnvelopeSimple size={20} weight="bold" />
+                <EnvelopeSimple size={18} weight="bold" />
                 <span>Demander un devis gratuit</span>
               </a>
               <a
@@ -567,7 +584,7 @@ export function HeroSection() {
                   e.preventDefault();
                   scrollToSection("realisations");
                 }}
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-lg border border-accent-border text-text-secondary hover:text-text-primary hover:border-accent-action/50 transition-all text-base backdrop-blur-sm bg-background-elevated/30"
+                className="hidden sm:inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-lg border border-accent-border text-text-secondary hover:text-text-primary hover:border-accent-action/50 transition-all text-base backdrop-blur-sm bg-background-elevated/30"
               >
                 <span>Voir mes réalisations</span>
                 <ArrowDown size={18} />
@@ -590,53 +607,68 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="hidden lg:block"
           >
-            <FloatingScreens isInView={isHeroInView} active={activeDemo} onNext={nextDemo} onSelect={setActiveDemo} />
+            <FloatingScreens isInView={isHeroInView} active={activeDemo} onNext={nextDemo} onSelect={setActiveDemo} onOpenGallery={(i) => setGalleryOpen(i)} />
           </motion.div>
         </div>
 
-        {/* Mobile illustration */}
+        {/* Mobile illustration — compact single demo preview */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mt-8 lg:hidden"
+          transition={{ delay: 0.35, duration: 0.5 }}
+          className="mt-6 lg:hidden"
         >
-          <MobileIllustration isInView={isHeroInView} />
+          <MobileIllustration isInView={isHeroInView} onOpenGallery={(i) => setGalleryOpen(i)} />
         </motion.div>
 
         {/* Stats row */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
           transition={{
-            delay: 0.6,
+            delay: 0.5,
             duration: 0.6,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="mt-16"
+          className="mt-6 lg:mt-10"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Mobile: inline compact stats */}
+          <div className="flex items-center justify-between gap-2 sm:hidden">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div key={stat.label} className="flex items-center gap-2 flex-1">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent-action-subtle border border-accent-action/20 shrink-0">
+                    <Icon size={16} weight="duotone" className="text-accent-action" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-text-primary font-mono leading-none">
+                      <NumberTicker value={stat.value} suffix={stat.suffix} delay={0.5} />
+                    </p>
+                    <p className="text-[10px] text-text-tertiary leading-tight mt-0.5">
+                      {stat.label}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* sm+: card-style stats */}
+          <div className="hidden sm:grid grid-cols-3 gap-3">
             {stats.map((stat) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={stat.label}
-                  className="group flex items-center gap-4 p-5 rounded-xl border border-accent-border bg-background-elevated/60 backdrop-blur-sm hover:border-accent-action/40 transition-all duration-300"
+                  className="group flex items-center gap-3.5 p-4 rounded-xl border border-accent-border bg-background-elevated/60 backdrop-blur-sm hover:border-accent-action/40 transition-all duration-300"
                 >
-                  <div className="flex items-center justify-center w-11 h-11 rounded-lg bg-accent-action-subtle border border-accent-action/20 shrink-0">
-                    <Icon
-                      size={22}
-                      weight="duotone"
-                      className="text-accent-action"
-                    />
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-action-subtle border border-accent-action/20 shrink-0">
+                    <Icon size={22} weight="duotone" className="text-accent-action" />
                   </div>
                   <div>
                     <p className="text-xl font-medium text-text-primary font-mono leading-tight">
-                      <NumberTicker
-                        value={stat.value}
-                        suffix={stat.suffix}
-                        delay={0.6}
-                      />
+                      <NumberTicker value={stat.value} suffix={stat.suffix} delay={0.6} />
                     </p>
                     <p className="text-sm text-text-tertiary leading-snug">
                       {stat.label}
@@ -648,6 +680,16 @@ export function HeroSection() {
           </div>
         </motion.div>
       </div>
+
+      {/* Demo gallery overlay */}
+      <AnimatePresence>
+        {galleryOpen !== null && (
+          <DemoGallery
+            initial={galleryOpen}
+            onClose={() => setGalleryOpen(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

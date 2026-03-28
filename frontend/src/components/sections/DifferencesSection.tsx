@@ -81,11 +81,11 @@ export function DifferencesSection() {
           <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
             Pourquoi du sur-mesure
           </p>
-          <h2 id="differences-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+          <h2 id="differences-heading" className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
             Un site internet professionnel,{" "}
             <span className="font-medium">pas un template.</span>
           </h2>
-          <p className="text-text-secondary prose-width leading-relaxed mb-14">
+          <p className="text-sm sm:text-base text-text-secondary prose-width leading-relaxed mb-8 sm:mb-14">
             La différence entre un site sur mesure et WordPress ou Wix — voici ce
             que ça change concrètement pour votre activité à Caen et en Normandie.
           </p>
@@ -96,7 +96,7 @@ export function DifferencesSection() {
           whileInView="whileInView"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="grid sm:grid-cols-2 gap-5"
+          className="grid sm:grid-cols-2 gap-3 sm:gap-5"
         >
           {differences.map((item) => {
             const Icon = item.icon;
@@ -107,11 +107,11 @@ export function DifferencesSection() {
                 viewport={{ once: true }}
                 className="group"
               >
-                <div className="relative p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 backdrop-blur-sm transition-all duration-300 group-hover:border-accent-action/40 group-hover:bg-background-elevated h-full">
+                <div className="relative p-4 sm:p-6 md:p-7 rounded-xl border border-accent-border bg-background-elevated/50 backdrop-blur-sm transition-all duration-300 group-hover:border-accent-action/40 group-hover:bg-background-elevated h-full">
                   {/* Metric badge */}
-                  <div className="absolute top-6 right-6">
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
                     <div className="text-right">
-                      <p className="text-2xl font-light text-accent-action stat-number leading-none">
+                      <p className="text-xl sm:text-2xl font-light text-accent-action stat-number leading-none">
                         {item.metric}
                       </p>
                       <p className="text-xs text-text-tertiary mt-0.5">

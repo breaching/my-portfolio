@@ -22,10 +22,10 @@ const resourceLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-accent-border mt-8">
-      <div className="container-main pt-16 pb-10">
+    <footer className="border-t-0 mt-8">
+      <div className="container-main pt-10 sm:pt-16 pb-8 sm:pb-10">
         {/* Main grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8 mb-10 sm:mb-12">
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
@@ -116,7 +116,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-10 mt-2 border-t border-accent-border/40">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-10 mt-2">
           <p className="text-xs text-text-tertiary">
             © {new Date().getFullYear()} Alexis Dubus — Développeur web freelance à Caen
           </p>

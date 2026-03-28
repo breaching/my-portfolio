@@ -104,15 +104,14 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-md border-b border-accent-border shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-md border-b-0">
       <nav className="container-main h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="text-[15px] font-medium text-text-primary hover:text-accent-primary transition-colors duration-200 tracking-[-0.02em] group"
+          className="text-[15px] font-medium text-text-primary hover:text-accent-action transition-colors duration-200 tracking-[-0.01em]"
         >
-          <span className="text-accent-action mr-0.5 font-semibold">A</span>
-          <span>lexis Dubus</span>
+          Alexis Dubus<span className="text-accent-action">.</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -134,7 +133,7 @@ export function Navbar() {
                   <>
                     <motion.span
                       layoutId="navbar-pill"
-                      className="absolute inset-0 bg-background-elevated rounded-md border border-accent-border"
+                      className="absolute inset-0 bg-background-elevated/80 rounded-md"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
                     />
                     <motion.span
@@ -165,7 +164,7 @@ export function Navbar() {
         <motion.button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           whileTap={{ scale: 0.9 }}
-          className="md:hidden p-2 -mr-2 text-text-secondary hover:text-text-primary transition-colors duration-200"
+          className="md:hidden p-2.5 -mr-2 text-text-secondary hover:text-text-primary transition-colors duration-200"
           aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
         >
           <motion.div
@@ -185,7 +184,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="md:hidden border-b border-accent-border bg-background overflow-hidden"
+            className="md:hidden bg-background overflow-hidden"
           >
             <motion.div
               initial="closed"
@@ -228,8 +227,8 @@ export function Navbar() {
                       onClick={(e) => handleNavClick(e, link)}
                       className={`block py-3 px-3 text-sm transition-colors duration-200 rounded-md ${
                         isActive
-                          ? "text-text-primary font-medium bg-background-elevated border border-accent-border"
-                          : "text-text-secondary hover:text-text-primary hover:bg-background-elevated"
+                          ? "text-text-primary font-medium bg-background-elevated/80"
+                          : "text-text-secondary hover:text-text-primary hover:bg-background-elevated/50"
                       }`}
                     >
                       {link.label}

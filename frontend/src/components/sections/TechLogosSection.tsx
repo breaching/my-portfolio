@@ -82,22 +82,93 @@ function NodeLogo({ size = 20 }: { size?: number }) {
   );
 }
 
+function PythonLogo({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.96 3.403 5.96h2.03v-2.867s-.109-3.42 3.35-3.42h5.766s3.24.052 3.24-3.148V3.202S18.28 0 11.914 0ZM8.708 1.85a1.06 1.06 0 1 1 0 2.118 1.06 1.06 0 0 1 0-2.118Z" />
+      <path d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752H11.98v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.96-3.403-5.96h-2.03v2.867s.109 3.42-3.35 3.42H9.451s-3.24-.052-3.24 3.148v5.292S5.72 24 12.086 24Zm3.206-1.85a1.06 1.06 0 1 1 0-2.118 1.06 1.06 0 0 1 0 2.118Z" />
+    </svg>
+  );
+}
+
+function PostgreSQLLogo({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.128 0a10.134 10.134 0 0 0-2.755.403l-.063.02A10.922 10.922 0 0 0 12.6.258C11.422.238 10.4.524 9.594 1 8.79.721 7.122.24 5.364.336 4.14.403 2.804.775 1.814 1.82.826 2.865.377 4.478.565 6.55c.053.585.179 1.22.358 1.9.178.68.41 1.408.693 2.12.566 1.427 1.315 2.755 2.273 3.454.479.35 1.016.527 1.585.453.345-.045.656-.199.928-.406l.036.037c.398.371.84.554 1.297.622.242.036.49.035.738.012-.064.138-.12.28-.165.428-.108.353-.164.72-.164 1.088l-.001.592c-.02.318-.01.63.104.946.083.226.2.442.382.612.033.03.068.057.103.084-.103.197-.167.412-.167.643 0 .462.225.832.533 1.096.308.264.72.438 1.186.543.928.212 2.148.183 3.277-.068.516-.115.975-.307 1.37-.612.396-.305.667-.727.765-1.237.08-.418.122-.88.152-1.36-.022-.06-.005-.037.012.017a8.83 8.83 0 0 0 .324-.07c.542-.133.99-.276 1.384-.544a2.31 2.31 0 0 0 .565-.517c.394.07.802.115 1.223.115 1.13 0 2.152-.312 2.95-.784 1.3-.768 2.079-1.879 2.297-2.859.028-.127.042-.237.044-.343.001-.048-.001-.105-.003-.15a.55.55 0 0 0-.037-.172l.003-.003c.354-.354.669-.715.927-1.115.386-.599.647-1.262.72-1.985.037-.363.03-.742-.071-1.118-.1-.376-.323-.738-.683-1.013a1.388 1.388 0 0 0-.122-.082c.042-.524.053-1.039.028-1.527-.05-.959-.27-1.856-.7-2.547-.43-.693-1.078-1.168-1.913-1.334-.835-.166-1.644-.02-2.508.28a.13.13 0 0 0-.035-.03C18.86.322 18.078.068 17.21.01a4.153 4.153 0 0 0-.082-.006V0Z" />
+    </svg>
+  );
+}
+
+function PlaywrightLogo({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.468 0a5.553 5.553 0 0 0-4.014 1.89c-.458.513-.863 1.089-1.205 1.715a9.664 9.664 0 0 0-.814 2.143 14.449 14.449 0 0 0-.4 2.378l-.002.016.566.287.008-.044c.122-.664.297-1.33.524-1.987.286-.83.653-1.612 1.092-2.285.36-.551.773-1.03 1.231-1.396.492-.393 1.035-.643 1.623-.663h.044c.737 0 1.4.39 1.963.993.563.603 1.01 1.448 1.284 2.416.337 1.19.452 2.47.36 3.775a13.42 13.42 0 0 1-.2 1.564c.606.465 1.076.986 1.395 1.553l.047.084a12.2 12.2 0 0 0 .159-1.313c.126-1.622-.002-3.196-.43-4.633-.347-1.163-.89-2.186-1.625-2.96C19.351.738 18.4.145 17.316.02A3.27 3.27 0 0 0 16.98 0h1.489ZM7.286 1.6H5.795c-.11.006-.221.016-.334.03C4.377 1.775 3.427 2.367 2.7 3.22c-.728.854-1.267 1.948-1.61 3.168-.435 1.546-.564 3.232-.443 4.953.047.68.134 1.37.264 2.062a3.066 3.066 0 0 1 1.13-1.472 13.37 13.37 0 0 1-.164-1.422c-.09-1.306.024-2.585.36-3.775.278-.98.724-1.836 1.294-2.437.57-.6 1.226-.976 1.963-.976h.044c.589.02 1.132.27 1.623.663.459.366.872.845 1.232 1.396.44.673.806 1.455 1.091 2.285a13.3 13.3 0 0 1 .525 1.987l.008.044.566-.287-.003-.016a14.451 14.451 0 0 0-.399-2.378 9.664 9.664 0 0 0-.814-2.143 6.786 6.786 0 0 0-1.205-1.715A5.555 5.555 0 0 0 7.286 1.6Z" />
+      <path d="M11.949 8.727a.31.31 0 0 0-.148.042L5.794 12.04a.31.31 0 0 0-.16.271v6.86a.31.31 0 0 0 .453.275l3.153-1.633c-.226-.354-.36-.748-.36-1.151 0-.437.164-.848.44-1.182-.63-.178-1.076-.484-1.076-.838 0-.535.794-.968 1.773-.968.98 0 1.773.433 1.773.968 0 .369-.48.686-1.143.857.236.27.383.605.383.963 0 .352-.128.677-.343.96l3.413 1.736a.31.31 0 0 0 .454-.275V12.04a.31.31 0 0 0-.16-.271l-2.216-1.145 2.216-1.146a.31.31 0 0 0 .16-.271v-.21a.31.31 0 0 0-.454-.275l-2.402 1.244-2.403-1.244a.31.31 0 0 0-.138-.033.31.31 0 0 0-.306.316v.21c0 .116.064.223.165.277l2.066 1.068-1.778.92-1.778-.92a.31.31 0 0 0-.286 0l-1.778.92 2.069-1.07a.31.31 0 0 0 .163-.277v-.21a.31.31 0 0 0-.305-.316l-.01.001a.31.31 0 0 0-.133.031L5.795 11.4l2.126-1.1a.31.31 0 0 0 .002-.55L6.64 9.12l5.303-2.847.006-.003 5.303 2.847-1.283.63a.31.31 0 0 0 .002.551l2.126 1.1-2.403 1.243a.31.31 0 0 0-.138.033.31.31 0 0 0-.306.316v.21c0 .116.064.223.164.277l2.068 1.069-1.778.92-1.778-.92a.31.31 0 0 0-.286 0l-1.778.92 2.066-1.068a.31.31 0 0 0 .165-.277v-.21a.31.31 0 0 0-.306-.316.31.31 0 0 0-.138.033l-2.403 1.244-2.402-1.244a.31.31 0 0 0-.454.275v.21c0 .116.064.223.16.271l2.216 1.146-2.216 1.145a.31.31 0 0 0-.16.271v6.859a.31.31 0 0 0 .093.222.31.31 0 0 0 .361.053l5.812-3.008.007-.003 5.812 3.008a.31.31 0 0 0 .454-.275v-6.86a.31.31 0 0 0-.16-.27l-3.166-1.638c.215-.283.343-.608.343-.96 0-.358-.147-.693-.382-.963.663-.17 1.142-.488 1.142-.857 0-.535-.793-.968-1.773-.968-.979 0-1.773.433-1.773.968 0 .354.446.66 1.077.838a1.629 1.629 0 0 0-.44 1.182c0 .403.134.797.36 1.151l-3.153 1.633a.31.31 0 0 1-.302 0Z" />
+    </svg>
+  );
+}
+
+function GrafanaLogo({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22.687 12.783c-.034-.56-.17-1.12-.408-1.612a3.373 3.373 0 0 0-.476-.782 3.2 3.2 0 0 0-.578-.544c.03-.202.03-.372.03-.544a4.93 4.93 0 0 0-.17-1.29 5.063 5.063 0 0 0-.544-1.256 5.63 5.63 0 0 0-.85-1.052 5.088 5.088 0 0 0-1.086-.816 4.39 4.39 0 0 0-1.256-.51 5.26 5.26 0 0 0-1.392-.17c-.136 0-.238 0-.374.034a3.43 3.43 0 0 0-1.936-1.46 3.378 3.378 0 0 0-1.358-.238c-.272 0-.544.034-.816.102-.238.068-.476.17-.714.306a4.66 4.66 0 0 0-1.664-1.392A4.829 4.829 0 0 0 9.122 1.1c-.612 0-1.188.102-1.766.34a4.907 4.907 0 0 0-1.494.917A5.253 5.253 0 0 0 4.828 3.87a5.137 5.137 0 0 0-.544 1.596c-.272.068-.544.17-.782.306-.238.136-.476.306-.68.51a3.015 3.015 0 0 0-.51.68c-.17.272-.272.544-.34.85a3.403 3.403 0 0 0-.068.918c.034.306.102.578.238.85a3.2 3.2 0 0 0-.442.442c-.272.34-.476.714-.612 1.12a4.24 4.24 0 0 0-.204 1.324c0 .476.068.918.238 1.358.136.408.374.782.646 1.086.272.34.612.612.986.816-.034.306-.034.578 0 .884.034.476.136.952.306 1.392.204.442.476.85.816 1.188a3.8 3.8 0 0 0 1.188.85c.476.238.986.374 1.528.408.238.578.612 1.086 1.052 1.528.51.51 1.12.884 1.8 1.12.646.204 1.358.272 2.038.204.68-.068 1.324-.272 1.902-.612.476.204.986.34 1.528.374h.306c.578 0 1.12-.102 1.63-.34a4.5 4.5 0 0 0 1.358-.918c.374-.374.68-.816.918-1.29.204-.476.34-.986.374-1.528a3.57 3.57 0 0 0 .782-.306c.408-.204.748-.476 1.052-.782.306-.306.544-.646.714-1.052.17-.408.272-.816.306-1.256.034-.442-.034-.884-.17-1.29a3.583 3.583 0 0 0-.646-1.12 3.36 3.36 0 0 0 .374-.544c.238-.476.374-.986.408-1.528Z" />
+    </svg>
+  );
+}
+
+function FramerMotionLogo({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 0h16v8h-8ZM4 8h8l8 8H4ZM4 16h8v8Z" />
+    </svg>
+  );
+}
+
+function LinuxLogo({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 0 0-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602.004.145.024.282.06.424.265 1.065.909 1.528 1.598 1.714.456.09.962.068 1.477-.004.28-.04.574-.106.892-.182.26-.063.568-.117.9-.183l.089-.018c.288-.042.635-.058 1.01-.046.379.022.783.098 1.166.264.271.116.486.273.702.378.216.105.475.14.754.135.543-.01 1.18-.133 1.728-.345.632-.245 1.143-.609 1.437-1.156a.64.64 0 0 0 .067-.368 1.523 1.523 0 0 0-.122-.44c.396-.198.764-.46 1.065-.802.352-.4.62-.903.72-1.502.093-.6-.004-1.282-.296-2.036-.289-.702-.6-1.217-.927-1.642-.3-.39-.558-.64-.751-.876a3.097 3.097 0 0 1-.3-.491c-.183-.371-.388-.917-.449-1.606-.062-.684.001-1.544.293-2.543.067-.233.104-.477.104-.719 0-.413-.072-.824-.203-1.199C14.8 1.724 13.726.02 12.504 0Z" />
+    </svg>
+  );
+}
+
 const technologies: { name: string; icon: React.FC<{ size?: number }> }[] = [
   { name: "React", icon: ReactLogo },
   { name: "Next.js", icon: NextLogo },
   { name: "TypeScript", icon: TypeScriptLogo },
   { name: "Tailwind CSS", icon: TailwindLogo },
-  { name: "Vercel", icon: VercelLogo },
-  { name: "Stripe", icon: StripeLogo },
-  { name: "Supabase", icon: SupabaseLogo },
+  { name: "Framer Motion", icon: FramerMotionLogo },
   { name: "Node.js", icon: NodeLogo },
+  { name: "Python", icon: PythonLogo },
+  { name: "PostgreSQL", icon: PostgreSQLLogo },
+  { name: "Supabase", icon: SupabaseLogo },
+  { name: "Stripe", icon: StripeLogo },
+  { name: "Vercel", icon: VercelLogo },
+  { name: "Playwright", icon: PlaywrightLogo },
+  { name: "Grafana", icon: GrafanaLogo },
+  { name: "Linux", icon: LinuxLogo },
 ];
 
-function TechItem({ name, icon: Icon }: { name: string; icon: React.FC<{ size?: number }> }) {
+/* ── Mobile: icon-centric grid card ── */
+function TechGridItem({ name, icon: Icon }: { name: string; icon: React.FC<{ size?: number }> }) {
   return (
-    <div className="flex items-center gap-3 px-5 py-2.5 rounded-lg border border-accent-border bg-background-elevated/50 text-text-tertiary hover:text-text-primary hover:border-accent-action/30 transition-all duration-300 select-none group">
-      <span className="shrink-0 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
-        <Icon size={18} />
+    <div className="flex flex-col items-center gap-2 py-3 px-1 rounded-xl border border-accent-border bg-background-elevated/40 group hover:border-accent-action/30 transition-all duration-300">
+      <span className="text-text-tertiary group-hover:text-accent-action transition-colors duration-300">
+        <Icon size={24} />
+      </span>
+      <span className="text-[11px] font-medium text-text-tertiary group-hover:text-text-secondary tracking-tight transition-colors duration-300">
+        {name}
+      </span>
+    </div>
+  );
+}
+
+/* ── Desktop: marquee badge ── */
+function TechMarqueeItem({ name, icon: Icon }: { name: string; icon: React.FC<{ size?: number }> }) {
+  return (
+    <div className="flex items-center gap-3 px-5 py-3 rounded-xl border border-accent-border bg-background-elevated/50 text-text-tertiary hover:text-text-primary hover:border-accent-action/30 transition-all duration-300 select-none group">
+      <span className="shrink-0 opacity-60 group-hover:opacity-100 group-hover:text-accent-action transition-all duration-300">
+        <Icon size={20} />
       </span>
       <span className="text-sm font-medium tracking-tight whitespace-nowrap">
         {name}
@@ -108,29 +179,30 @@ function TechItem({ name, icon: Icon }: { name: string; icon: React.FC<{ size?: 
 
 export function TechLogosSection() {
   return (
-    <section className="py-12 md:py-16 border-t border-accent-border overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        <p className="text-center text-xs text-text-tertiary font-mono uppercase tracking-widest mb-8 container-main">
+    <section className="py-10 sm:py-14 md:py-16 border-t border-accent-border">
+      <div className="flex flex-col items-center gap-5 sm:gap-6 md:gap-8">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center text-xs text-text-tertiary font-mono uppercase tracking-widest"
+        >
           Technologies maîtrisées
-        </p>
+        </motion.p>
 
-        <div className="relative">
-          {/* Gradient fade edges */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 sm:w-40 bg-gradient-to-r from-background to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 sm:w-40 bg-gradient-to-l from-background to-transparent" />
+        {/* Marquee — overflow hidden scoped here only */}
+        <div className="relative overflow-hidden w-full">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 sm:w-40 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 sm:w-40 bg-gradient-to-l from-background to-transparent" />
 
-          <Marquee pauseOnHover className="[--duration:30s] [--gap:1rem]">
-            {technologies.map((tech) => (
-              <TechItem key={tech.name} name={tech.name} icon={tech.icon} />
-            ))}
-          </Marquee>
+        <Marquee pauseOnHover className="[--duration:30s] [--gap:1rem]">
+          {technologies.map((tech) => (
+            <TechMarqueeItem key={tech.name} name={tech.name} icon={tech.icon} />
+          ))}
+        </Marquee>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

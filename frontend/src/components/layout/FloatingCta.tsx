@@ -38,7 +38,7 @@ export function FloatingCta() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed bottom-6 left-4 right-4 z-40 md:hidden"
+          className="fixed bottom-4 left-3 right-3 z-40 md:hidden pb-[env(safe-area-inset-bottom)]"
         >
           <button
             onClick={handleClick}

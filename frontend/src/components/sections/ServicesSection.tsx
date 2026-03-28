@@ -52,7 +52,7 @@ function formatPrice(price: string) {
     const to = rangeMatch[2].trim();
     return (
       <div className="flex items-baseline gap-1.5">
-        <span className="text-3xl font-light tracking-tight text-text-primary font-mono">
+        <span className="text-2xl sm:text-3xl font-light tracking-tight text-text-primary font-mono">
           {from} — {to}
         </span>
         <span className="text-lg text-text-tertiary font-light">€</span>
@@ -65,7 +65,7 @@ function formatPrice(price: string) {
     const number = match[1].trim();
     return (
       <div className="flex items-baseline gap-1.5">
-        <span className="text-4xl font-light tracking-tight text-text-primary font-mono">
+        <span className="text-3xl sm:text-4xl font-light tracking-tight text-text-primary font-mono">
           {number}
         </span>
         <span className="text-lg text-text-tertiary font-light">€</span>
@@ -73,7 +73,7 @@ function formatPrice(price: string) {
     );
   }
   return (
-    <span className="text-4xl font-light tracking-tight text-text-primary">
+    <span className="text-3xl sm:text-4xl font-light tracking-tight text-text-primary">
       {price}
     </span>
   );
@@ -101,15 +101,15 @@ export function ServicesSection() {
         <p className="text-accent-action text-sm font-medium font-mono mb-3 tracking-wide uppercase">
           Offres & tarifs
         </p>
-        <h2 id="services-heading" className="text-3xl md:text-4xl font-light tracking-[-0.02em] mb-4">
+        <h2 id="services-heading" className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[-0.02em] mb-3 sm:mb-4">
           Création de site vitrine à Caen —{" "}
           <span className="font-medium">prix transparents.</span>
         </h2>
-        <p className="text-text-secondary prose-width leading-relaxed mb-4">
+        <p className="text-sm sm:text-base text-text-secondary prose-width leading-relaxed mb-4">
           Vous savez exactement ce que vous obtenez et combien ça coûte.
           Paiement en 2 fois, devis gratuit.
         </p>
-        <p className="text-xs text-text-tertiary prose-width leading-relaxed mb-14">
+        <p className="text-xs text-text-tertiary prose-width leading-relaxed mb-8 sm:mb-14">
           Une agence web facture en moyenne 3 000 à 8 000 € pour un site vitrine.
           Je propose la même qualité technique, sans les frais d&apos;agence.
         </p>
@@ -120,7 +120,7 @@ export function ServicesSection() {
         whileInView="whileInView"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="grid md:grid-cols-3 gap-5 md:gap-6"
+        className="grid md:grid-cols-3 gap-4 md:gap-6"
       >
         {services.map((service) => (
           <motion.div
@@ -146,7 +146,7 @@ export function ServicesSection() {
                 </div>
               )}
 
-              <div className="p-7 md:p-8 flex flex-col h-full">
+              <div className="p-5 sm:p-7 md:p-8 flex flex-col h-full">
                 {/* Header */}
                 <div className="mb-6">
                   <h3 className="text-xl font-medium tracking-[-0.01em] mb-4">

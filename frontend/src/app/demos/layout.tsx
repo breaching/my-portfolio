@@ -11,9 +11,11 @@ export default function DemosLayout({
 }) {
   return (
     <>
-      {/* Hide portfolio chrome for demo sites */}
+      {/* Hide portfolio chrome (navbar, footer, floating CTA) for demo sites */}
       <style>{`
-        body > header, body > main ~ footer, body > main ~ div { display: none !important; }
+        header.fixed { display: none !important; }
+        footer { display: none !important; }
+        .fixed.bottom-6 { display: none !important; }
         #main-content { padding-top: 0 !important; }
       `}</style>
       {children}
